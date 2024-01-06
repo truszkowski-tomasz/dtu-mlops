@@ -1,110 +1,103 @@
-import torch
-from torch import nn
-from transformers import AutoTokenizer
-from torch.utils.data import DataLoader, TensorDataset
-from sklearn.model_selection import train_test_split
-from models.model import MyBaseTransformerModel
-import matplotlib.pyplot as plt
+# train_model.py
+import numpy as np
+import pandas as pd
+from sklearn import metrics
+from torch.utils.data import DataLoader
+from data.make_dataset_2 import CustomDataset
+from models.model import BERTClass
+from transformers import BertTokenizer
+import torch 
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+df = pd.read_csv("data/raw/WELFake_Dataset.csv").head(10)
 
-def train(model_name='models/distilbert-base-uncased', lr=1e-3, batch_size=16, num_epochs=3):
-    print(f"Learning Rate: {lr}")
-    print(f"Batch Size: {batch_size}")
-    print(f"Number of Epochs: {num_epochs}")
+MAX_LEN = 200
+TRAIN_BATCH_SIZE = 8
+VALID_BATCH_SIZE = 4
+EPOCHS = 1
+LEARNING_RATE = 1e-05
+tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
-    # Initialize tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
+train_size = 0.8
+train_dataset = df.sample(frac=train_size, random_state=200)
+test_dataset = df.drop(train_dataset.index).reset_index(drop=True)
+train_dataset = train_dataset.reset_index(drop=True)
 
-    ### TO BE DELETED
+print("FULL Dataset: {}".format(df.shape))
+print("TRAIN Dataset: {}".format(train_dataset.shape))
+print("TEST Dataset: {}".format(test_dataset.shape))
 
-    import pandas as pd
+training_set = CustomDataset(train_dataset, tokenizer, MAX_LEN)
+testing_set = CustomDataset(test_dataset, tokenizer, MAX_LEN)
 
-    # Load the CSV file
-    csv_file_path = "data/raw/WELFake_Dataset.csv"
-    df = pd.read_csv(csv_file_path)
+train_params = {'batch_size': TRAIN_BATCH_SIZE,
+                'shuffle': True,
+                'num_workers': 0
+                }
 
-    # Take the first 100 rows
-    df_subset = df.head(100)
+test_params = {'batch_size': VALID_BATCH_SIZE,
+                'shuffle': True,
+                'num_workers': 0
+                }
 
-    # Extract texts and labels
-    texts = df_subset['text'].tolist()
-    labels = df_subset['label'].tolist()
+training_loader = DataLoader(training_set, **train_params)
+testing_loader = DataLoader(testing_set, **test_params)
 
-    ### 
+model = BERTClass()
+model.to(device)
 
-    # Tokenize input texts
-    tokenized_inputs = tokenizer(texts, padding=True, truncation=True, return_tensors='pt')
+optimizer = torch.optim.Adam(params=model.parameters(), lr=LEARNING_RATE)
 
-    # Create PyTorch dataset
-    dataset = TensorDataset(tokenized_inputs['input_ids'], tokenized_inputs['attention_mask'], torch.tensor(labels))
+def loss_fn(outputs, targets):
+    return torch.nn.BCEWithLogitsLoss()(outputs, targets)
 
-    # Split dataset into train and validation sets
-    train_dataset, val_dataset = train_test_split(dataset, test_size=0.2, random_state=42)
-    train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-    val_dataloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
+def train(epoch):
+    model.train()
+    for _, data in enumerate(training_loader, 0):
+        ids = data['ids'].to(device, dtype=torch.long)
+        mask = data['mask'].to(device, dtype=torch.long)
+        token_type_ids = data['token_type_ids'].to(device, dtype=torch.long)
+        targets = data['targets'].to(device, dtype=torch.float)
 
-    # Instantiate the model
-    model = MyBaseTransformerModel(model_name=model_name)  # Adjust num_labels as per your classification task
-    model.to(device)
+        outputs = model(ids, mask, token_type_ids)
 
-    optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
-    loss_fn = nn.CrossEntropyLoss()
-    
-    train_losses = []
-    val_losses = []  # Add an array to store validation losses
+        optimizer.zero_grad()
+        loss = loss_fn(outputs, targets)
+        if _ % 5000 == 0:
+            print(f'Epoch: {epoch}, Loss:  {loss.item()}')
 
-    for epoch in range(num_epochs):
-        model.train()
-        total_loss = 0.0
-        for batch in train_dataloader:
-            optimizer.zero_grad()
-            input_ids, attention_mask, label = [tensor.to(device) for tensor in batch]
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
 
-            logits = model(input_ids, attention_mask=attention_mask)
-            loss = loss_fn(logits, label)
-            loss.backward()
-            optimizer.step()
-            total_loss += loss.item()
+    # Validation
+    model.eval()
+    fin_targets = []
+    fin_outputs = []
+    with torch.no_grad():
+        for _, data in enumerate(testing_loader, 0):
+            ids = data['ids'].to(device, dtype=torch.long)
+            mask = data['mask'].to(device, dtype=torch.long)
+            token_type_ids = data['token_type_ids'].to(device, dtype=torch.long)
+            targets = data['targets'].to(device, dtype=torch.float)
+            outputs = model(ids, mask, token_type_ids)
 
-        average_loss = total_loss / len(train_dataloader)
-        train_losses.append(average_loss)
-        print(f"Epoch {epoch} - Training Loss: {average_loss}")
+            # Convert outputs to binary predictions
+            predictions = torch.sigmoid(outputs).cpu().detach().numpy() >= 0.5
 
-        # Validation loop
-        model.eval()
-        total_correct = 0
-        total_samples = 0
-        val_loss = 0.0
+            fin_targets.extend(targets.cpu().detach().numpy().tolist())
+            fin_outputs.extend(predictions.tolist())
 
-        with torch.no_grad():
-            for val_batch in val_dataloader:
-                val_input_ids, val_attention_mask, val_label = [tensor.to(device) for tensor in val_batch]
+    outputs = np.array(fin_outputs)
+    accuracy = metrics.accuracy_score(fin_targets, outputs)
+    f1_score_micro = metrics.f1_score(fin_targets, outputs, average='micro')
+    f1_score_macro = metrics.f1_score(fin_targets, outputs, average='macro')
+    print(f"Validation Accuracy Score = {accuracy}")
+    print(f"Validation F1 Score (Micro) = {f1_score_micro}")
+    print(f"Validation F1 Score (Macro) = {f1_score_macro}")
 
-                val_outputs = model(val_input_ids, attention_mask=val_attention_mask)
 
-                # Squeeze the output tensor to remove the extra dimension
-                val_loss += loss_fn(val_outputs.squeeze(), val_label).item()
+for epoch in range(EPOCHS):
+    train(epoch)
 
-                val_preds = torch.argmax(val_outputs, dim=1)
-
-                total_correct += (val_preds == val_label).sum().item()
-                total_samples += len(val_label)
-
-        # Calculate average validation loss
-        average_val_loss = val_loss / len(val_dataloader)
-        val_losses.append(average_val_loss) 
-
-    # Plot both training and validation losses
-    plt.title('Training and Validation Losses')
-    plt.plot(train_losses, label='Training Loss')
-    plt.plot(val_losses, label='Validation Loss')
-    plt.xlabel('Epoch')
-    plt.ylabel('Loss')
-    plt.legend()
-    plt.show()
-
-    torch.save(model, f"{model_name}_fine_tuned.pt")
-
-if __name__ == "__main__":
-    train()
+torch.save(model.state_dict(), 'models/fine_tuned/bert.pth')

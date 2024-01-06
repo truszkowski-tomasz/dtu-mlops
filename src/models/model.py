@@ -1,23 +1,15 @@
 import torch
-from torch import nn
-from transformers import AutoModel, AutoConfig
+import transformers
 
-class MyBaseTransformerModel(nn.Module):
-    def __init__(self, model_name='models/distilbert-base-uncased'):
-        super(MyBaseTransformerModel, self).__init__()
-        self.num_labels = 2
-        config = AutoConfig.from_pretrained(model_name, num_labels=self.num_labels)
-        self.transformer = AutoModel.from_pretrained(model_name, config=config)
-        self.classifier = nn.Linear(config.hidden_size, self.num_labels)
-
-    def forward(self, input_ids, attention_mask=None, labels=None):
-        outputs = self.transformer(input_ids, attention_mask=attention_mask)
-        last_hidden_states = outputs.last_hidden_state[:, 0, :]
-        logits = self.classifier(last_hidden_states)
-
-        if labels is not None:
-            loss_fn = nn.CrossEntropyLoss()
-            loss = loss_fn(logits, labels)
-            return loss
-
-        return logits
+class BERTClass(torch.nn.Module):
+    def __init__(self):
+        super(BERTClass, self).__init__()
+        self.l1 = transformers.BertModel.from_pretrained('bert-base-uncased')
+        self.l2 = torch.nn.Dropout(0.3)
+        self.l3 = torch.nn.Linear(768, 1)
+    
+    def forward(self, ids, mask, token_type_ids):
+        _, output_1 = self.l1(ids, attention_mask=mask, token_type_ids=token_type_ids, return_dict=False)
+        output_2 = self.l2(output_1)
+        output = self.l3(output_2).squeeze(1) 
+        return output
