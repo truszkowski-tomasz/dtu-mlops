@@ -1,26 +1,23 @@
 import torch
+from torch import nn
+from transformers import AutoModel, AutoConfig
 
-class MyNeuralNet(torch.nn.Module):
-    """ Basic neural network class. 
-    
-    Args:
-        in_features: number of input features
-        out_features: number of output features
-    
-    """
-    def __init__(self, in_features: int, out_features: int) -> None:
-        self.l1 = torch.nn.Linear(in_features, 500)
-        self.l2 = torch.nn.Linear(500, out_features)
-        self.r = torch.nn.ReLU()
-    
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """Forward pass of the model.
-        
-        Args:
-            x: input tensor expected to be of shape [N,in_features]
+class MyBaseTransformerModel(nn.Module):
+    def __init__(self, model_name='models/distilbert-base-uncased'):
+        super(MyBaseTransformerModel, self).__init__()
+        self.num_labels = 2
+        config = AutoConfig.from_pretrained(model_name, num_labels=self.num_labels)
+        self.transformer = AutoModel.from_pretrained(model_name, config=config)
+        self.classifier = nn.Linear(config.hidden_size, self.num_labels)
 
-        Returns:
-            Output tensor with shape [N,out_features]
+    def forward(self, input_ids, attention_mask=None, labels=None):
+        outputs = self.transformer(input_ids, attention_mask=attention_mask)
+        last_hidden_states = outputs.last_hidden_state[:, 0, :]
+        logits = self.classifier(last_hidden_states)
 
-        """
-        return self.l2(self.r(self.l1(x)))
+        if labels is not None:
+            loss_fn = nn.CrossEntropyLoss()
+            loss = loss_fn(logits, labels)
+            return loss
+
+        return logits
