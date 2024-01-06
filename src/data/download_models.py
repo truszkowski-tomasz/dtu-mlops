@@ -18,7 +18,7 @@ def download_and_save_model(model_name, save_directory):
 
 def main():
     parser = argparse.ArgumentParser(description='Download and save Hugging Face model locally.')
-    parser.add_argument('--model_name', type=str, default='distilbert-base-uncased', help='Name of the Hugging Face model to download.')
+    parser.add_argument('--model_name', type=str, default='bert-base-uncased', help='Name of the Hugging Face model to download.')
 
     args = parser.parse_args()
     save_directory = os.path.join('models', args.model_name)
