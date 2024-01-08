@@ -18,14 +18,14 @@ def download_and_save_model(model_name, save_directory):
 
 def main():
     parser = argparse.ArgumentParser(description='Download and save Hugging Face model locally.')
-    parser.add_argument('--model_name', type=str, default='distilbert-base-uncased', help='Name of the Hugging Face model to download.')
+    parser.add_argument('--model_name', type=str, default='bert-base-uncased', help='Name of the Hugging Face model to download.')
 
     args = parser.parse_args()
     save_directory = os.path.join('models', args.model_name)
 
     download_and_save_model(args.model_name, save_directory)
 
-    """Ucomment if you would like to see how this tokenizer works"""
+    """Uncomment if you would like to see how this tokenizer works"""
     # tokenizer = AutoTokenizer.from_pretrained(save_directory)
     # sample_text = "This is a sample text for tokenization."
     # tokenized_input = tokenizer(sample_text, return_tensors='pt')
