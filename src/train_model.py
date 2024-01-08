@@ -16,20 +16,18 @@ np.random.seed(random_seed)
 random.seed(random_seed)
 
 # Constants and parameters
-MAX_LEN = 200
-TRAIN_BATCH_SIZE = 8
-VALID_BATCH_SIZE = 4
-EPOCHS = 1
+TRAIN_BATCH_SIZE = 32
+VALID_BATCH_SIZE = 16
+EPOCHS = 3
 LEARNING_RATE = 1e-05
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-training_set, testing_set = load_and_tokenize_data("data/raw/WELFake_Dataset.csv", MAX_LEN, 0.8)
+train_set = torch.load("data/processed/train_set.pt")
+test_set = torch.load("data/processed/test_set.pt")
 
-train_params = {'batch_size': TRAIN_BATCH_SIZE, 'shuffle': True, 'num_workers': 0}
-test_params = {'batch_size': VALID_BATCH_SIZE, 'shuffle': True, 'num_workers': 0}
-
-training_loader = DataLoader(training_set, **train_params)
-testing_loader = DataLoader(testing_set, **test_params)
+# Create DataLoader
+train_loader = DataLoader(train_set, batch_size=TRAIN_BATCH_SIZE, shuffle=True, num_workers=0)
+test_loader = DataLoader(test_set, batch_size=VALID_BATCH_SIZE, shuffle=True, num_workers=0)
 
 # Initializing the model, loss function, and optimizer
 model = BERTClass()
@@ -45,11 +43,9 @@ val_losses = []
 for epoch in range(EPOCHS):
     model.train()
     total_loss = 0
-    for _, data in enumerate(training_loader, 0):
-        ids = data['ids'].to(device, dtype=torch.long)
-        mask = data['mask'].to(device, dtype=torch.long)
-        token_type_ids = data['token_type_ids'].to(device, dtype=torch.long)
-        targets = data['labels'].to(device, dtype=torch.float)
+    for _, data in enumerate(train_loader, 0):
+        ids, mask, token_type_ids, targets = data
+        ids, mask, token_type_ids, targets = ids.to(device), mask.to(device), token_type_ids.to(device), targets.to(device)
 
         optimizer.zero_grad()
         outputs = model(ids, mask, token_type_ids)
@@ -60,7 +56,7 @@ for epoch in range(EPOCHS):
         loss.backward()
         optimizer.step()
 
-    average_loss = total_loss / len(training_loader)
+    average_loss = total_loss / len(train_loader)
     train_losses.append(average_loss)
 
     model.eval()
@@ -68,11 +64,9 @@ for epoch in range(EPOCHS):
     fin_val_targets = []
     fin_val_outputs = []
     with torch.no_grad():
-        for _, data in enumerate(testing_loader, 0):
-            ids = data['ids'].to(device, dtype=torch.long)
-            mask = data['mask'].to(device, dtype=torch.long)
-            token_type_ids = data['token_type_ids'].to(device, dtype=torch.long)
-            targets = data['labels'].to(device, dtype=torch.float)
+        for _, data in enumerate(test_loader, 0):
+            ids, mask, token_type_ids, targets = data
+            ids, mask, token_type_ids, targets = ids.to(device), mask.to(device), token_type_ids.to(device), targets.to(device)
 
             outputs = model(ids, mask, token_type_ids)
 
@@ -82,7 +76,7 @@ for epoch in range(EPOCHS):
             fin_val_targets.extend(targets.cpu().detach().numpy().tolist())
             fin_val_outputs.extend(torch.sigmoid(outputs).cpu().detach().numpy().tolist())
 
-    average_val_loss = total_val_loss / len(testing_loader)
+    average_val_loss = total_val_loss / len(test_loader)
     val_losses.append(average_val_loss)
 
     val_outputs = np.array(fin_val_outputs) >= 0.5
