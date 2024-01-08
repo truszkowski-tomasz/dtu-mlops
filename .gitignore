@@ -180,4 +180,5 @@ cython_debug/
 data/
 models
 !src/models
+!src/data
 .DS_Store
