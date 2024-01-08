@@ -16,7 +16,7 @@ TRAIN_BATCH_SIZE = 8
 VALID_BATCH_SIZE = 4
 EPOCHS = 1
 LEARNING_RATE = 1e-05
-tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+tokenizer = BertTokenizer.from_pretrained('models/bert-base-uncased')
 
 train_size = 0.8
 train_dataset = df.sample(frac=train_size, random_state=200)
