@@ -3,8 +3,7 @@ import pandas as pd
 from sklearn import metrics
 import torch
 from torch.utils.data import DataLoader
-from transformers import BertTokenizer
-from data.make_dataset_2 import FakeNewsDataset
+from data.make_dataset_2 import FakeNewsDataset, load_and_tokenize_data
 from models.model import BERTClass
 import matplotlib.pyplot as plt
 import random
@@ -23,27 +22,8 @@ VALID_BATCH_SIZE = 4
 EPOCHS = 1
 LEARNING_RATE = 1e-05
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-tokenizer = BertTokenizer.from_pretrained('models/bert-base-uncased')
 
-
-# Loading the dataset
-df = pd.read_csv("data/raw/WELFake_Dataset.csv").head(10)
-new_df = df[['text', 'label']].copy()
-new_df.columns = ['text', 'labels']
-
-# Creating the dataset and dataloader for the neural network
-train_size = 0.8
-train_dataset=new_df.sample(frac=train_size,random_state=200)
-test_dataset=new_df.drop(train_dataset.index).reset_index(drop=True)
-train_dataset = train_dataset.reset_index(drop=True)
-
-
-print("FULL Dataset: {}".format(new_df.shape))
-print("TRAIN Dataset: {}".format(train_dataset.shape))
-print("TEST Dataset: {}".format(test_dataset.shape))
-
-training_set = FakeNewsDataset(train_dataset, tokenizer, MAX_LEN)
-testing_set = FakeNewsDataset(test_dataset, tokenizer, MAX_LEN)
+training_set, testing_set = load_and_tokenize_data("data/raw/WELFake_Dataset.csv", MAX_LEN, 0.8)
 
 train_params = {'batch_size': TRAIN_BATCH_SIZE, 'shuffle': True, 'num_workers': 0}
 test_params = {'batch_size': VALID_BATCH_SIZE, 'shuffle': True, 'num_workers': 0}
