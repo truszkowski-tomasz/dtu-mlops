@@ -29,12 +29,5 @@ def main():
 
     download_and_save_model(args.model_name, save_directory)
 
-    """Uncomment if you would like to see how this tokenizer works"""
-    # tokenizer = AutoTokenizer.from_pretrained(save_directory)
-    # sample_text = "This is a sample text for tokenization."
-    # tokenized_input = tokenizer(sample_text, return_tensors='pt')
-    # print(f"{sample_text} \n \n This is how tokenized text looks like: \n \n {tokenized_input}")
-
-
 if __name__ == "__main__":
     main()
