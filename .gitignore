@@ -19,6 +19,7 @@ manual_test/
 __pycache__/
 *.py[cod]
 *$py.class
+.DS_Store
 
 # C extensions
 *.so
@@ -178,7 +179,9 @@ cython_debug/
 
 # Data and models
 data/
-models
+models/
 !src/models
 !src/data
-.DS_Store
+
+# Hydra
+outputs/

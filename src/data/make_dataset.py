@@ -3,7 +3,16 @@ from torch.utils.data import Dataset, TensorDataset
 import torch
 from transformers import BertTokenizer
 import argparse
+import os
+import sys
 
+# for some reason I cannot make logger work without this workaround
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
+src_path = os.path.join(project_root, "src")
+sys.path.append(src_path)
+
+from utils.logger import get_logger
+logger = get_logger(__name__)
 
 class FakeNewsDataset(Dataset):
     def __init__(self, dataframe, tokenizer, max_len):
@@ -51,9 +60,9 @@ def preprocess_data(df, train_size, max_len):
     test_dataset = new_df.drop(train_dataset.index).reset_index(drop=True)
     train_dataset = train_dataset.reset_index(drop=True)
 
-    print("FULL Dataset: {}".format(new_df.shape))
-    print("TRAIN Dataset: {}".format(train_dataset.shape))
-    print("TEST Dataset: {}".format(test_dataset.shape))
+    logger.info("FULL Dataset: {}".format(new_df.shape))
+    logger.info("TRAIN Dataset: {}".format(train_dataset.shape))
+    logger.info("TEST Dataset: {}".format(test_dataset.shape))
 
     # Tokenize and convert to TensorDataset
     tokenizer = BertTokenizer.from_pretrained("models/bert-base-uncased")
@@ -87,7 +96,7 @@ def preprocess_data(df, train_size, max_len):
 def save_datasets(train_set, test_set, save_path="data/processed/"):
     torch.save(train_set, f"{save_path}train_set.pt")
     torch.save(test_set, f"{save_path}test_set.pt")
-    print("Files have been saved.")
+    logger.info("Saved datasets to {save_path}")
 
 
 def load_and_tokenize_data(file_path, max_len, train_size, subset_size=True):

@@ -4,7 +4,15 @@
 import os
 import argparse
 from transformers import AutoTokenizer, AutoModel
+import os
+import sys
 
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
+src_path = os.path.join(project_root, "src")
+sys.path.append(src_path)
+
+from utils.logger import get_logger
+logger = get_logger(__name__)
 
 def download_and_save_model(model_name, save_directory):
     tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -13,8 +21,7 @@ def download_and_save_model(model_name, save_directory):
     tokenizer.save_pretrained(save_directory)
     model.save_pretrained(save_directory)
 
-    print(f"Model and tokenizer saved to {save_directory}")
-
+    log.info(f"Model and tokenizer saved to {save_directory}")
 
 def main():
     parser = argparse.ArgumentParser(description="Download and save Hugging Face model locally.")
