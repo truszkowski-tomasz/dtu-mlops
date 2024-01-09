@@ -6,7 +6,7 @@ import argparse
 import os
 import sys
 
-# for some reason I cannot make logger work without this workaround
+# For some reason, I cannot make the logger work without this workaround
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
 src_path = os.path.join(project_root, "src")
 sys.path.append(src_path)
@@ -50,8 +50,9 @@ class FakeNewsDataset(Dataset):
             "labels": torch.tensor(self.labels[index], dtype=torch.float).unsqueeze(0),
         }
 
-
 def preprocess_data(df, train_size, max_len):
+    logger.info(f"Processing data with max_len={max_len} and train_size={train_size}")
+
     new_df = df[["text", "label"]].copy()
     new_df.columns = ["text", "labels"]
 
@@ -92,12 +93,10 @@ def preprocess_data(df, train_size, max_len):
 
     return train_set, test_set
 
-
 def save_datasets(train_set, test_set, save_path="data/processed/"):
     torch.save(train_set, f"{save_path}train_set.pt")
     torch.save(test_set, f"{save_path}test_set.pt")
-    logger.info("Saved datasets to {save_path}")
-
+    logger.info(f"Saved datasets to {save_path}")
 
 def load_and_tokenize_data(file_path, max_len, train_size, subset_size=True):
 
@@ -114,5 +113,5 @@ if __name__ == "__main__":
     parser.add_argument("--train_size", default=0.8, type=float, help="Fraction of data used for training.")
 
     args = parser.parse_args()
-    
+    logger.info(f"Script started with arguments: file_path={args.file_path}, max_len={args.max_len}, train_size={args.train_size}")
     load_and_tokenize_data(args.file_path, args.max_len, args.train_size)
