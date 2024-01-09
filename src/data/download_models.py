@@ -12,7 +12,9 @@ src_path = os.path.join(project_root, "src")
 sys.path.append(src_path)
 
 from utils.logger import get_logger
+
 logger = get_logger(__name__)
+
 
 def download_and_save_model(model_name, save_directory):
     logger.info(f"Downloading and saving Hugging Face model '{model_name}' to '{save_directory}'...")
@@ -25,6 +27,7 @@ def download_and_save_model(model_name, save_directory):
 
     logger.info(f"Model and tokenizer saved to {save_directory}")
 
+
 def main():
     parser = argparse.ArgumentParser(description="Download and save Hugging Face model locally.")
     parser.add_argument(
@@ -35,6 +38,7 @@ def main():
     save_directory = os.path.join("models", args.model_name)
 
     download_and_save_model(args.model_name, save_directory)
+
 
 if __name__ == "__main__":
     main()

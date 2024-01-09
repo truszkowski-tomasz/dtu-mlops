@@ -3,6 +3,7 @@ import transformers
 
 LOCAL_MODEL_PATH = "models/bert-base-uncased"
 
+
 class BERTClass(torch.nn.Module):
     def __init__(self):
         super(BERTClass, self).__init__()

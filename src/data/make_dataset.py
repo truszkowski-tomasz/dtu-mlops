@@ -12,7 +12,9 @@ src_path = os.path.join(project_root, "src")
 sys.path.append(src_path)
 
 from utils.logger import get_logger
+
 logger = get_logger(__name__)
+
 
 class FakeNewsDataset(Dataset):
     def __init__(self, dataframe, tokenizer, max_len):
@@ -49,6 +51,7 @@ class FakeNewsDataset(Dataset):
             "token_type_ids": torch.tensor(token_type_ids, dtype=torch.long),
             "labels": torch.tensor(self.labels[index], dtype=torch.float).unsqueeze(0),
         }
+
 
 def preprocess_data(df, train_size, max_len):
     logger.info(f"Processing data with max_len={max_len} and train_size={train_size}")
@@ -93,13 +96,14 @@ def preprocess_data(df, train_size, max_len):
 
     return train_set, test_set
 
+
 def save_datasets(train_set, test_set, save_path="data/processed/"):
     torch.save(train_set, f"{save_path}train_set.pt")
     torch.save(test_set, f"{save_path}test_set.pt")
     logger.info(f"Saved datasets to {save_path}")
 
-def load_and_tokenize_data(file_path, max_len, train_size, subset_size=True):
 
+def load_and_tokenize_data(file_path, max_len, train_size, subset_size=True):
     df = pd.read_csv(file_path).head(100) if subset_size else pd.read_csv(file_path)
 
     train_set, test_set = preprocess_data(df, train_size, max_len)
@@ -113,5 +117,7 @@ if __name__ == "__main__":
     parser.add_argument("--train_size", default=0.8, type=float, help="Fraction of data used for training.")
 
     args = parser.parse_args()
-    logger.info(f"Script started with arguments: file_path={args.file_path}, max_len={args.max_len}, train_size={args.train_size}")
+    logger.info(
+        f"Script started with arguments: file_path={args.file_path}, max_len={args.max_len}, train_size={args.train_size}"
+    )
     load_and_tokenize_data(args.file_path, args.max_len, args.train_size)
