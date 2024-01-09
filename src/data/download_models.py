@@ -7,11 +7,9 @@ from transformers import AutoTokenizer, AutoModel
 
 
 def download_and_save_model(model_name, save_directory):
-    # Download
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModel.from_pretrained(model_name)
 
-    # Save locally
     tokenizer.save_pretrained(save_directory)
     model.save_pretrained(save_directory)
 
