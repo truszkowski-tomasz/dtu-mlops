@@ -2,6 +2,7 @@ import pandas as pd
 from torch.utils.data import Dataset, TensorDataset
 import torch
 from transformers import BertTokenizer
+import argparse
 
 
 class FakeNewsDataset(Dataset):
@@ -89,11 +90,20 @@ def save_datasets(train_set, test_set, save_path="data/processed/"):
     print("Files have been saved.")
 
 
-def load_and_tokenize_data(file_path, max_len, train_size):
-    df = pd.read_csv(file_path).head(100)
+def load_and_tokenize_data(file_path, max_len, train_size, subset_size=True):
+
+    df = pd.read_csv(file_path).head(100) if subset_size else pd.read_csv(file_path)
+
     train_set, test_set = preprocess_data(df, train_size, max_len)
     save_datasets(train_set, test_set)
 
 
 if __name__ == "__main__":
-    load_and_tokenize_data("data/raw/WELFake_Dataset.csv", 200, 0.8)
+    parser = argparse.ArgumentParser(description="Process data and tokenize for fake news classification.")
+    parser.add_argument("--file_path", default="data/raw/WELFake_Dataset.csv", type=str, help="Path to the CSV file.")
+    parser.add_argument("--max_len", default=200, type=int, help="Maximum length for tokenization.")
+    parser.add_argument("--train_size", default=0.8, type=float, help="Fraction of data used for training.")
+
+    args = parser.parse_args()
+    
+    load_and_tokenize_data(args.file_path, args.max_len, args.train_size)

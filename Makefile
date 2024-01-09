@@ -7,6 +7,9 @@
 PROJECT_NAME = src
 PYTHON_VERSION = 3.11
 PYTHON_INTERPRETER = python
+FILE_PATH ?= data/raw/WELFake_Dataset.csv
+MAX_LEN ?= 200
+TRAIN_SIZE ?= 0.8
 
 #################################################################################
 # COMMANDS                                                                      #
@@ -38,7 +41,7 @@ clean:
 
 ## Process raw data into processed data
 data:
-	python $(PROJECT_NAME)/data/make_dataset.py
+	python $(PROJECT_NAME)/data/make_dataset.py --file_path "$(FILE_PATH)" --max_len $(MAX_LEN) --train_size $(TRAIN_SIZE)
 
 #################################################################################
 # Documentation RULES                                                           #
