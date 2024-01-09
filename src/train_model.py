@@ -7,6 +7,9 @@ from models.model import BERTClass
 import matplotlib.pyplot as plt
 import random
 from torch import cuda
+from utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 # Set a random seed for reproducibility
 random_seed = 42
@@ -93,12 +96,12 @@ for epoch in range(EPOCHS):
     f1_score_micro = metrics.f1_score(fin_val_targets, val_outputs, average="micro")
     f1_score_macro = metrics.f1_score(fin_val_targets, val_outputs, average="macro")
 
-    print(f"Epoch {epoch}:")
-    print(f"  Training Loss = {average_loss}")
-    print(f"  Validation Loss = {average_val_loss}")
-    print(f"  Accuracy Score = {accuracy}")
-    print(f"  F1 Score (Micro) = {f1_score_micro}")
-    print(f"  F1 Score (Macro) = {f1_score_macro}")
+    logger.info(f"Epoch {epoch}:")
+    logger.info(f"  Training Loss = {average_loss}")
+    logger.info(f"  Validation Loss = {average_val_loss}")
+    logger.info(f"  Accuracy Score = {accuracy}")
+    logger.info(f"  F1 Score (Micro) = {f1_score_micro}")
+    logger.info(f"  F1 Score (Macro) = {f1_score_macro}")
 
 # Plotting loss changes
 plt.figure(figsize=(10, 6))
