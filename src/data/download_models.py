@@ -27,5 +27,6 @@ def main():
 
     download_and_save_model(args.model_name, save_directory)
 
+
 if __name__ == "__main__":
     main()

@@ -3,7 +3,6 @@ import pandas as pd
 from sklearn import metrics
 import torch
 from torch.utils.data import DataLoader
-from data.make_dataset_2 import FakeNewsDataset, load_and_tokenize_data
 from models.model import BERTClass
 import matplotlib.pyplot as plt
 import random
