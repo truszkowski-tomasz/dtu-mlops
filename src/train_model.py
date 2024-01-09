@@ -45,7 +45,12 @@ for epoch in range(EPOCHS):
     total_loss = 0
     for _, data in enumerate(train_loader, 0):
         ids, mask, token_type_ids, targets = data
-        ids, mask, token_type_ids, targets = ids.to(device), mask.to(device), token_type_ids.to(device), targets.to(device)
+        ids, mask, token_type_ids, targets = (
+            ids.to(device),
+            mask.to(device),
+            token_type_ids.to(device),
+            targets.to(device),
+        )
 
         optimizer.zero_grad()
         outputs = model(ids, mask, token_type_ids)
@@ -66,7 +71,12 @@ for epoch in range(EPOCHS):
     with torch.no_grad():
         for _, data in enumerate(test_loader, 0):
             ids, mask, token_type_ids, targets = data
-            ids, mask, token_type_ids, targets = ids.to(device), mask.to(device), token_type_ids.to(device), targets.to(device)
+            ids, mask, token_type_ids, targets = (
+                ids.to(device),
+                mask.to(device),
+                token_type_ids.to(device),
+                targets.to(device),
+            )
 
             outputs = model(ids, mask, token_type_ids)
 
@@ -81,8 +91,8 @@ for epoch in range(EPOCHS):
 
     val_outputs = np.array(fin_val_outputs) >= 0.5
     accuracy = metrics.accuracy_score(fin_val_targets, val_outputs)
-    f1_score_micro = metrics.f1_score(fin_val_targets, val_outputs, average='micro')
-    f1_score_macro = metrics.f1_score(fin_val_targets, val_outputs, average='macro')
+    f1_score_micro = metrics.f1_score(fin_val_targets, val_outputs, average="micro")
+    f1_score_macro = metrics.f1_score(fin_val_targets, val_outputs, average="macro")
 
     print(f"Epoch {epoch}:")
     print(f"  Training Loss = {average_loss}")
@@ -93,12 +103,12 @@ for epoch in range(EPOCHS):
 
 # Plotting loss changes
 plt.figure(figsize=(10, 6))
-plt.plot(train_losses, label='Training Loss')
-plt.plot(val_losses, label='Validation Loss')
-plt.xlabel('Epoch')
-plt.ylabel('Loss')
+plt.plot(train_losses, label="Training Loss")
+plt.plot(val_losses, label="Validation Loss")
+plt.xlabel("Epoch")
+plt.ylabel("Loss")
 plt.legend()
 plt.show()
 
 # Save the model
-torch.save(model.state_dict(), 'models/fine_tuned/bert_model.pth')
+torch.save(model.state_dict(), "models/fine_tuned/bert_model.pth")
