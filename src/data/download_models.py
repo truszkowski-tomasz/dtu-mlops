@@ -17,6 +17,10 @@ logger = get_logger(__name__)
 
 
 def download_and_save_model(model_name, save_directory):
+    if os.path.exists(save_directory):
+        logger.info(f"Model '{model_name}' already exists in '{save_directory}'. Skipping download.")
+        return
+
     logger.info(f"Downloading and saving Hugging Face model '{model_name}' to '{save_directory}'...")
 
     tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -35,6 +39,7 @@ def main():
     )
 
     args = parser.parse_args()
+
     save_directory = os.path.join("models", args.model_name)
 
     download_and_save_model(args.model_name, save_directory)

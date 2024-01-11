@@ -59,14 +59,17 @@ def preprocess_data(df, train_size, max_len):
     new_df = df[["text", "label"]].copy()
     new_df.columns = ["text", "labels"]
 
+    # drop rows where either text or labels are missing
+    new_df.dropna(inplace=True)
+
     # Creating the dataset and dataloader for the neural network
     train_dataset = new_df.sample(frac=train_size, random_state=200)
-    test_dataset = new_df.drop(train_dataset.index).reset_index(drop=True)
+    val_dataset = new_df.drop(train_dataset.index).reset_index(drop=True)
     train_dataset = train_dataset.reset_index(drop=True)
 
     logger.info("FULL Dataset: {}".format(new_df.shape))
     logger.info("TRAIN Dataset: {}".format(train_dataset.shape))
-    logger.info("TEST Dataset: {}".format(test_dataset.shape))
+    logger.info("VAL Dataset: {}".format(val_dataset.shape))
 
     # Tokenize and convert to TensorDataset
     tokenizer = BertTokenizer.from_pretrained("models/bert-base-uncased")
@@ -82,32 +85,32 @@ def preprocess_data(df, train_size, max_len):
 
     train_set = TensorDataset(train_input_ids, train_attention_mask, train_token_type_ids, train_labels)
 
-    test_data = [
+    val_data = [
         tokenizer.encode_plus(text, max_length=max_len, padding="max_length", return_tensors="pt", truncation=True)
-        for text in test_dataset["text"]
+        for text in val_dataset["text"]
     ]
-    test_input_ids = torch.cat([data["input_ids"] for data in test_data], dim=0)
-    test_attention_mask = torch.cat([data["attention_mask"] for data in test_data], dim=0)
-    test_token_type_ids = torch.cat([data["token_type_ids"] for data in test_data], dim=0)
+    val_input_ids = torch.cat([data["input_ids"] for data in val_data], dim=0)
+    val_attention_mask = torch.cat([data["attention_mask"] for data in val_data], dim=0)
+    val_token_type_ids = torch.cat([data["token_type_ids"] for data in val_data], dim=0)
 
-    test_labels = torch.tensor(test_dataset["labels"].values, dtype=torch.float).unsqueeze(1)
+    val_labels = torch.tensor(val_dataset["labels"].values, dtype=torch.float).unsqueeze(1)
 
-    test_set = TensorDataset(test_input_ids, test_attention_mask, test_token_type_ids, test_labels)
+    val_set = TensorDataset(val_input_ids, val_attention_mask, val_token_type_ids, val_labels)
 
-    return train_set, test_set
+    return train_set, val_set
 
 
-def save_datasets(train_set, test_set, save_path="data/processed/"):
+def save_datasets(train_set, val_set, save_path="data/processed/"):
     torch.save(train_set, f"{save_path}train_set.pt")
-    torch.save(test_set, f"{save_path}test_set.pt")
+    torch.save(val_set, f"{save_path}val_set.pt")
     logger.info(f"Saved datasets to {save_path}")
 
 
 def load_and_tokenize_data(file_path, max_len, train_size, subset_size=True):
     df = pd.read_csv(file_path).head(100) if subset_size else pd.read_csv(file_path)
 
-    train_set, test_set = preprocess_data(df, train_size, max_len)
-    save_datasets(train_set, test_set)
+    train_set, val_set = preprocess_data(df, train_size, max_len)
+    save_datasets(train_set, val_set)
 
 
 if __name__ == "__main__":

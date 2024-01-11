@@ -41,6 +41,7 @@ clean:
 
 ## Process raw data into processed data
 data:
+	python $(PROJECT_NAME)/data/download_models.py
 	python $(PROJECT_NAME)/data/make_dataset.py --file_path "$(FILE_PATH)" --max_len $(MAX_LEN) --train_size $(TRAIN_SIZE)
 
 #################################################################################

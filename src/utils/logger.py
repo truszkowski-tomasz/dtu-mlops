@@ -2,8 +2,11 @@ import logging
 import logging.config
 from pathlib import Path
 import sys
+import os
 
 LOGS_DIR = "logs"
+
+Path(LOGS_DIR).mkdir(parents=True, exist_ok=True)
 
 logging_config = {
     "version": 1,

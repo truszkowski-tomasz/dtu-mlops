@@ -25,11 +25,11 @@ LEARNING_RATE = 1e-05
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 train_set = torch.load("data/processed/train_set.pt")
-test_set = torch.load("data/processed/test_set.pt")
+val_set = torch.load("data/processed/val_set.pt")
 
 # Create DataLoader
 train_loader = DataLoader(train_set, batch_size=TRAIN_BATCH_SIZE, shuffle=True, num_workers=0)
-test_loader = DataLoader(test_set, batch_size=VALID_BATCH_SIZE, shuffle=True, num_workers=0)
+val_loader = DataLoader(val_set, batch_size=VALID_BATCH_SIZE, shuffle=True, num_workers=0)
 
 # Initializing the model, loss function, and optimizer
 model = BERTClass()
@@ -71,7 +71,7 @@ for epoch in range(EPOCHS):
     fin_val_targets = []
     fin_val_outputs = []
     with torch.no_grad():
-        for _, data in enumerate(test_loader, 0):
+        for _, data in enumerate(val_loader, 0):
             ids, mask, token_type_ids, targets = data
             ids, mask, token_type_ids, targets = (
                 ids.to(device),
@@ -88,7 +88,7 @@ for epoch in range(EPOCHS):
             fin_val_targets.extend(targets.cpu().detach().numpy().tolist())
             fin_val_outputs.extend(torch.sigmoid(outputs).cpu().detach().numpy().tolist())
 
-    average_val_loss = total_val_loss / len(test_loader)
+    average_val_loss = total_val_loss / len(val_loader)
     val_losses.append(average_val_loss)
 
     val_outputs = np.array(fin_val_outputs) >= 0.5
