@@ -18,7 +18,7 @@ VALID_BATCH_SIZE = 64
 LEARNING_RATE = 1e-05
 EPOCHS = 3
 
-config = {"train_batch_size": TRAIN_BATCH_SIZE, "valid_batch_size": VALID_BATCH_SIZE, "epochs": EPOCHS}
+config = {"train_batch_size": TRAIN_BATCH_SIZE, "valid_batch_size": VALID_BATCH_SIZE, "epochs": EPOCHS, "lr": LEARNING_RATE}
 wandb.init(project="dtu-mlops", config=config)
 
 # Set a random seed for reproducibility
