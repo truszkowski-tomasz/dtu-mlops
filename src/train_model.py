@@ -16,16 +16,6 @@ torch.manual_seed(random_seed)
 np.random.seed(random_seed)
 random.seed(random_seed)
 
-# Set hyperparameters
-TRAIN_BATCH_SIZE = 128
-VALID_BATCH_SIZE = 64
-LEARNING_RATE = 1e-05
-EPOCHS = 3
-
-config = {"train_batch_size": TRAIN_BATCH_SIZE, "valid_batch_size": VALID_BATCH_SIZE, "epochs": EPOCHS, "lr": LEARNING_RATE}
-wandb.init(project="dtu-mlops", config=config)
-
-
 # Constants and parameters
 TRAIN_BATCH_SIZE = 32
 VALID_BATCH_SIZE = 16
@@ -54,19 +44,11 @@ trainer = Trainer(max_epochs=EPOCHS, log_every_n_steps=1, logger=logger)
 
 trainer.fit(model=model, train_dataloaders=train_loader, val_dataloaders=val_loader)
 
-
-# Plotting loss changes
-# plt.figure(figsize=(10, 6))
-# plt.plot(train_losses, label="Training Loss")
-# plt.plot(val_losses, label="Validation Loss")
-# plt.xlabel("Epoch")
-# plt.ylabel("Loss")
-# plt.legend()
-# plt.show()
+model_path = "models/fine_tuned"
 
 # If the directory does not exist, create it
-if not os.path.exists("models/fine_tuned"):
-    os.mkdir("models/fine_tuned")
+if not os.path.exists(model_path):
+    os.mkdir(model_path)
 
 # Save the model
-torch.save(model.state_dict(), "models/fine_tuned/bert_model.pth")
+torch.save(model.state_dict(), model_path+"/bert_model.pth")
