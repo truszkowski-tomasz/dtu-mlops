@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import random
 from torch import cuda
 from utils.logger import get_logger
+from tqdm import tqdm
 
 logger = get_logger(__name__)
 
@@ -45,7 +46,9 @@ val_losses = []
 for epoch in range(EPOCHS):
     model.train()
     total_loss = 0
-    for _, data in enumerate(train_loader, 0):
+    # Wrap the train_loader with tqdm for progress visualization
+    train_loader_iter = tqdm(enumerate(train_loader, 0), total=len(train_loader))
+    for _, data in train_loader_iter:
         ids, mask, token_type_ids, targets = data
         ids, mask, token_type_ids, targets = (
             ids.to(device),
@@ -70,8 +73,10 @@ for epoch in range(EPOCHS):
     total_val_loss = 0
     fin_val_targets = []
     fin_val_outputs = []
+    # Wrap the val_loader with tqdm for progress visualization
+    val_loader_iter = tqdm(enumerate(val_loader, 0), total=len(val_loader))
     with torch.no_grad():
-        for _, data in enumerate(val_loader, 0):
+        for _, data in val_loader_iter:
             ids, mask, token_type_ids, targets = data
             ids, mask, token_type_ids, targets = (
                 ids.to(device),
