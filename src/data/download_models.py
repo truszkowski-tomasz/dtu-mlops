@@ -1,11 +1,10 @@
 """ Download and save Hugging Face model locally. """
 
-
-import os
 import argparse
-from transformers import AutoTokenizer, AutoModel
 import os
 import sys
+
+from transformers import AutoModel, AutoTokenizer
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
 src_path = os.path.join(project_root, "src")

@@ -1,8 +1,8 @@
 import logging
 import logging.config
-from pathlib import Path
-import sys
 import os
+import sys
+from pathlib import Path
 
 LOGS_DIR = "logs"
 
