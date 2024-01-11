@@ -9,6 +9,7 @@ import random
 from torch import cuda
 from utils.logger import get_logger
 from tqdm import tqdm
+import os
 
 logger = get_logger(__name__)
 
@@ -21,7 +22,7 @@ random.seed(random_seed)
 # Constants and parameters
 TRAIN_BATCH_SIZE = 32
 VALID_BATCH_SIZE = 16
-EPOCHS = 3
+EPOCHS = 1
 LEARNING_RATE = 1e-05
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -118,4 +119,8 @@ plt.legend()
 plt.show()
 
 # Save the model
-torch.save(model.state_dict(), "models/fine_tuned/bert_model.pth")
+model_path = "models/fine_tuned"
+# Check if the folder exists, and if not, create it
+if not os.path.exists(model_path):
+    os.makedirs(model_path)
+torch.save(model.state_dict(), os.path.join(model_path, "bert_model.pth"))
