@@ -9,8 +9,19 @@ import random
 from torch import cuda
 from utils.logger import get_logger
 from tqdm import tqdm
+import wandb
 
 logger = get_logger(__name__)
+
+# Set hyperparameters
+TRAIN_BATCH_SIZE = 128
+VALID_BATCH_SIZE = 64
+LEARNING_RATE = 1e-05
+EPOCHS = 3
+
+config = {'train_batch_size': TRAIN_BATCH_SIZE, 'valid_batch_size': VALID_BATCH_SIZE, 'epochs': EPOCHS}
+
+wandb.init(project = 'dtu-mlops' , config=config)
 
 # Set a random seed for reproducibility
 random_seed = 42
@@ -19,10 +30,6 @@ np.random.seed(random_seed)
 random.seed(random_seed)
 
 # Constants and parameters
-TRAIN_BATCH_SIZE = 32
-VALID_BATCH_SIZE = 16
-EPOCHS = 3
-LEARNING_RATE = 1e-05
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 train_set = torch.load("data/processed/train_set.pt")
@@ -35,6 +42,7 @@ val_loader = DataLoader(val_set, batch_size=VALID_BATCH_SIZE, shuffle=True, num_
 # Initializing the model, loss function, and optimizer
 model = BERTClass()
 model.to(device)
+wandb.watch(model, log_freq=100)
 
 loss_fn = torch.nn.BCEWithLogitsLoss()
 optimizer = torch.optim.Adam(params=model.parameters(), lr=LEARNING_RATE)
@@ -104,18 +112,12 @@ for epoch in range(EPOCHS):
     logger.info(f"Epoch {epoch}:")
     logger.info(f"  Training Loss = {average_loss}")
     logger.info(f"  Validation Loss = {average_val_loss}")
-    logger.info(f"  Accuracy Score = {accuracy}")
-    logger.info(f"  F1 Score (Micro) = {f1_score_micro}")
-    logger.info(f"  F1 Score (Macro) = {f1_score_macro}")
 
-# Plotting loss changes
-plt.figure(figsize=(10, 6))
-plt.plot(train_losses, label="Training Loss")
-plt.plot(val_losses, label="Validation Loss")
-plt.xlabel("Epoch")
-plt.ylabel("Loss")
-plt.legend()
-plt.show()
+    wandb.log({"Training Loss": average_loss})
+    wandb.log({"Validation Loss": average_val_loss})
+    wandb.log({"Accuracy Score": accuracy})
+    wandb.log({"F1 Score (Micro)": f1_score_micro})
+    wandb.log({"F1 Score (Macro)": f1_score_macro})
 
 # Save the model
 torch.save(model.state_dict(), "models/fine_tuned/bert_model.pth")
