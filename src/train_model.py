@@ -12,6 +12,12 @@ from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
+# Set a random seed for reproducibility
+random_seed = 42
+torch.manual_seed(random_seed)
+np.random.seed(random_seed)
+random.seed(random_seed)
+
 # Set hyperparameters
 TRAIN_BATCH_SIZE = 128
 VALID_BATCH_SIZE = 64
@@ -21,11 +27,6 @@ EPOCHS = 3
 config = {"train_batch_size": TRAIN_BATCH_SIZE, "valid_batch_size": VALID_BATCH_SIZE, "epochs": EPOCHS, "lr": LEARNING_RATE}
 wandb.init(project="dtu-mlops", config=config)
 
-# Set a random seed for reproducibility
-random_seed = 42
-torch.manual_seed(random_seed)
-np.random.seed(random_seed)
-random.seed(random_seed)
 
 # Constants and parameters
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
