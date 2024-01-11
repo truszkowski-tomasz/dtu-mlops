@@ -5,14 +5,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import torch
+import wandb
 from pytorch_lightning import Trainer
+from pytorch_lightning.loggers import WandbLogger
 from sklearn import metrics
 from torch.utils.data import DataLoader
-from utils.logger import get_logger
-
 from models.model import BERTLightning
-
-logger = get_logger(__name__)
 
 # Set a random seed for reproducibility
 random_seed = 42
@@ -27,6 +25,9 @@ EPOCHS = 3
 LEARNING_RATE = 1e-05
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+config = {"train_batch_size": TRAIN_BATCH_SIZE, "valid_batch_size": VALID_BATCH_SIZE, "epochs": EPOCHS, "lr": LEARNING_RATE}
+wandb.init(project="dtu-mlops", config=config)
+
 train_set = torch.load("data/processed/train_set.pt")
 val_set = torch.load("data/processed/val_set.pt")
 
@@ -38,10 +39,12 @@ val_loader = DataLoader(val_set, batch_size=VALID_BATCH_SIZE, shuffle=False, num
 model = BERTLightning()
 model.to(device)
 
-trainer = Trainer(max_epochs=EPOCHS, log_every_n_steps=1)
+wandb.watch(model, log_freq=100)
+logger = WandbLogger()
+
+trainer = Trainer(max_epochs=EPOCHS, log_every_n_steps=1, logger=logger)
 
 trainer.fit(model=model, train_dataloaders=train_loader, val_dataloaders=val_loader)
-
 
 
 # Plotting loss changes
