@@ -1,7 +1,5 @@
 import os
 import random
-
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import torch
@@ -18,6 +16,16 @@ torch.manual_seed(random_seed)
 np.random.seed(random_seed)
 random.seed(random_seed)
 
+# Set hyperparameters
+TRAIN_BATCH_SIZE = 128
+VALID_BATCH_SIZE = 64
+LEARNING_RATE = 1e-05
+EPOCHS = 3
+
+config = {"train_batch_size": TRAIN_BATCH_SIZE, "valid_batch_size": VALID_BATCH_SIZE, "epochs": EPOCHS, "lr": LEARNING_RATE}
+wandb.init(project="dtu-mlops", config=config)
+
+
 # Constants and parameters
 TRAIN_BATCH_SIZE = 32
 VALID_BATCH_SIZE = 16
@@ -28,6 +36,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 config = {"train_batch_size": TRAIN_BATCH_SIZE, "valid_batch_size": VALID_BATCH_SIZE, "epochs": EPOCHS, "lr": LEARNING_RATE}
 wandb.init(project="dtu-mlops", config=config)
 
+# Load datasets
 train_set = torch.load("data/processed/train_set.pt")
 val_set = torch.load("data/processed/val_set.pt")
 
@@ -36,8 +45,7 @@ train_loader = DataLoader(train_set, batch_size=TRAIN_BATCH_SIZE, shuffle=True, 
 val_loader = DataLoader(val_set, batch_size=VALID_BATCH_SIZE, shuffle=False, num_workers=7)
 
 # Initializing the model, loss function, and optimizer
-model = BERTLightning()
-model.to(device)
+model = BERTLightning().to(device)
 
 wandb.watch(model, log_freq=100)
 logger = WandbLogger()

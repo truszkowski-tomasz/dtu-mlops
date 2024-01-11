@@ -178,6 +178,7 @@ cython_debug/
 #.idea/
 
 # Data and models
+wandb
 data/
 models/
 !src/models
