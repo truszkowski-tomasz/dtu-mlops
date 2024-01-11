@@ -10,6 +10,7 @@ from torch import cuda
 from utils.logger import get_logger
 from tqdm import tqdm
 import wandb
+import os
 
 logger = get_logger(__name__)
 
@@ -120,4 +121,8 @@ for epoch in range(EPOCHS):
     wandb.log({"F1 Score (Macro)": f1_score_macro})
 
 # Save the model
-torch.save(model.state_dict(), "models/fine_tuned/bert_model.pth")
+model_path = "models/fine_tuned"
+# Check if the folder exists, and if not, create it
+if not os.path.exists(model_path):
+    os.makedirs(model_path)
+torch.save(model.state_dict(), os.path.join(model_path, "bert_model.pth"))
