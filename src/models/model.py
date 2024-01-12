@@ -33,7 +33,7 @@ class BERTLightning(LightningModule):
         outputs = self(ids, mask, token_type_ids).squeeze(1)
         loss = self.criterium(outputs, targets.squeeze(1))
 
-        self.log("train_loss", loss, on_step=True, on_epoch=True, prog_bar=True, logger=True)
+        self.log("train_loss", loss, on_step=False, on_epoch=True, prog_bar=True, logger=True)
 
         return loss
     
@@ -50,7 +50,10 @@ class BERTLightning(LightningModule):
         f1_score_micro = metrics.f1_score(targets.cpu(), torch.round(torch.sigmoid(outputs)).cpu(), average="micro")
         f1_score_macro = metrics.f1_score(targets.cpu(), torch.round(torch.sigmoid(outputs)).cpu(), average="macro")
 
-        self.log("val_loss", loss, on_step=True, on_epoch=True, prog_bar=True, logger=True)
+        self.log("val_loss", loss, on_step=False, on_epoch=True, prog_bar=True, logger=True)
+        self.log("val_accuracy", accuracy, on_step=False, on_epoch=True, prog_bar=True, logger=True)
+        self.log("val_f1_score_micro", f1_score_micro, on_step=False, on_epoch=True, prog_bar=True, logger=True)
+        self.log("val_f1_score_macro", f1_score_macro, on_step=False, on_epoch=True, prog_bar=True, logger=True)
 
         return {
             "loss": loss,
