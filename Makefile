@@ -1,4 +1,4 @@
-.PHONY: create_environment requirements dev_requirements clean data build_documentation serve_documentation
+.PHONY: create_environment requirements dev_requirements clean data train build_documentation serve_documentation
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -40,6 +40,10 @@ clean:
 data:
 	python $(PROJECT_NAME)/data/download_models.py
 	python $(PROJECT_NAME)/data/make_dataset.py
+
+## Train model
+train:
+	python $(PROJECT_NAME)/train_model.py
 
 #################################################################################
 # Documentation RULES                                                           #

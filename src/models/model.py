@@ -6,20 +6,23 @@ from pytorch_lightning import LightningModule
 from pytorch_lightning.utilities.types import OptimizerLRScheduler
 from sklearn import metrics
 from torch import nn
-
-LOCAL_MODEL_PATH = "models/bert-base-uncased"
-
+from omegaconf import DictConfig
 
 class BERTLightning(LightningModule):
-    def __init__(self):
+    def __init__(self, config: DictConfig):
         super().__init__()
-        self.l1 = transformers.BertModel.from_pretrained(LOCAL_MODEL_PATH)
+        self.l1 = transformers.BertModel.from_pretrained(config.model.file_path_input)
         self.l2 = torch.nn.Dropout(0.3)
         self.l3 = torch.nn.Linear(768, 1)
 
         self.criterium = torch.nn.BCEWithLogitsLoss()
 
-    def forward(self, ids, mask, token_type_ids):
+    def forward(
+            self,
+            ids: torch.Tensor,
+            mask: torch.Tensor,
+            token_type_ids: torch.Tensor
+        ) -> torch.Tensor:
         _, output_1 = self.l1(ids, attention_mask=mask, token_type_ids=token_type_ids, return_dict=False)
         output_2 = self.l2(output_1)
         output = self.l3(output_2)

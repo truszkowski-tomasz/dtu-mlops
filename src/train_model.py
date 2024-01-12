@@ -34,7 +34,7 @@ def train(config: DictConfig) -> None:
     val_loader = DataLoader(val_set, batch_size=config.train.batch_size_val, shuffle=False, num_workers=7)
 
     # Initializing the model, loss function, and optimizer
-    model = BERTLightning().to(device)
+    model = BERTLightning(config=config).to(device)
 
     wandb.watch(model, log_freq=100)
     logger = WandbLogger()
