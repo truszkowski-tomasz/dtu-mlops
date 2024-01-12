@@ -1,10 +1,11 @@
-import pandas as pd
-from torch.utils.data import Dataset, TensorDataset
-import torch
-from transformers import BertTokenizer
 import argparse
 import os
 import sys
+
+import pandas as pd
+import torch
+from torch.utils.data import Dataset, TensorDataset
+from transformers import BertTokenizer
 
 # For some reason, I cannot make the logger work without this workaround
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
