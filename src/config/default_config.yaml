@@ -1,0 +1,7 @@
+defaults:
+  - model: model_config
+  - train: train_config
+
+hydra:
+  job:
+    chdir: False
