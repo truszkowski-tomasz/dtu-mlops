@@ -1,0 +1,5 @@
+file_path: "data/raw/WELFake_Dataset.csv" # Path to the CSV file containing the data
+max_len: 200 # Maximum length for tokenization
+train_size: 0.8 # Fraction of data used for training
+subset: True
+subset_size: 50
