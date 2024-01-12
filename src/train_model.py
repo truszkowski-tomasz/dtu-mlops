@@ -12,6 +12,7 @@ from sklearn import metrics
 from torch.utils.data import DataLoader
 from models.model import BERTLightning
 
+@profile
 def main():
     # Set a random seed for reproducibility
     random_seed = 42
@@ -57,15 +58,4 @@ def main():
     torch.save(model.state_dict(), model_path+"/bert_model.pth")
 
 if __name__ == "__main__":
-    cProfile.run('main()', 'profiling_stats')
-
-    # Reading the profiling stats
-    p = pstats.Stats('profiling_stats')
-
-    # Printing top 10 lines sorted by cumulative time
-    print("Top functions by cumulative time:")
-    p.strip_dirs().sort_stats('cumulative').print_stats(10)
-
-    # Printing top 10 lines sorted by total time
-    print("\nTop functions by total time:")
-    p.strip_dirs().sort_stats('tottime').print_stats(10)
+    main()
