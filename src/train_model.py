@@ -5,7 +5,6 @@ import pandas as pd
 import torch
 import wandb
 from pytorch_lightning import Trainer
-from pytorch_lightning.loggers import WandbLogger
 from sklearn import metrics
 from torch.utils.data import DataLoader
 from models.model import BERTLightning
@@ -25,7 +24,6 @@ LEARNING_RATE = 1e-05
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 config = {"train_batch_size": TRAIN_BATCH_SIZE, "valid_batch_size": VALID_BATCH_SIZE, "epochs": EPOCHS, "lr": LEARNING_RATE}
-wandb.init(project="dtu-mlops", config=config)
 
 # Load datasets
 train_set = torch.load("data/processed/train_set.pt")
@@ -38,10 +36,8 @@ val_loader = DataLoader(val_set, batch_size=VALID_BATCH_SIZE, shuffle=False, num
 # Initializing the model, loss function, and optimizer
 model = BERTLightning().to(device)
 
-wandb.watch(model, log_freq=100)
-logger = WandbLogger()
 
-trainer = Trainer(max_epochs=EPOCHS, log_every_n_steps=1, logger=logger)
+trainer = Trainer(max_epochs=EPOCHS, log_every_n_steps=1)
 
 # Profiling
 with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_shapes=True) as prof:
@@ -51,6 +47,7 @@ with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_sh
 # Print profiler results
 print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))
 print(prof.key_averages(group_by_input_shape=True).table(sort_by="cpu_time_total", row_limit=30))
+prof.export_chrome_trace("trace.json")
 
 model_path = "models/fine_tuned"
 
@@ -60,4 +57,3 @@ if not os.path.exists(model_path):
 
 # Save the model
 torch.save(model.state_dict(), model_path+"/bert_model.pth")
-wandb.finish()
