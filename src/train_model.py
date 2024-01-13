@@ -10,7 +10,7 @@ from pytorch_lightning import Trainer
 from pytorch_lightning.loggers import WandbLogger
 from sklearn import metrics
 from torch.utils.data import DataLoader
-from models.model import BERTLightning
+from src.models.model import BERTLightning
 
 
 @hydra.main(config_path="config", config_name="default_config.yaml", version_base='1.1')
