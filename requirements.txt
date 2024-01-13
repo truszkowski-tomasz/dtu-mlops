@@ -4,6 +4,6 @@ omegaconf==2.3.0
 pandas==2.1.4
 pytorch_lightning==2.1.3
 scikit_learn==1.2.2
-torch==2.1.0+cpu
+torch==2.1.0
 transformers==4.32.1
 wandb==0.16.1

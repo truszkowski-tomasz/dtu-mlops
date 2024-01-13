@@ -178,11 +178,11 @@ cython_debug/
 #.idea/
 
 # Data and models
-wandb
+wandb/
 data/
 models/
-!src/models
-!src/data
+!src/models/
+!src/data/
 !src/config/
 
 # Hydra
