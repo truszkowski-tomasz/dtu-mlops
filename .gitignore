@@ -183,6 +183,7 @@ data/
 models/
 !src/models
 !src/data
+!src/config/data
 
 # Hydra
 outputs/
