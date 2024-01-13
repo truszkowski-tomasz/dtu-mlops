@@ -40,14 +40,10 @@ model = BERTLightning().to(device)
 trainer = Trainer(max_epochs=EPOCHS, log_every_n_steps=1)
 
 # Profiling
-with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_shapes=True) as prof:
-    with record_function("model_training"):
-        trainer.fit(model=model, train_dataloaders=train_loader, val_dataloaders=val_loader)
 
-# Print profiler results
-print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))
-print(prof.key_averages(group_by_input_shape=True).table(sort_by="cpu_time_total", row_limit=30))
-prof.export_chrome_trace("trace.json")
+trainer.fit(model=model, train_dataloaders=train_loader, val_dataloaders=val_loader)
+
+
 
 model_path = "models/fine_tuned"
 
