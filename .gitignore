@@ -183,11 +183,10 @@ data/
 models/
 !src/models
 !src/data
-!src/config/data
+!src/config/
 
 # Hydra
 outputs/
-/models
 
 # Lightning
 lightning_logs/
