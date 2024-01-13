@@ -10,7 +10,7 @@ from pytorch_lightning import Trainer
 from pytorch_lightning.loggers import WandbLogger
 from sklearn import metrics
 from torch.utils.data import DataLoader
-from models.model import BERTLightning
+from src.models.model import BERTLightning
 
 
 @hydra.main(config_path="config", config_name="default_config.yaml", version_base='1.1')
@@ -43,14 +43,13 @@ def train(config: DictConfig) -> None:
 
     trainer.fit(model=model, train_dataloaders=train_loader, val_dataloaders=val_loader)
 
-    model_path = "models/fine_tuned"
 
     # If the directory does not exist, create it
-    if not os.path.exists(model_path):
-        os.mkdir(model_path)
+    if not os.path.exists(config.fine_tuned_path):
+        os.mkdir(config.fine_tuned_path)
 
     # Save the model
-    torch.save(model.state_dict(), model_path+"/bert_model.pth")
+    torch.save(model.state_dict(), config.fine_tuned_path+"/bert_model.pth")
 
 if __name__ == "__main__":
     train()
