@@ -30,8 +30,8 @@ train_set = torch.load("data/processed/train_set.pt")
 val_set = torch.load("data/processed/val_set.pt")
 
 # Create DataLoader
-train_loader = DataLoader(train_set, batch_size=TRAIN_BATCH_SIZE, shuffle=True, num_workers=7)
-val_loader = DataLoader(val_set, batch_size=VALID_BATCH_SIZE, shuffle=False, num_workers=7)
+train_loader = DataLoader(train_set, batch_size=TRAIN_BATCH_SIZE, shuffle=True, num_workers=2)
+val_loader = DataLoader(val_set, batch_size=VALID_BATCH_SIZE, shuffle=False, num_workers=2)
 
 # Initializing the model, loss function, and optimizer
 model = BERTLightning().to(device)
