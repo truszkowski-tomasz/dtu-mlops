@@ -3,12 +3,12 @@ from unittest.mock import patch
 
 import pytest
 
-from src.data.download_models import download_and_save_model
+# from src.data.download_models import download_and_save_model
 
 
-@pytest.fixture
-def save_directory(tmpdir):
-    return str(tmpdir)
+# @pytest.fixture
+# def save_directory(tmpdir):
+#     return str(tmpdir)
 
 
 # Again, this test can be deleted once github actions work properly

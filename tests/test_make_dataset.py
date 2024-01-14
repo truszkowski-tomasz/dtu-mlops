@@ -1,26 +1,26 @@
 import pytest
 import torch
 
-from src.data.make_dataset import preprocess_data
+# from src.data.make_dataset import preprocess_data
 
 
-@pytest.fixture
-def sample_dataframe():
-    # Create a sample dataframe for testing
-    import pandas as pd
+# @pytest.fixture
+# def sample_dataframe():
+#     # Create a sample dataframe for testing
+#     import pandas as pd
 
-    df = pd.DataFrame(
-        {
-            "text": [
-                "This is a sample text",
-                "Another sample text",
-                "This is a sample text",
-                "Another sample text",
-            ],
-            "label": [0, 1, 0, 1],
-        }
-    )
-    return df
+#     df = pd.DataFrame(
+#         {
+#             "text": [
+#                 "This is a sample text",
+#                 "Another sample text",
+#                 "This is a sample text",
+#                 "Another sample text",
+#             ],
+#             "label": [0, 1, 0, 1],
+#         }
+#     )
+#     return df
 
 
 # This test is only meant to check if github actions works
