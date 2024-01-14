@@ -1,14 +1,12 @@
 import torch
-from src.models.model import BERTLightning
 from omegaconf import OmegaConf
+
+from src.models.model import BERTLightning
+
 
 def test_forward():
     # Create a sample configuration for the model with a Hugging Face model hub URL
-    model_config = OmegaConf.create({
-        "model": {
-            "file_path_input": "models/bert-base-uncased"
-        }
-    })
+    model_config = OmegaConf.create({"model": {"file_path_input": "models/bert-base-uncased"}})
 
     # Instantiate the BERTLightning model
     model = BERTLightning(config=model_config)
@@ -26,6 +24,6 @@ def test_forward():
 
     # Ensure the output tensor is on the same device as the input tensors
     assert output.device == ids.device
-    
+
     # assert output.device == token_type_ids.device
     assert output.device == mask.device

@@ -129,8 +129,8 @@ end of the project.
 >
 > Answer:
 
---- We have used the PyTorch framework in our project along with the PyTorch Lightning interface, which is built on top PyTorch framework. 
-In our project, we have used the many functionalities provided by the PyTroch framework such as the torch.utils.data package to process our dataset (in conjunction with Pandas), 
+--- We have used the PyTorch framework in our project along with the PyTorch Lightning interface, which is built on top PyTorch framework.
+In our project, we have used the many functionalities provided by the PyTroch framework such as the torch.utils.data package to process our dataset (in conjunction with Pandas),
 the Tensor functionality from the Torch library to process our data as tensors, the nn library from PyTorch to create and manipulate our model and its layers (along with the BERT transformer that we have utilized from Huggingface 🤗). In addition to this we have used numerous other functionalities from other packages such as Pytest to test our scripts, Hydra to keep track of hyperparameters, wandb to log our model's performance, to name a few. As mentioned, we have used PyTorch Lightning to reduce the amount of boiler plate code around our project as well.---
 
 ## Coding environment
@@ -152,9 +152,9 @@ the Tensor functionality from the Torch library to process our data as tensors, 
 
 --- Our project is overall very well structured. We have used the "Pipreqs" package to manage the dependencies of our project automatically, which are tracked in the requirements.txt file. Everytime we make a significant change in our project, such as adding functionality from a previously unused package, we update our requirements.txt file. For anyone to get a copy of our development environment, they could do the following.
 1. Create a new virtual environment (recommended but not necessary).
-2. pip install -r requirements.txt (to install all the dependencies of the project) 
+2. pip install -r requirements.txt (to install all the dependencies of the project)
 3. dvc pull (to download the dataset)
-4. wandb login 
+4. wandb login
 
 Note: This project (currently) uses Google Drive as the storage location for DVC and wandb for hyperparameter tracking. Therefore, anyone willing to work on this project must contact @Tomasz (for wandb) and @Laura to be added to the gdrive folder.      ---
 

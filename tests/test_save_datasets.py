@@ -1,8 +1,11 @@
-import pytest
 import os
+
+import pytest
 import torch
-from src.data.make_dataset import save_datasets
 from torch.utils.data import TensorDataset
+
+from src.data.make_dataset import save_datasets
+
 
 def test_save_datasets(tmpdir):
     # Create a temporary directory for testing
