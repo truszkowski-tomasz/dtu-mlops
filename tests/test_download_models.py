@@ -1,6 +1,8 @@
 import os
-import pytest
 from unittest.mock import patch
+
+import pytest
+
 from src.data.download_models import download_and_save_model
 
 
@@ -12,6 +14,7 @@ def save_directory(tmpdir):
 # Again, this test can be deleted once github actions work properly
 def test_actions_2():
     assert True
+
 
 # def test_download_and_save_model_existing_directory(save_directory, caplog):
 #     # Create a dummy file in the save directory to simulate an existing model

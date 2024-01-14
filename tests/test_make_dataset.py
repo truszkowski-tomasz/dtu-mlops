@@ -1,5 +1,6 @@
 import pytest
 import torch
+
 from src.data.make_dataset import preprocess_data
 
 
@@ -10,15 +11,22 @@ def sample_dataframe():
 
     df = pd.DataFrame(
         {
-            "text": ["This is a sample text", "Another sample text", "This is a sample text", "Another sample text"],
+            "text": [
+                "This is a sample text",
+                "Another sample text",
+                "This is a sample text",
+                "Another sample text",
+            ],
             "label": [0, 1, 0, 1],
         }
     )
     return df
 
+
 # This test is only meant to check if github actions works
 def test_actions():
     assert 1 == 1
+
 
 # def test_preprocess_data(sample_dataframe):
 #     train_size = 0.8
