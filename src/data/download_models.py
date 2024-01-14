@@ -1,4 +1,4 @@
-""" Download and save Hugging Face model locally. """
+"""Download and save Hugging Face model locally."""
 
 import argparse
 import os

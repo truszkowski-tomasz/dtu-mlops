@@ -25,4 +25,21 @@ dev = {file = ['requirements_dev.txt']}
 
 [tool.ruff]
 line-length = 120
-extend-select = ["I"]
+select = ["E", "W", "F", "I", "N", "S", "A", "B"]
+ignore = [
+    "F821",
+    "F841",
+    "D100",
+    "D107",
+    "D211",
+    "D212",
+    "S301",
+    "S311",
+    "S603",
+    "S605",
+    "S607",
+    "B008",
+    "B028",
+    "S101",
+    "B905", # `zip()` without an explicit `strict=` parameter
+]
