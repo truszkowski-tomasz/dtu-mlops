@@ -1,6 +1,8 @@
-# from src.models.model import BERTLightning
+# import torch
+# from omegaconf import OmegaConf
 
-
+# TODO - again, pipeline will not be able to use models/bert-base-uncased. We can make pipeline using
+# ready model stored in dvc.
 # def test_forward():
 #     # Create a sample configuration for the model with a Hugging Face model hub URL
 #     model_config = OmegaConf.create({"model": {"file_path_input": "models/bert-base-uncased"}})
