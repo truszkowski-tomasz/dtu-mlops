@@ -20,7 +20,8 @@ jobs:
         python-version: 3.8
     - name: Install Ruff
       run: |
-        curl -sL https://raw.githubusercontent.com/alexander-akhmetov/ruff/master/install.sh | bash
+        python -m pip install --upgrade pip
+        pip install ruff
     - name: Check code style
       run: |
         ruff check
