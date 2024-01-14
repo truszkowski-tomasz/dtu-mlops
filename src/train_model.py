@@ -1,21 +1,20 @@
 import os
 import random
-import numpy as np
-import pandas as pd
-import torch
-import wandb
+
 import hydra
+import numpy as np
+import torch
 from omegaconf import DictConfig
 from pytorch_lightning import Trainer
 from pytorch_lightning.loggers import WandbLogger
-from sklearn import metrics
 from torch.utils.data import DataLoader
+
+import wandb
 from src.models.model import BERTLightning
 
 
-@hydra.main(config_path="config", config_name="default_config.yaml", version_base='1.1')
+@hydra.main(config_path="config", config_name="default_config.yaml", version_base="1.1")
 def train(config: DictConfig) -> None:
-
     # Set a random seed for reproducibility
     torch.manual_seed(config.train.random_seed)
     np.random.seed(config.train.random_seed)
@@ -43,13 +42,13 @@ def train(config: DictConfig) -> None:
 
     trainer.fit(model=model, train_dataloaders=train_loader, val_dataloaders=val_loader)
 
-
     # If the directory does not exist, create it
     if not os.path.exists(config.fine_tuned_path):
         os.mkdir(config.fine_tuned_path)
 
     # Save the model
-    torch.save(model.state_dict(), config.fine_tuned_path+"/bert_model.pth")
+    torch.save(model.state_dict(), config.fine_tuned_path + "/bert_model.pth")
+
 
 if __name__ == "__main__":
     train()
