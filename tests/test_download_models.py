@@ -13,7 +13,7 @@ def test_download_and_save_model_existing_directory(save_directory, caplog):
     with open(os.path.join(save_directory, "dummy_model.bin"), "w") as f:
         f.write("dummy content")
 
-    # Call the function with an existing save directory
+    # TODO: We would like to use mock here!!!
     download_and_save_model("dummy_model", save_directory)
 
     # Check that the function logs a  and returns early
