@@ -6,7 +6,6 @@ from omegaconf import DictConfig
 from pytorch_lightning import LightningModule
 from pytorch_lightning.utilities.types import OptimizerLRScheduler
 from sklearn import metrics
-from torch import nn
 
 
 class BERTLightning(LightningModule):

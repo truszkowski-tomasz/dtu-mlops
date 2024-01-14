@@ -1,20 +1,11 @@
-import argparse
-import os
-import sys
-
 import hydra
 import pandas as pd
 import torch
 from omegaconf import DictConfig
-from torch.utils.data import Dataset, TensorDataset
+from torch.utils.data import TensorDataset
 from transformers import BertTokenizer
 
-# For some reason, I cannot make the logger work without this workaround
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
-src_path = os.path.join(project_root, "src")
-sys.path.append(src_path)
-
-from utils.logger import get_logger
+from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
 

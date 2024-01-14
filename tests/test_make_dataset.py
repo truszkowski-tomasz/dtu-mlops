@@ -1,6 +1,3 @@
-import pytest
-import torch
-
 # from src.data.make_dataset import preprocess_data
 
 

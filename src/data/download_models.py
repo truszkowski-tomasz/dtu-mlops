@@ -2,15 +2,10 @@
 
 import argparse
 import os
-import sys
 
 from transformers import AutoModel, AutoTokenizer
 
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
-src_path = os.path.join(project_root, "src")
-sys.path.append(src_path)
-
-from utils.logger import get_logger
+from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
 

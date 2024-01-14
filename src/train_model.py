@@ -3,12 +3,10 @@ import random
 
 import hydra
 import numpy as np
-import pandas as pd
 import torch
 from omegaconf import DictConfig
 from pytorch_lightning import Trainer
 from pytorch_lightning.loggers import WandbLogger
-from sklearn import metrics
 from torch.utils.data import DataLoader
 
 import wandb
