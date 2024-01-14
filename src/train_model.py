@@ -22,7 +22,7 @@ random.seed(random_seed)
 # Constants and parameters
 TRAIN_BATCH_SIZE = 32
 VALID_BATCH_SIZE = 16
-EPOCHS = 1
+EPOCHS = 6
 LEARNING_RATE = 1e-05
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 WEIGHT_DECAY = 1e-5  # L2 regularization factor
