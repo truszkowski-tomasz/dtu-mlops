@@ -184,6 +184,7 @@ models/
 !src/models/
 !src/data/
 !src/config/
+!src/config/data
 
 
 # Hydra
