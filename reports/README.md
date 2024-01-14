@@ -105,7 +105,7 @@ end of the project.
 >
 > Answer:
 
---- question 1 fill here ---
+--- Group Number 10 ---
 
 ### Question 2
 > **Enter the study number for each member in the group**
@@ -129,7 +129,9 @@ end of the project.
 >
 > Answer:
 
---- question 3 fill here ---
+--- We have used the PyTorch framework in our project along with the PyTorch Lightning interface, which is built on top PyTorch framework. 
+In our project, we have used the many functionalities provided by the PyTroch framework such as the torch.utils.data package to process our dataset (in conjunction with Pandas), 
+the Tensor functionality from the Torch library to process our data as tensors, the nn library from PyTorch to create and manipulate our model and its layers (along with the BERT transformer that we have utilized from Huggingface 🤗). In addition to this we have used numerous other functionalities from other packages such as Pytest to test our scripts, Hydra to keep track of hyperparameters, wandb to log our model's performance, to name a few. As mentioned, we have used PyTorch Lightning to reduce the amount of boiler plate code around our project as well.---
 
 ## Coding environment
 
@@ -148,7 +150,13 @@ end of the project.
 >
 > Answer:
 
---- question 4 fill here ---
+--- Our project is overall very well structured. We have used the "Pipreqs" package to manage the dependencies of our project automatically, which are tracked in the requirements.txt file. Everytime we make a significant change in our project, such as adding functionality from a previously unused package, we update our requirements.txt file. For anyone to get a copy of our development environment, they could do the following.
+1. Create a new virtual environment (recommended but not necessary).
+2. pip install -r requirements.txt (to install all the dependencies of the project) 
+3. dvc pull (to download the dataset)
+4. wandb login 
+
+Note: This project (currently) uses Google Drive as the storage location for DVC and wandb for hyperparameter tracking. Therefore, anyone willing to work on this project must contact @Tomasz (for wandb) and @Laura to be added to the gdrive folder.      ---
 
 ### Question 5
 
@@ -223,7 +231,7 @@ end of the project.
 >
 > Answer:
 
---- question 9 fill here ---
+--- Our process of contributing to the project was also well structured. All of the group members have utilized branches to make their contributions. The general branch labelling structure follows "group_member_name/contribution". To merge individual contributions into the main project, we have utilized Pull Requests (PR), and one or more group members must review the PR before it can be allowed to merge into the main branch (master in our project due to technical reasons).   ---
 
 ### Question 10
 
@@ -238,7 +246,7 @@ end of the project.
 >
 > Answer:
 
---- question 10 fill here ---
+--- We have used DVC to implement data version control in our project. The data for our project has been accquired from Kaggle and it is unlikely that there may be many changes to the data itself. However, it is a necessary part of our project pipeline, as it allows to make sure that once a project member has set up the project locally, they can get the exact same data as everyone else to train the model on.  ---
 
 ### Question 11
 
