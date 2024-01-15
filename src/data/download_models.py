@@ -1,16 +1,11 @@
-""" Download and save Hugging Face model locally. """
+"""Download and save Hugging Face model locally."""
 
 import argparse
 import os
-import sys
 
 from transformers import AutoModel, AutoTokenizer
 
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
-src_path = os.path.join(project_root, "src")
-sys.path.append(src_path)
-
-from utils.logger import get_logger
+from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
@@ -34,7 +29,10 @@ def download_and_save_model(model_name, save_directory):
 def main():
     parser = argparse.ArgumentParser(description="Download and save Hugging Face model locally.")
     parser.add_argument(
-        "--model_name", type=str, default="bert-base-uncased", help="Name of the Hugging Face model to download."
+        "--model_name",
+        type=str,
+        default="bert-base-uncased",
+        help="Name of the Hugging Face model to download.",
     )
 
     args = parser.parse_args()
