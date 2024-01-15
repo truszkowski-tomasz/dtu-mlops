@@ -12,6 +12,8 @@ from torch.utils.data import DataLoader
 import wandb
 from src.models.model import BERTLightning
 
+from torch.profiler import profile, ProfilerActivity
+
 
 @hydra.main(config_path="config", config_name="default_config.yaml", version_base="1.1")
 def train(config: DictConfig) -> None:
@@ -38,9 +40,14 @@ def train(config: DictConfig) -> None:
     wandb.watch(model, log_freq=100)
     logger = WandbLogger()
 
-    trainer = Trainer(max_epochs=config.train.epochs, log_every_n_steps=1, logger=logger)
+    with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_shapes=True) as prof:
+        trainer = Trainer(max_epochs=config.train.epochs, log_every_n_steps=1, logger=logger)
 
-    trainer.fit(model=model, train_dataloaders=train_loader, val_dataloaders=val_loader)
+        trainer.fit(model=model, train_dataloaders=train_loader, val_dataloaders=val_loader)
+
+    print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))
+    print(prof.key_averages(group_by_input_shape=True).table(sort_by="cpu_time_total", row_limit=30))
+    prof.export_chrome_trace("trace.json")
 
     # If the directory does not exist, create it
     if not os.path.exists(config.fine_tuned_path):
