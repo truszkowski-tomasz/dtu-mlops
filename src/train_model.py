@@ -29,8 +29,12 @@ def train(config: DictConfig) -> None:
     val_set = torch.load("data/processed/val_set.pt")
 
     # Create DataLoader
-    train_loader = DataLoader(train_set, batch_size=config.train.batch_size_train, shuffle=True, num_workers=7)
-    val_loader = DataLoader(val_set, batch_size=config.train.batch_size_val, shuffle=False, num_workers=7)
+    train_loader = DataLoader(
+        train_set, batch_size=config.train.batch_size_train, shuffle=True, num_workers=7
+    )
+    val_loader = DataLoader(
+        val_set, batch_size=config.train.batch_size_val, shuffle=False, num_workers=7
+    )
 
     # Initializing the model, loss function, and optimizer
     model = BERTLightning(config=config).to(device)
@@ -38,16 +42,20 @@ def train(config: DictConfig) -> None:
     wandb.watch(model, log_freq=100)
     logger = WandbLogger()
 
-    trainer = Trainer(max_epochs=config.train.epochs, log_every_n_steps=1, logger=logger)
+    trainer = Trainer(
+        max_epochs=config.train.epochs, log_every_n_steps=1, logger=logger
+    )
 
     trainer.fit(model=model, train_dataloaders=train_loader, val_dataloaders=val_loader)
 
+    fined_tune_path = config.model.fine_tuned_path
     # If the directory does not exist, create it
-    if not os.path.exists(config.fine_tuned_path):
-        os.mkdir(config.fine_tuned_path)
+    if not os.path.exists(fined_tune_path):
+        os.mkdir(fined_tune_path)
 
     # Save the model
-    torch.save(model.state_dict(), config.fine_tuned_path + "/bert_model.pth")
+    torch.save(model.state_dict(), fined_tune_path + "/bert_model.pth")
+    trainer.save_checkpoint(fined_tune_path + "/bert_model.ckpt")
 
 
 if __name__ == "__main__":
