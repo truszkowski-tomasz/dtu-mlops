@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Classification Result</title>
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Classification Result</h1>
+    <p>Input News: {{ input_news }}</p>
+
+    <p>Classification: {{ prediction }}</p>
+
+    <form action="/" method="get">
+        <button type="submit">Make another classification</button>
+    </form>
+</body>
+</html>
