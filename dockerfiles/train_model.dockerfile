@@ -13,5 +13,6 @@ COPY data/processed data/processed
 WORKDIR /
 RUN pip install -r requirements.txt --no-cache-dir
 RUN pip install . --no-deps --no-cache-dir
+RUN pip install -e .
 
 ENTRYPOINT ["python", "-u", "src/train_model.py"]
