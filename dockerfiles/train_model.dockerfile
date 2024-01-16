@@ -1,4 +1,5 @@
-# Base image
+# Run docker image with the following command:
+# docker run -e WANDB_API_KEY=<API_KEY> trainer:latest
 FROM python:3.11-slim
 
 RUN apt update && \
@@ -8,6 +9,10 @@ RUN apt update && \
 COPY requirements.txt requirements.txt
 COPY pyproject.toml pyproject.toml
 COPY src/ src/
+#TODO fetch data from bucket
+COPY models/ models/
+COPY data/ data/
+
 COPY data/processed data/processed
 
 WORKDIR /
