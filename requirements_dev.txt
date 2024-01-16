@@ -15,3 +15,7 @@ mkdocstrings[python]>=0.18
 
 # tracking training
 wandb>=0.16.2
+
+#memory
+dvc>=3.39.0
+dvc-gs>=3.0.1
