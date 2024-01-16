@@ -3,7 +3,7 @@ This project serves as a hand-in for the final exam for 02476 Machine Learning O
 1. Laura Paz
 2. Shah Bekhsh
 3. Tomasz Truszkowski
-4. Aiax
+4. Àiax Faura Vilalta
 5. Diana
 
 
