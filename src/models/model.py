@@ -77,7 +77,9 @@ class BERTLightning(LightningModule):
     def predict_step(self, batch, batch_idx, dataloader_idx=0):
         ids, mask, token_type_ids = batch
         outputs = self(ids, mask, token_type_ids).squeeze(1)
-        return outputs
+
+        binary_predictions = torch.round(torch.sigmoid(outputs))
+        return binary_predictions
 
     def configure_optimizers(self) -> OptimizerLRScheduler:
         optimizer = torch.optim.Adam(self.parameters(), lr=2e-5)

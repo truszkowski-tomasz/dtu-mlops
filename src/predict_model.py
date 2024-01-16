@@ -6,6 +6,7 @@ from data.make_dataset import tokenize_and_convert
 from models.model import BERTLightning
 from pytorch_lightning import Trainer
 from torch.utils.data import DataLoader
+from src.utils.logger import get_logger
 
 @hydra.main(config_path="config", config_name="default_config.yaml", version_base="1.1")
 def predict(config: DictConfig) -> None:
@@ -22,6 +23,8 @@ def predict(config: DictConfig) -> None:
     -------
         Tensor of shape [N, d] where N is the number of samples and d is the output dimension of the model
     """
+
+    logger = get_logger(__name__)
 
     # Load the model from the specific checkpoint
     model = BERTLightning.load_from_checkpoint(config.model.fine_tuned_path + "/bert_model.ckpt", config=config)
@@ -54,10 +57,9 @@ def predict(config: DictConfig) -> None:
     # Run prediction
     predictions = trainer.predict(model, dataloader)
 
+    logger.info(f"Predictions: {predictions}")
+
     return predictions
 
-
 if __name__ == "__main__":
-    print("Predicting...")
-
-    print(predict())
+    predictions = predict()
