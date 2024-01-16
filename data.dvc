@@ -1,6 +1,25 @@
 outs:
-- md5: c153bf79ba3ef57659dabcf02d780085.dir
-  size: 245570360
-  nfiles: 3
-  hash: md5
+- hash: md5
   path: data
+  files:
+  - relpath: processed/train_set.pt
+    md5: 856704ec61f6a4fdd306982826f9714c
+    size: 386336
+    cloud:
+      cloud_data_bucket:
+        etag: 08edcddcf7e2e183031001
+        version_id: '1705403452172013'
+  - relpath: processed/val_set.pt
+    md5: 1e9c392bf9c5d89fee42e6ff1d990888
+    size: 97872
+    cloud:
+      cloud_data_bucket:
+        etag: 08c2b1c4f7e2e183031001
+        version_id: '1705403451775170'
+  - relpath: raw/WELFake_Dataset.csv
+    md5: 73c9675a4b3d09f86a6933d0b8d7d908
+    size: 245086152
+    cloud:
+      cloud_data_bucket:
+        etag: 08f6c8b5f7e2e183031001
+        version_id: '1705403451532406'
