@@ -2,6 +2,7 @@ defaults:
   - data: data_config
   - model: model_config
   - train: train_config
+  - predict: predict_config
 
 hydra:
   job:

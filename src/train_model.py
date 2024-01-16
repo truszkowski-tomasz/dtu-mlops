@@ -10,7 +10,7 @@ from pytorch_lightning.loggers import WandbLogger
 from torch.utils.data import DataLoader
 
 import wandb
-from src.models.model import BERTLightning
+from models.model import BERTLightning
 
 
 @hydra.main(config_path="config", config_name="default_config.yaml", version_base="1.1")
