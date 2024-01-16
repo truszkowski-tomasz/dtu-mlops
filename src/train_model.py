@@ -12,8 +12,6 @@ from torch.utils.data import DataLoader
 import wandb
 from src.models.model import BERTLightning
 
-from torch.profiler import profile, tensorboard_trace_handler, ProfilerActivity
-
 
 @hydra.main(config_path="config", config_name="default_config.yaml", version_base="1.1")
 def train(config: DictConfig) -> None:
@@ -31,8 +29,12 @@ def train(config: DictConfig) -> None:
     val_set = torch.load("data/processed/val_set.pt")
 
     # Create DataLoader
-    train_loader = DataLoader(train_set, batch_size=config.train.batch_size_train, shuffle=True, num_workers=7)
-    val_loader = DataLoader(val_set, batch_size=config.train.batch_size_val, shuffle=False, num_workers=7)
+    train_loader = DataLoader(
+        train_set, batch_size=config.train.batch_size_train, shuffle=True, num_workers=7
+    )
+    val_loader = DataLoader(
+        val_set, batch_size=config.train.batch_size_val, shuffle=False, num_workers=7
+    )
 
     # Initializing the model, loss function, and optimizer
     model = BERTLightning(config=config).to(device)
@@ -40,21 +42,20 @@ def train(config: DictConfig) -> None:
     wandb.watch(model, log_freq=100)
     logger = WandbLogger()
 
-    with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_shapes=True, on_trace_ready=tensorboard_trace_handler("./profile_log/bert")) as prof:
-        trainer = Trainer(max_epochs=config.train.epochs, log_every_n_steps=1, logger=logger)
+    trainer = Trainer(
+        max_epochs=config.train.epochs, log_every_n_steps=1, logger=logger
+    )
 
-        trainer.fit(model=model, train_dataloaders=train_loader, val_dataloaders=val_loader)
+    trainer.fit(model=model, train_dataloaders=train_loader, val_dataloaders=val_loader)
 
-    print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))
-    print(prof.key_averages(group_by_input_shape=True).table(sort_by="cpu_time_total", row_limit=30))
-    # prof.export_chrome_trace("trace.json")
-
+    fined_tune_path = config.model.fine_tuned_path
     # If the directory does not exist, create it
-    if not os.path.exists(config.fine_tuned_path):
-        os.mkdir(config.fine_tuned_path)
+    if not os.path.exists(fined_tune_path):
+        os.mkdir(fined_tune_path)
 
     # Save the model
-    torch.save(model.state_dict(), config.fine_tuned_path + "/bert_model.pth")
+    torch.save(model.state_dict(), fined_tune_path + "/bert_model.pth")
+    trainer.save_checkpoint(fined_tune_path + "/bert_model.ckpt")
 
 
 if __name__ == "__main__":
