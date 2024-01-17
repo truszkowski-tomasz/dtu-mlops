@@ -1,19 +1,20 @@
-import torch
 import hydra
 import pandas as pd
 import numpy as np
 from omegaconf import DictConfig
-# from src.data.make_dataset import tokenize_and_convert
-# from src.models.model import BERTLightning
-# from src.utils.logger import get_logger
-from data.make_dataset import tokenize_and_convert
-from models.model import BERTLightning
-from utils.logger import get_logger
+from src.data.make_dataset import tokenize_and_convert
+from src.models.model import BERTLightning
+from src.utils.logger import get_logger
+
+# from data.make_dataset import tokenize_and_convert
+# from models.model import BERTLightning
+# from utils.logger import get_logger
 from pytorch_lightning import Trainer
 from torch.utils.data import DataLoader
 
+
 @hydra.main(config_path="config", config_name="default_config.yaml", version_base="1.1")
-def predict(cfg: DictConfig) -> np.ndarray:
+def classify(cfg: DictConfig) -> np.ndarray:
     """
     Run prediction for a given dataframe
 
@@ -31,18 +32,22 @@ def predict(cfg: DictConfig) -> np.ndarray:
     logger = get_logger(__name__)
 
     # Load the model from the specific checkpoint
-    model = BERTLightning.load_from_checkpoint(cfg.model.fine_tuned_path + "/bert_model.ckpt", config=cfg)
+    model = BERTLightning.load_from_checkpoint(
+        cfg.model.fine_tuned_path + "/bert_model.ckpt", config=cfg
+    )
 
     texts = cfg.predict.texts
 
     # Create a dataframe with the expected columns
-    df = pd.DataFrame({
-        # title should be a list of empty strings, as long as the number of texts
-        "title": [""] * len(texts),
-        "text": texts,
-    })
+    df = pd.DataFrame(
+        {
+            # title should be a list of empty strings, as long as the number of texts
+            "title": [""] * len(texts),
+            "text": texts,
+        }
+    )
 
-    # Preprocess the data 
+    # Preprocess the data
     tensorDataset = tokenize_and_convert(cfg.data.max_len, df)
 
     dataloader = DataLoader(tensorDataset, batch_size=1, num_workers=7)
@@ -59,5 +64,6 @@ def predict(cfg: DictConfig) -> np.ndarray:
 
     return predictions
 
+
 if __name__ == "__main__":
-    predict()
+    classify()
