@@ -56,6 +56,7 @@ def train(config: DictConfig) -> None:
     # Save the model
     torch.save(model.state_dict(), fined_tune_path + "/bert_model.pth")
     trainer.save_checkpoint(fined_tune_path + "/bert_model.ckpt")
+    wandb.finish()
 
 
 if __name__ == "__main__":
