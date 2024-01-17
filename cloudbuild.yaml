@@ -1,5 +1,5 @@
 steps:
-- name: 'gcr.io/cloud-builders/docker'
+- name: 'gcr.io/project-mlops/docker'
   args: ['build', '-t', 'gcr.io/sunlit-apricot-411406/trainer', '.']
-- name: 'gcr.io/cloud-builders/docker'
+- name: 'gcr.io/project-mlops/docker'
   args: ['push', 'gcr.io/sunlit-apricot-411406/trainer']
