@@ -1,6 +1,53 @@
 outs:
-- md5: 580c0ed8588fa99bda6192ad98064725.dir
-  size: 876947950
-  nfiles: 7
-  hash: md5
+- hash: md5
   path: models
+  files:
+  - relpath: bert-base-uncased/config.json
+    md5: 6cc3090e5ede1bea3dae17441a056d79
+    size: 658
+    cloud:
+      cloud_data_bucket:
+        etag: 0889f1c9f7e2e183031001
+        version_id: '1705403451865225'
+  - relpath: bert-base-uncased/pytorch_model.bin
+    md5: 35846debd6720c945bb5d32b2ee3d525
+    size: 437993382
+    cloud:
+      cloud_data_bucket:
+        etag: 08de91d18de4e183031001
+        version_id: '1705403766556894'
+  - relpath: bert-base-uncased/special_tokens_map.json
+    md5: 29ba428df177361130afa82cf0883098
+    size: 125
+    cloud:
+      cloud_data_bucket:
+        etag: 08e68acaf7e2e183031001
+        version_id: '1705403451868518'
+  - relpath: bert-base-uncased/tokenizer.json
+    md5: 653b717dc3bce8f7eaf587008bf1f150
+    size: 711396
+    cloud:
+      cloud_data_bucket:
+        etag: 08f3e9f8f7e2e183031001
+        version_id: '1705403452634355'
+  - relpath: bert-base-uncased/tokenizer_config.json
+    md5: f4ed2dd5c3e235557b89c4594bebab08
+    size: 314
+    cloud:
+      cloud_data_bucket:
+        etag: 08f5a6cbf7e2e183031001
+        version_id: '1705403451888501'
+  - relpath: bert-base-uncased/vocab.txt
+    md5: 64800d5d8528ce344256daf115d4965e
+    size: 231508
+    cloud:
+      cloud_data_bucket:
+        etag: 0885e1d3f7e2e183031001
+        version_id: '1705403452027013'
+  - relpath: fine_tuned/bert_model.pth
+    md5: 44ac191782fd56c4f1986b6efc79035e
+    size: 438010567
+    cloud:
+      cloud_data_bucket:
+        etag: 0896e3e68ce4e183031001
+        version_id: '1705403764814230'
