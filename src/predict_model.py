@@ -3,12 +3,16 @@ import hydra
 import pandas as pd
 import numpy as np
 from omegaconf import DictConfig
-from src.data.make_dataset import tokenize_and_convert
-from src.models.model import BERTLightning
+# from src.data.make_dataset import tokenize_and_convert
+# from src.models.model import BERTLightning
+# from src.utils.logger import get_logger
+from data.make_dataset import tokenize_and_convert
+from models.model import BERTLightning
+from utils.logger import get_logger
 from pytorch_lightning import Trainer
 from torch.utils.data import DataLoader
-from src.utils.logger import get_logger
 
+@hydra.main(config_path="config", config_name="default_config.yaml", version_base="1.1")
 def predict(cfg: DictConfig) -> np.ndarray:
     """
     Run prediction for a given dataframe
@@ -55,11 +59,5 @@ def predict(cfg: DictConfig) -> np.ndarray:
 
     return predictions
 
-@hydra.main(config_path="config", config_name="default_config.yaml", version_base="1.1")
-def main(cfg: DictConfig) -> None:
-
-    # Run prediction
-    predictions = predict(cfg)
-
 if __name__ == "__main__":
-    main()
+    predict()
