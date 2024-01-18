@@ -17,12 +17,11 @@ RUN pip install -r requirements.txt --no-cache-dir
 COPY src/ src/
 RUN pip install -e .
 
-#TODO fetch data from bucket
+COPY .dvc/ .dvc/
+RUN dvc pull
+
 COPY models/ models/
 COPY data/ data/
-COPY .dvc/ .dvc/
-
-RUN dvc pull
 
 RUN pip install . --no-deps --no-cache-dir
 

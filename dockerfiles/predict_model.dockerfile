@@ -19,11 +19,10 @@ WORKDIR /
 RUN pip install -r requirements.txt --no-cache-dir
 
 COPY src/ src/
-COPY models/ models/
 COPY .dvc/ .dvc/
 
 RUN dvc pull
-
+COPY models/ models/
 
 RUN pip install . --no-deps --no-cache-dir
 
