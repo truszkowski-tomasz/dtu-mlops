@@ -22,6 +22,7 @@ RUN pip install -e .
 #TODO fetch data from bucket
 COPY models/ models/
 COPY data/ data/
+COPY .dvc/ .dvc/
 
 RUN pip install . --no-deps --no-cache-dir
 

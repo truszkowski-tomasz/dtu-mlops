@@ -22,6 +22,7 @@ RUN dvc pull
 
 COPY src/ src/
 COPY models/ models/
+COPY .dvc/ .dvc/
 
 RUN pip install . --no-deps --no-cache-dir
 
