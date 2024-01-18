@@ -18,11 +18,12 @@ COPY models.dvc models.dvc
 WORKDIR /
 RUN pip install -r requirements.txt --no-cache-dir
 
-RUN dvc pull
-
 COPY src/ src/
 COPY models/ models/
 COPY .dvc/ .dvc/
+
+RUN dvc pull
+
 
 RUN pip install . --no-deps --no-cache-dir
 
