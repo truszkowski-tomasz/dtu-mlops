@@ -8,16 +8,29 @@ RUN apt update && \
 
 COPY requirements.txt requirements.txt
 COPY pyproject.toml pyproject.toml
-COPY src/ src/
-#TODO fetch data from bucket
-COPY models/ models/
-COPY data/ data/
-
-COPY data/processed data/processed
+COPY data.dvc data.dvc
+COPY models.dvc models.dvc
 
 WORKDIR /
 RUN pip install -r requirements.txt --no-cache-dir
-RUN pip install . --no-deps --no-cache-dir
+
+COPY src/ src/
 RUN pip install -e .
+
+# COPY .dvc/ .dvc/
+RUN dvc init --no-scm
+
+RUN dvc remote add -d myremote gs://mlops_project_data_bucket/
+RUN dvc config core.no_scm true
+
+RUN dvc pull --verbose
+
+# RUN pip install dvc "dvc[gs]"
+
+COPY models/ models/
+COPY data/ data/
+
+RUN pip install . --no-deps --no-cache-dir
+
 
 ENTRYPOINT ["python", "-u", "src/train_model.py"]
