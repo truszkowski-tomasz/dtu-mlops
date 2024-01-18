@@ -3,7 +3,7 @@ workerPoolSpecs:
       machineType: n1-highmem-8
     replicaCount: 1
     containerSpec:
-        imageUri: gcr.io/astute-anagram-410709/trainer-fake-news
+        imageUri: gcr.io/astute-anagram-410709/trainer-fake-news-save-model:latest
         env:
             - name: "WANDB_API_KEY"
               value: "<Your WANDB API Key>"
