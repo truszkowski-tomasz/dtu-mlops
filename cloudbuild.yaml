@@ -1,5 +1,9 @@
 steps:
-- name: 'gcr.io/project-mlops/docker'
-  args: ['build', '-t', 'gcr.io/sunlit-apricot-411406/trainer', '.']
-- name: 'gcr.io/project-mlops/docker'
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/sunlit-apricot-411406/trainer', '-f', 'dockerfiles/train_model.dockerfile', '.']
+- name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/sunlit-apricot-411406/trainer']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/sunlit-apricot-411406/predict', '-f', 'dockerfiles/predict_model.dockerfile', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/sunlit-apricot-411406/predict']
