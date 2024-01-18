@@ -1,8 +1,8 @@
 steps:
 - name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', '-r', 'gs://mlops_project_data_bucket/data', 'data']
-- name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', '-r', 'gs://mlops_project_data_bucket/models', 'models']
+  args: ['cp', '-r', 'gs://mlops_project_data_bucket', './']
+# - name: 'gcr.io/cloud-builders/gsutil'
+#   args: ['cp', '-r', 'gs://mlops_project_data_bucket/models', 'models/']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/sunlit-apricot-411406/trainer', '-f', 'dockerfiles/train_model.dockerfile', '.']
 - name: 'gcr.io/cloud-builders/docker'
