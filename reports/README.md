@@ -171,8 +171,6 @@ Note: This project (currently) uses Google Drive as the storage location for DVC
 > *experiments.*
 > Answer:
 
-Based on the screenshots of the repository you provided earlier, the project follows a structure influenced by a cookiecutter data science template, with some modifications tailored to our specific needs. We have filled out the src, models, docs, and reports directories, among others.
-
 The src directory contains the core code for the project, including scripts for data processing, model training, and predictions. The models directory holds the trained model files and serialized objects. Documentation relevant to the project is found within the docs directory, and the reports directory includes generated analysis and figures, often used for insights and presentations.
 
 Our repository also contains a notebooks directory, which we have retained for potential future use in exploratory data analysis or prototyping, though it is currently empty.
@@ -319,7 +317,7 @@ We do make use of caching to speed up the CI process, particularly for dependenc
 >
 > Answer:
 
---- To ensure reproducibility in our experiments, we employed a combination of config files, and environment management.. Whenever an experiment is run, we use hydra framework configuration files that specify all parameters. This setup allows for precise control over the experiment settings and easy adjustment without modifying the code. Each experiment's configuration is saved alongside its results, providing a clear record of the conditions under which it was run.
+--- To ensure reproducibility in our experiments, we employed a combination of config files, and environment management. Whenever an experiment is run, we use hydra framework configuration files that specify all parameters. This setup allows for precise control over the experiment settings and easy adjustment without modifying the code. Each experiment's configuration is saved alongside its results, providing a clear record of the conditions under which it was run.
 
 To reproduce an experiment, one would need to use the same configuration file and ensure that the environment (Python version, library versions, etc.) matches the original setup. We manage our environment using tools like pip and requirements.txt (or conda with an environment.yml file) to specify exact package versions. Additionally, we use Docker containers to encapsulate the entire runtime environment, ensuring that experiments can be run with the same setup anywhere.
 
@@ -495,7 +493,7 @@ Compute Engine: Employed for initial testing and running experiments on the clou
 >
 > Answer:
 
---- Àiax used $6.87, Tomasz used $0.01, Shah used ~$50 and in total $56.88 credits was spend during development. The highest costing services were the Compute Engine and Cloud Build, due to the high use of CPU and memory during training and for trying to debug issues with automatic image building on Cloud Build. ---
+--- Àiax used $6.87, Group member 2 used ..., in total ... credits was spend during development. The service costing the most was Compute Engine due to the high use of CPU and memory during training and because these more expensive than other services like storage or networking ---
 
 ## Overall discussion of project
 
