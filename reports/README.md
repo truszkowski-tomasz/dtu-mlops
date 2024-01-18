@@ -323,7 +323,7 @@ We do make use of caching to speed up the CI process, particularly for dependenc
 >
 > Answer:
 
---- To ensure reproducibility in our experiments, we employed a combination of config files and careful environment management. Whenever an experiment is run, we use YAML configuration files that specify all experiment parameters. This setup allows for precise control over the experiment settings and easy adjustment without modifying the code. Each experiment's configuration is saved alongside its results, providing a clear record of the conditions under which it was run.
+--- To ensure reproducibility in our experiments, we employed a combination of config files, and environment management.. Whenever an experiment is run, we use hydra framework configuration files that specify all parameters. This setup allows for precise control over the experiment settings and easy adjustment without modifying the code. Each experiment's configuration is saved alongside its results, providing a clear record of the conditions under which it was run.
 
 To reproduce an experiment, one would need to use the same configuration file and ensure that the environment (Python version, library versions, etc.) matches the original setup. We manage our environment using tools like pip and requirements.txt (or conda with an environment.yml file) to specify exact package versions. Additionally, we use Docker containers to encapsulate the entire runtime environment, ensuring that experiments can be run with the same setup anywhere.
 
