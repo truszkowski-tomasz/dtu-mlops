@@ -17,7 +17,8 @@ RUN pip install -r requirements.txt --no-cache-dir
 COPY src/ src/
 RUN pip install -e .
 
-COPY .dvc/ .dvc/
+# COPY .dvc/ .dvc/
+RUN dvc init --no-scm
 
 RUN dvc remote add -d myremote gs://mlops_project_data_bucket/
 RUN dvc config core.no_scm true
