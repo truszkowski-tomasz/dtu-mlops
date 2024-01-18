@@ -18,7 +18,7 @@ COPY src/ src/
 RUN pip install -e .
 
 COPY .dvc/ .dvc/
-RUN dvc pull
+RUN dvc pull --verbose
 
 COPY models/ models/
 COPY data/ data/
