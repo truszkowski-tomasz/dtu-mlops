@@ -220,12 +220,12 @@ In large projects, consistent code quality and format are vital as they lead to 
 >
 > Answer:
 
---- We have implemented 4 tests, and 2 of them are part of the automatic pipeline. We are testing the following: 
+--- We have implemented 4 tests, and 2 of them are part of the automatic pipeline. We are testing the following:
 
-1. Downloading dataset 
-2. Making dataset 
-3. Forward pass of model 
-4. Saving dataset. 
+1. Downloading dataset
+2. Making dataset
+3. Forward pass of model
+4. Saving dataset.
 
 We have focused on deploying docker images, data and running the training in the cloud, so test are not strong part of our project. Due to issues with with access to the model from the github actions workflow we have decided to comment out 2 of them - making the dataset (uses local tokenizer) and forward pass (using fine tuned model). ---
 
@@ -290,7 +290,7 @@ We have focused on deploying docker images, data and running the training in the
 >
 > Answer:
 
---- Our CI setup is configured within GitHub Actions workflows to ensure that every change to the codebase is automatically tested and validated. Github Actions consist of two workflows - first one executes all the unit tests using pytest framework to validate that all components of our application behave as expected. Second, using ruff, enforce coding standards and style consistency across the project.  
+--- Our CI setup is configured within GitHub Actions workflows to ensure that every change to the codebase is automatically tested and validated. Github Actions consist of two workflows - first one executes all the unit tests using pytest framework to validate that all components of our application behave as expected. Second, using ruff, enforce coding standards and style consistency across the project.
 
 Currently, our CI pipeline is set to run on the latest Ubuntu OS with Python 3.11. We have not configured the workflow to test across multiple operating systems or multiple versions of Python, but this can be a future enhancement to ensure broader compatibility.
 
@@ -349,7 +349,15 @@ This approach of using config files, precise dependency management, and containe
 >
 > Answer:
 
---- question 14 fill here ---
+We did a lot of experiments, but many of them were tracked only because wandb support has been implemented very early. Some of them were performed locally and therefore with a limited number of epochs and only small subset of data was used. In the images below, there can be seen - training progress for a large subset of the data and 150 epochs, progress for just a few dozen examples and 5 epochs, and the full set of metrics we tracked (Validation loss, Train loss, micro f1, macro f1, validation accuracy) respectively. The orange colour represents Validation loss and the blue colour represents Training loss.
+
+![Training in cloud for 150 epochs](figures/150 epochs.png)
+
+![Training locally for 5 epochs](figures/5 epochs.png)
+
+![Some of the measures we tracked](figures/measures.png)
+
+Training and validation loss represent how well our model is performing, respectively on the training data and validation data. Validation data is needed to make sure that we do not overfit model to the training dataset. This way we make sure model generalizes well to new, unseen data. Micro F1 combines precision and recall but it is useful especially for multiclass classification as it reflects model ability to classify instances across all the classes. Macro, on the other hand is more helpful to understand classification of each class individually. Validation accuracy gives general overview predictions on validation set. It's important as it helps to easily see and understand how model performs on unseen data.
 
 ### Question 15
 
@@ -402,7 +410,7 @@ Finally, as for memory usage, the sections that consume the most memory are the 
 >
 > Answer:
 
---- 
+---
 In our project, we made use of the following Google Cloud Platform (GCP) services, each playing a crucial role in our machine learning workflow:
 
 Cloud Storage (GCS): Hosted our data that was version-controlled with DVC, providing robust and scalable storage for datasets and model artifacts.
@@ -438,7 +446,7 @@ Compute Engine: Employed for initial testing and running experiments on the clou
 >
 > Answer:
 
---- 
+---
 ![Bucket-1](figures/bucket-1.png)
 ![Bucket-2](figures/bucket-2.png)
  ---
@@ -539,7 +547,7 @@ Optimizing our machine learning models for performance and cost was another sign
 
 Team coordination and maintaining a consistent development environment were universal challenges. Using Docker to containerize our environment ensured every team member worked with an identical setup, avoiding the "it works on my machine" syndrome.
 
-It's worth adding that we spent a lot of time struggling with DVC usage inside the cloud, leading to a workaround. Despite the struggles, the project was a valuable learning experience, enhancing our understanding of cloud services, DevOps skills, and the importance of monitoring and profiling in the machine learning lifecycle. 
+It's worth adding that we spent a lot of time struggling with DVC usage inside the cloud, leading to a workaround. Despite the struggles, the project was a valuable learning experience, enhancing our understanding of cloud services, DevOps skills, and the importance of monitoring and profiling in the machine learning lifecycle.
 ### Question 27
 
 > **State the individual contributions of each team member. This is required information from DTU, because we need to**
