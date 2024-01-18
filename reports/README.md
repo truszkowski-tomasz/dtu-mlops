@@ -428,7 +428,10 @@ Compute Engine: Employed for initial testing and running experiments on the clou
 >
 > Answer:
 
---- question 19 fill here ---
+--- 
+![Bucket-1](figures/bucket-1.png)
+![Bucket-2](figures/bucket-2.png)
+ ---
 
 ### Question 20
 
@@ -491,7 +494,7 @@ Compute Engine: Employed for initial testing and running experiments on the clou
 >
 > Answer:
 
---- question 24 fill here ---
+--- Àiax used $6.87, Group member 2 used ..., in total ... credits was spend during development. The service costing the most was Compute Engine due to the high use of CPU and memory during training and because these more expensive than other services like storage or networking ---
 
 ## Overall discussion of project
 
