@@ -1,8 +1,10 @@
 steps:
 - name: 'bash'
   script: 'ls -la'
+- name: 'bash'
+  script: 'mkdir data'
 - name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', '-r', 'gs://mlops_project_data_bucket', './data']
+  args: ['cp', '-r', 'gs://mlops_project_data_bucket', 'data']
 - name: 'bash'
   script: 'mkdir models'
 - name: 'bash'
