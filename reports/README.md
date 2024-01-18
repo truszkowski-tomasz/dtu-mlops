@@ -408,8 +408,6 @@ Container Registry: Stored the container images created by Cloud Build, serving 
 
 Vertex AI: Utilized for submitting custom training jobs using the container images from Container Registry, which allowed us to train our models on scalable infrastructure.
 
-BigQuery: Used to store inputs and outputs of our deployed models, enabling us to analyze model performance and detect data drift over time.
-
 Compute Engine: Employed for initial testing and running experiments on the cloud before scaling up , providing customizable and on-demand virtual  ---
 
 ### Question 18
