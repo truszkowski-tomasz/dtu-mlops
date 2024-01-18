@@ -8,8 +8,6 @@ RUN apt update && \
 
 COPY requirements.txt requirements.txt
 COPY pyproject.toml pyproject.toml
-COPY data.dvc data.dvc
-COPY models.dvc models.dvc
 
 WORKDIR /
 COPY src/ src/
