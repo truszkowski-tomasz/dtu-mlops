@@ -5,7 +5,7 @@ steps:
   script: 'mkdir data; mkdir models'
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp', '-r', 'gs://mlops_project_data_bucket/data', 'data']
-  - name: 'gcr.io/cloud-builders/gsutil'
+- name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp', '-r', 'gs://mlops_project_data_bucket/models', 'models']
 # - name: 'bash'
 #   script: 'mkdir models'
