@@ -351,9 +351,9 @@ This approach of using config files, precise dependency management, and containe
 
 We did a lot of experiments, but many of them were tracked only because wandb support has been implemented very early. Some of them were performed locally and therefore with a limited number of epochs and only small subset of data was used. In the images below, there can be seen - training progress for a large subset of the data and 150 epochs, progress for just a few dozen examples and 5 epochs, and the full set of metrics we tracked (Validation loss, Train loss, micro f1, macro f1, validation accuracy) respectively. The orange colour represents Validation loss and the blue colour represents Training loss.
 
-![Training in cloud for 150 epochs](figures/150 epochs.png)
+![Training in cloud for 150 epochs](figures/150_epochs.png)
 
-![Training locally for 5 epochs](figures/5 epochs.png)
+![Training locally for 5 epochs](figures/5_epochs.png)
 
 ![Some of the measures we tracked](figures/measures.png)
 
