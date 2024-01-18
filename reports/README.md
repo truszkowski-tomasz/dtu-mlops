@@ -112,11 +112,11 @@ end of the project.
 >
 > Example:
 >
-> *sXXXXXX, sXXXXXX, sXXXXXX*
+>
 >
 > Answer:
+> s222937, s194768, s223219, s232858, s222703
 
---- question 2 fill here ---
 
 ### Question 3
 > **What framework did you choose to work with and did it help you complete the project?**
@@ -171,7 +171,17 @@ Note: This project (currently) uses Google Drive as the storage location for DVC
 > *experiments.*
 > Answer:
 
---- question 5 fill here ---
+Based on the screenshots of the repository you provided earlier, the project follows a structure influenced by a cookiecutter data science template, with some modifications tailored to our specific needs. We have filled out the src, models, docs, and reports directories, among others.
+
+The src directory contains the core code for the project, including scripts for data processing, model training, and predictions. The models directory holds the trained model files and serialized objects. Documentation relevant to the project is found within the docs directory, and the reports directory includes generated analysis and figures, often used for insights and presentations.
+
+Our repository also contains a notebooks directory, which we have retained for potential future use in exploratory data analysis or prototyping, though it is currently empty.
+
+Additional configurations and workflows are managed through files like pyproject.toml, requirements.txt, and .github/workflows, which define project dependencies and CI/CD processes, respectively.
+
+To manage our experiments and ensure reproducibility, we used Docker, as indicated by the dockerfiles directory containing Dockerfiles for different purposes. The Makefile present in the root assists in automating routine tasks such as setting up the environment, training models, and cleaning build artifacts.
+
+This setup is designed to be flexible and efficient for our machine learning operations, facilitating easy replication and scaling while maintaining a clear and organized codebase.
 
 ### Question 6
 
@@ -182,7 +192,16 @@ Note: This project (currently) uses Google Drive as the storage location for DVC
 >
 > Answer:
 
---- question 6 fill here ---
+---  We implemented rules for code quality and formatting through pre-commit configuration. We are using standard pre-commit hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-docstring-first
+      - id: check-executables-have-shebangs
+      - id: check-case-conflict
+      - id: detect-private-key
+
+Also, in order to follow `pip-8` standard, we are also using ruff hooks for linting and code formating.
+In large projects, consistent code quality and format are vital as they lead to a more maintainable and understandable codebase, reduce the risk of introducing errors, and make collaboration easier. Uniform code standards help ensure that any developer can quickly read and contribute to the code, regardless of the project's scale.---
 
 ## Version control
 
@@ -262,7 +281,11 @@ Note: This project (currently) uses Google Drive as the storage location for DVC
 >
 > Answer:
 
---- question 11 fill here ---
+--- Our continuous integration (CI) setup is configured within GitHub Actions workflows to ensure that every change to the codebase is automatically tested and validated. Github Actions consist of two workflows - first one executes all the unittests using pytest framework to validate that all components of our application behave as expected. Second, using ruff, enforce coding standards and style consistency across the project.  
+
+Currently, our CI pipeline is set to run on the latest Ubuntu OS with Python 3.11. We have not configured the workflow to test across multiple operating systems or multiple versions of Python, but this can be a future enhancement to ensure broader compatibility.
+
+We do make use of caching to speed up the CI process, particularly for dependencies. Caching saves time on subsequent runs by reusing the previously saved cache, which avoids redundant steps like re-downloading and reinstalling packages. The link to the workflow: ---
 
 ## Running code and tracking experiments
 
@@ -296,7 +319,11 @@ Note: This project (currently) uses Google Drive as the storage location for DVC
 >
 > Answer:
 
---- question 13 fill here ---
+--- To ensure reproducibility in our experiments, we employed a combination of config files, and environment management.. Whenever an experiment is run, we use hydra framework configuration files that specify all parameters. This setup allows for precise control over the experiment settings and easy adjustment without modifying the code. Each experiment's configuration is saved alongside its results, providing a clear record of the conditions under which it was run.
+
+To reproduce an experiment, one would need to use the same configuration file and ensure that the environment (Python version, library versions, etc.) matches the original setup. We manage our environment using tools like pip and requirements.txt (or conda with an environment.yml file) to specify exact package versions. Additionally, we use Docker containers to encapsulate the entire runtime environment, ensuring that experiments can be run with the same setup anywhere.
+
+This approach of using config files, precise dependency management, and containerization helps to eliminate variations in the experimental setup, thereby ensuring that our experiments are reproducible by anyone with access to the configuration and environment details. ---
 
 ### Question 14
 
@@ -328,7 +355,7 @@ Note: This project (currently) uses Google Drive as the storage location for DVC
 >
 > Answer:
 
---- question 15 fill here ---
+--- We utilized Docker images to streamline and standardize our training process, particularly for running jobs on the cloud. Our workflow included an automated setup with Google Cloud Platform (GCP), where a new Docker image for training was automatically built and pushed to our container registry upon each commit to the main branch of our repository. This automation was achieved using a trigger on GCP. ---
 
 ### Question 16
 
@@ -366,7 +393,18 @@ Finally, as for memory usage, the sections that consume the most memory are the 
 >
 > Answer:
 
---- question 17 fill here ---
+--- 
+In our project, we made use of the following Google Cloud Platform (GCP) services, each playing a crucial role in our machine learning workflow:
+
+Cloud Storage (GCS): Hosted our data that was version-controlled with DVC, providing robust and scalable storage for datasets and model artifacts.
+
+Cloud Build: Configured to automatically build a new container image for training whenever code was pushed to the main branch of our repository, ensuring that our training environment was always up-to-date.
+
+Container Registry: Stored the container images created by Cloud Build, serving as a private repository for our Docker images.
+
+Vertex AI: Utilized for submitting custom training jobs using the container images from Container Registry, which allowed us to train our models on scalable infrastructure.
+
+Compute Engine: Employed for initial testing and running experiments on the cloud before scaling up , providing customizable and on-demand virtual  ---
 
 ### Question 18
 
@@ -381,7 +419,8 @@ Finally, as for memory usage, the sections that consume the most memory are the 
 >
 > Answer:
 
---- question 18 fill here ---
+--- While we had the capability to train our model locally using our CPUs, the necessity for scaling to more intensive compute resources was not immediate. Consequently, we didn't fully explore the potential of Compute Engine for training purposes. For model deployment, hosting our FastAPI server on a Compute Engine VM was a possibility. Yet, we recognized that this option might incur higher costs and offer less scalability compared to serverless alternatives like Cloud Run, which would be our preferred choice for such needs. Cloud Run provides a managed environment that automatically scales based on traffic, making it a more cost-effective and flexible solution for deploying containerized applications like ours.
+ ---
 
 ### Question 19
 
@@ -390,7 +429,10 @@ Finally, as for memory usage, the sections that consume the most memory are the 
 >
 > Answer:
 
---- question 19 fill here ---
+--- 
+![Bucket-1](figures/bucket-1.png)
+![Bucket-2](figures/bucket-2.png)
+ ---
 
 ### Question 20
 
@@ -453,7 +495,7 @@ Finally, as for memory usage, the sections that consume the most memory are the 
 >
 > Answer:
 
---- question 24 fill here ---
+--- Àiax used $6.87, Tomasz used $0.01, Shah used ~$50 and in total $56.88 credits was spend during development. The highest costing services were the Compute Engine and Cloud Build, due to the high use of CPU and memory during training and for trying to debug issues with automatic image building on Cloud Build. ---
 
 ## Overall discussion of project
 
@@ -478,18 +520,17 @@ Finally, as for memory usage, the sections that consume the most memory are the 
 
 ### Question 26
 
-> **Discuss the overall struggles of the project. Where did you spend most time and what did you do to overcome these**
-> **challenges?**
->
-> Answer length: 200-400 words.
->
-> Example:
-> *The biggest challenges in the project was using ... tool to do ... . The reason for this was ...*
->
-> Answer:
+> One of the major struggles in our project was the integration and orchestration of various cloud services and tools to establish a smooth workflow. We dedicated a substantial amount of time to setting up and configuring our CI/CD pipeline, ensuring our machine learning models were automatically trained and evaluated upon each code push.
 
---- question 26 fill here ---
+This was challenging due to the distinct configurations and nuances of each tool, requiring a deep understanding of their APIs and operational models. Additionally, managing data across services with DVC while ensuring data privacy and security added complexity.
 
+We heavily relied on documentation, community forums, and support channels to overcome these challenges. Implementing Infrastructure as Code (IaC) practices enabled us to manage cloud resources programmatically, leading to reproducible setups and simplifying change tracking and rollbacks.
+
+Optimizing our machine learning models for performance and cost was another significant hurdle. Cloud training can be expensive, and our models' early iterations were not efficient. Profiling models, identifying bottlenecks, and refining architectures improved performance and reduced resource utilization.
+
+Team coordination and maintaining a consistent development environment were universal challenges. Using Docker to containerize our environment ensured every team member worked with an identical setup, avoiding the "it works on my machine" syndrome.
+
+It's worth adding that we spent a lot of time struggling with DVC usage inside the cloud, leading to a workaround. Despite the struggles, the project was a valuable learning experience, enhancing our understanding of cloud services, DevOps skills, and the importance of monitoring and profiling in the machine learning lifecycle. 
 ### Question 27
 
 > **State the individual contributions of each team member. This is required information from DTU, because we need to**
