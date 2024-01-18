@@ -1,5 +1,5 @@
 batch_size_train: 64
 batch_size_val: 32
-epochs: 1
+epochs: 20
 lr: 1e-05
 random_seed: 42
