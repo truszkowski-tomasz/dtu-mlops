@@ -22,6 +22,8 @@ COPY src/ src/
 COPY .dvc/ .dvc/
 
 RUN dvc remote add -d myremote gs://mlops_project_data_bucket/
+RUN dvc config core.no_scm true
+
 RUN dvc pull --verbose
 
 COPY models/ models/

@@ -20,6 +20,8 @@ RUN pip install -e .
 COPY .dvc/ .dvc/
 
 RUN dvc remote add -d myremote gs://mlops_project_data_bucket/
+RUN dvc config core.no_scm true
+
 RUN dvc pull --verbose
 
 # RUN pip install dvc "dvc[gs]"
