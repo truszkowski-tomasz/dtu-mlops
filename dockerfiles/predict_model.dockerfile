@@ -13,6 +13,7 @@ RUN apt update && \
 COPY requirements.txt requirements.txt
 COPY pyproject.toml pyproject.toml
 COPY src/ src/
+COPY models/ models/
 
 
 WORKDIR /

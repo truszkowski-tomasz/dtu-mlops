@@ -28,46 +28,36 @@ def preprocess_data(df, train_size, max_len):
     logger.info("TRAIN Dataset: {}".format(train_dataset.shape))
     logger.info("VAL Dataset: {}".format(val_dataset.shape))
 
-    # Tokenize and convert to TensorDataset
-    tokenizer = BertTokenizer.from_pretrained("models/bert-base-uncased")
-    train_data = [
-        tokenizer.encode_plus(
-            text,
-            max_length=max_len,
-            padding="max_length",
-            return_tensors="pt",
-            truncation=True,
-        )
-        for text in train_dataset["text"]
-    ]
-    train_input_ids = torch.cat([data["input_ids"] for data in train_data], dim=0)
-    train_attention_mask = torch.cat([data["attention_mask"] for data in train_data], dim=0)
-    train_token_type_ids = torch.cat([data["token_type_ids"] for data in train_data], dim=0)
+    train_set = tokenize_and_convert(max_len, train_dataset)
 
-    train_labels = torch.tensor(train_dataset["labels"].values, dtype=torch.float).unsqueeze(1)
-
-    train_set = TensorDataset(train_input_ids, train_attention_mask, train_token_type_ids, train_labels)
-
-    val_data = [
-        tokenizer.encode_plus(
-            text,
-            max_length=max_len,
-            padding="max_length",
-            return_tensors="pt",
-            truncation=True,
-        )
-        for text in val_dataset["text"]
-    ]
-    val_input_ids = torch.cat([data["input_ids"] for data in val_data], dim=0)
-    val_attention_mask = torch.cat([data["attention_mask"] for data in val_data], dim=0)
-    val_token_type_ids = torch.cat([data["token_type_ids"] for data in val_data], dim=0)
-
-    val_labels = torch.tensor(val_dataset["labels"].values, dtype=torch.float).unsqueeze(1)
-
-    val_set = TensorDataset(val_input_ids, val_attention_mask, val_token_type_ids, val_labels)
+    val_set = tokenize_and_convert(max_len, val_dataset)
 
     return train_set, val_set
 
+def tokenize_and_convert(max_len, dataset):
+    # Tokenize and convert to TensorDataset
+    tokenizer = BertTokenizer.from_pretrained("models/bert-base-uncased")
+
+    tokenized_data = [
+        tokenizer.encode_plus(
+            text,
+            max_length=max_len,
+            padding="max_length",
+            return_tensors="pt",
+            truncation=True,
+        )
+        for text in dataset["text"]
+    ]
+
+    input_ids = torch.cat([data["input_ids"] for data in tokenized_data], dim=0)
+    attention_mask = torch.cat([data["attention_mask"] for data in tokenized_data], dim=0)
+    token_type_ids = torch.cat([data["token_type_ids"] for data in tokenized_data], dim=0)
+
+    if "labels" in dataset.columns:
+        labels = torch.tensor(dataset["labels"].values, dtype=torch.float).unsqueeze(1)
+        return TensorDataset(input_ids, attention_mask, token_type_ids, labels)
+    else:
+        return TensorDataset(input_ids, attention_mask, token_type_ids)
 
 def save_datasets(train_set, val_set, save_path="data/processed/"):
     torch.save(train_set, f"{save_path}train_set.pt")
