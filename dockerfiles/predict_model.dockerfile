@@ -12,12 +12,16 @@ RUN apt update && \
 
 COPY requirements.txt requirements.txt
 COPY pyproject.toml pyproject.toml
-COPY src/ src/
-COPY models/ models/
-
+COPY data.dvc data.dvc
 
 WORKDIR /
 RUN pip install -r requirements.txt --no-cache-dir
+
+RUN dvc pull
+
+COPY src/ src/
+COPY models/ models/
+
 RUN pip install . --no-deps --no-cache-dir
 
 CMD ["uvicorn", "src.app.main:app", "--host", "0.0.0.0", "--port", "80"]
