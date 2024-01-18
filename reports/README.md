@@ -501,7 +501,7 @@ Compute Engine: Employed for initial testing and running experiments on the clou
 >
 > Answer:
 
---- Àiax used $6.87, Group member 2 used ..., in total ... credits was spend during development. The service costing the most was Compute Engine due to the high use of CPU and memory during training and because these more expensive than other services like storage or networking ---
+--- Àiax used $6.87, Tomasz used $0.01, Shah used ~$50 and in total $56.88 credits was spend during development. The highest costing services were the Compute Engine and Cloud Build, due to the high use of CPU and memory during training and for trying to debug issues with automatic image building on Cloud Build. ---
 
 ## Overall discussion of project
 
