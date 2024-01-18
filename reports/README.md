@@ -156,7 +156,7 @@ the Tensor functionality from the Torch library to process our data as tensors, 
 3. dvc pull (to download the dataset)
 4. wandb login
 
-Note: This project (currently) uses Google Drive as the storage location for DVC and wandb for hyperparameter tracking. Therefore, anyone willing to work on this project must contact @Tomasz (for wandb) and @Laura to be added to the gdrive folder.      ---
+Note: This project (currently) uses Google Drive as the storage location for DVC and wandb for hyperparameter tracking. Therefore, anyone willing to work on this project must contact @Tomasz (for wandb) and @Laura to be added to the gdrive folder. ---
 
 ### Question 5
 
@@ -171,7 +171,7 @@ Note: This project (currently) uses Google Drive as the storage location for DVC
 > *experiments.*
 > Answer:
 
-Based on the screenshots of the repository you provided earlier, the project follows a structure influenced by a cookiecutter data science template, with some modifications tailored to our specific needs. We have filled out the src, models, docs, and reports directories, among others.
+The cookiecutter template has been extremely useful in our project. It gave us the freedom to focus on actual implementations of code, configurations and dependency management for the project. In our project, "src" is the main directory of our project. It contains code that forms the backbone of our model such as scripts for data processing, model training and predictions. The "models" directory contains the trained models   Based on the screenshots of the repository you provided earlier, the project follows a structure influenced by a cookiecutter machine learning template, with some modifications tailored to our specific needs. We have filled out the src, models, docs, and reports directories, among others.
 
 The src directory contains the core code for the project, including scripts for data processing, model training, and predictions. The models directory holds the trained model files and serialized objects. Documentation relevant to the project is found within the docs directory, and the reports directory includes generated analysis and figures, often used for insights and presentations.
 
@@ -220,7 +220,14 @@ In large projects, consistent code quality and format are vital as they lead to 
 >
 > Answer:
 
---- question 7 fill here ---
+--- We have implemented 4 tests, and 2 of them are part of the automatic pipeline. We are testing the following: 
+
+1. Downloading dataset 
+2. Making dataset 
+3. Forward pass of model 
+4. Saving dataset. 
+
+We have focused on deploying docker images, data and running the training in the cloud, so test are not strong part of our project. Due to issues with with access to the model from the github actions workflow we have decided to comment out 2 of them - making the dataset (uses local tokenizer) and forward pass (using fine tuned model). ---
 
 ### Question 8
 
@@ -235,7 +242,9 @@ In large projects, consistent code quality and format are vital as they lead to 
 >
 > Answer:
 
---- question 8 fill here ---
+--- Taking into consideration all the tests we have 60% of coverage. Two of the tests that are being commented out (what is described in question 7), do not cover everything they should. In order to achive higher coverage appropriate would be to mock those test to not relay on either locally stored or remotly stored data and models. Code fully covers downloading of dataset, models and saving the dataset in the form of TensorDataset objects.
+
+![Test coverage:](figures/coverage.png) ---
 
 ### Question 9
 
@@ -281,7 +290,7 @@ In large projects, consistent code quality and format are vital as they lead to 
 >
 > Answer:
 
---- Our continuous integration (CI) setup is configured within GitHub Actions workflows to ensure that every change to the codebase is automatically tested and validated. Github Actions consist of two workflows - first one executes all the unittests using pytest framework to validate that all components of our application behave as expected. Second, using ruff, enforce coding standards and style consistency across the project.  
+--- Our CI setup is configured within GitHub Actions workflows to ensure that every change to the codebase is automatically tested and validated. Github Actions consist of two workflows - first one executes all the unit tests using pytest framework to validate that all components of our application behave as expected. Second, using ruff, enforce coding standards and style consistency across the project.  
 
 Currently, our CI pipeline is set to run on the latest Ubuntu OS with Python 3.11. We have not configured the workflow to test across multiple operating systems or multiple versions of Python, but this can be a future enhancement to ensure broader compatibility.
 
@@ -441,7 +450,7 @@ Compute Engine: Employed for initial testing and running experiments on the clou
 >
 > Answer:
 
---- question 20 fill here ---
+---  ---
 
 ### Question 21
 
@@ -481,7 +490,7 @@ Compute Engine: Employed for initial testing and running experiments on the clou
 >
 > Answer:
 
---- question 23 fill here ---
+--- We have been unable to implement monitoring in our project but we appreciate its importance. It is no secret that machine learning models degrade over time and it is crucial for value generation that the performance of the model is kept under close observation. This allows us to view information that could lead us to improving the model itself, debugging it in case it fails or simply log its performance. Issues, such as data drifting, can arise on a previously "good" working model if it is asked to make predictions about data which is outside the scope of data on which it was trained. Logs, metrics and event triggers such as alert systems are all part of monitoring apparatus that can be used to check a model's performance. ---
 
 ### Question 24
 
