@@ -196,7 +196,16 @@ Additionally, the root of the repository includes several configuration files an
 >
 > Answer:
 
----  We implemented rules for code quality and formatting through pre-commit hooks, using ruff for linting and auto-fixing issues. In large projects, consistent code quality and format are vital as they lead to a more maintainable and understandable codebase, reduce the risk of introducing errors, and make collaboration easier. Uniform code standards help ensure that any developer can quickly read and contribute to the code, regardless of the project's scale.---
+---  We implemented rules for code quality and formatting through pre-commit configuration. We are using standard pre-commit hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-docstring-first
+      - id: check-executables-have-shebangs
+      - id: check-case-conflict
+      - id: detect-private-key
+
+Also, in order to follow `pip-8` standard, we are also using ruff hooks for linting and code formating.
+In large projects, consistent code quality and format are vital as they lead to a more maintainable and understandable codebase, reduce the risk of introducing errors, and make collaboration easier. Uniform code standards help ensure that any developer can quickly read and contribute to the code, regardless of the project's scale.---
 
 ## Version control
 
