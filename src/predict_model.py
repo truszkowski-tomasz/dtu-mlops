@@ -31,12 +31,16 @@ def classify(cfg: DictConfig) -> np.ndarray:
 
     logger = get_logger(__name__)
 
+    logger.info(f"Predicting using the following config: {cfg}")
+
     # Load the model from the specific checkpoint
     model = BERTLightning.load_from_checkpoint(
         cfg.model.fine_tuned_path + "/bert_model.ckpt", config=cfg
     )
 
     texts = cfg.predict.texts
+
+    logger.info(f"Texts to be predicted: {texts}")
 
     # Create a dataframe with the expected columns
     df = pd.DataFrame(
