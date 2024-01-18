@@ -171,21 +171,17 @@ Note: This project (currently) uses Google Drive as the storage location for DVC
 > *experiments.*
 > Answer:
 
-This project follows the organization provided by a customized cookiecutter data science project template. Here's an overview of the top-level directories and their contents:
+Based on the screenshots of the repository you provided earlier, the project follows a structure influenced by a cookiecutter data science template, with some modifications tailored to our specific needs. We have filled out the src, models, docs, and reports directories, among others.
 
-- `src/`: Contains all the source code for the project's core functionality.
-- `tests/`: Includes tests for the project's source code, ensuring reliability and aiding continuous integration practices.
-- `docs/`: Houses comprehensive documentation for the project.
-- `reports/`: Stores generated analysis reports or results related to the project.
-- `dockerfiles/`: Contains Dockerfiles which define the environment for running the project in containers.
-- `.github/workflows/`: Provides the configuration for GitHub Actions to automate the testing and deployment pipeline.
-- `notebooks/`: Intended for Jupyter notebooks, currently unused but available for future exploratory data analysis or interactive development.
+The src directory contains the core code for the project, including scripts for data processing, model training, and predictions. The models directory holds the trained model files and serialized objects. Documentation relevant to the project is found within the docs directory, and the reports directory includes generated analysis and figures, often used for insights and presentations.
 
-Additionally, the root of the repository includes several configuration files and directories that aid in the development and deployment of the project:
+Our repository also contains a notebooks directory, which we have retained for potential future use in exploratory data analysis or prototyping, though it is currently empty.
 
-- `docker-compose.yaml`: For defining and running multi-container Docker applications.
-- `requirements.txt`: Lists all Python dependencies for the project.
+Additional configurations and workflows are managed through files like pyproject.toml, requirements.txt, and .github/workflows, which define project dependencies and CI/CD processes, respectively.
 
+To manage our experiments and ensure reproducibility, we used Docker, as indicated by the dockerfiles directory containing Dockerfiles for different purposes. The Makefile present in the root assists in automating routine tasks such as setting up the environment, training models, and cleaning build artifacts.
+
+This setup is designed to be flexible and efficient for our machine learning operations, facilitating easy replication and scaling while maintaining a clear and organized codebase.
 
 ### Question 6
 
@@ -408,8 +404,6 @@ Container Registry: Stored the container images created by Cloud Build, serving 
 
 Vertex AI: Utilized for submitting custom training jobs using the container images from Container Registry, which allowed us to train our models on scalable infrastructure.
 
-BigQuery: Used to store inputs and outputs of our deployed models, enabling us to analyze model performance and detect data drift over time.
-
 Compute Engine: Employed for initial testing and running experiments on the cloud before scaling up , providing customizable and on-demand virtual  ---
 
 ### Question 18
@@ -526,29 +520,17 @@ Compute Engine: Employed for initial testing and running experiments on the clou
 
 ### Question 26
 
-> **Discuss the overall struggles of the project. Where did you spend most time and what did you do to overcome these**
-> **challenges?**
->
-> Answer length: 200-400 words.
->
-> Example:
-> *The biggest challenges in the project was using ... tool to do ... . The reason for this was ...*
->
-> Answer:
+> One of the major struggles in our project was the integration and orchestration of various cloud services and tools to establish a smooth workflow. We dedicated a substantial amount of time to setting up and configuring our CI/CD pipeline, ensuring our machine learning models were automatically trained and evaluated upon each code push.
 
---- 
-One of the major struggles in our project was the integration and orchestration of various cloud services and tools to establish a smooth workflow. We spent a considerable amount of time setting up and configuring our CI/CD pipeline, to ensure that our machine learning models were automatically trained and evaluated upon each code push.
+This was challenging due to the distinct configurations and nuances of each tool, requiring a deep understanding of their APIs and operational models. Additionally, managing data across services with DVC while ensuring data privacy and security added complexity.
 
-The reason this was challenging is that each tool has its own set of configurations and nuances, and aligning them to work seamlessly with each other required a deep understanding of their APIs and operational models. Additionally, managing data efficiently across these services, while maintaining version control with DVC and ensuring data privacy and security, added layers of complexity.
+We heavily relied on documentation, community forums, and support channels to overcome these challenges. Implementing Infrastructure as Code (IaC) practices enabled us to manage cloud resources programmatically, leading to reproducible setups and simplifying change tracking and rollbacks.
 
-To overcome these challenges, we relied heavily on documentation, community forums, and support channels. We also implemented Infrastructure as Code (IaC) practices, which allowed us to define and manage our cloud resources programmatically. This approach led to more reproducible setups and made it easier to track changes and roll back if something went wrong.
+Optimizing our machine learning models for performance and cost was another significant hurdle. Cloud training can be expensive, and our models' early iterations were not efficient. Profiling models, identifying bottlenecks, and refining architectures improved performance and reduced resource utilization.
 
-Another significant hurdle was optimizing our machine learning models for performance and cost. Training models on the cloud can be expensive, and early iterations of our models were not as efficient as they could be. We invested time in profiling our models, identifying bottlenecks, and refining our architectures. This not only improved performance but also reduced our cloud resource utilization, leading to cost savings.
+Team coordination and maintaining a consistent development environment were universal challenges. Using Docker to containerize our environment ensured every team member worked with an identical setup, avoiding the "it works on my machine" syndrome.
 
-Lastly, we faced the universal challenge of team coordination and maintaining a consistent development environment across all team members. To address this, we containerized our development environment using Docker, which allowed every team member to work with an identical setup, thus minimizing the "it works on my machine" syndrome.
-
-Overall, the project was a valuable learning experience. We developed a deeper understanding of cloud services, improved our DevOps skills, and learned the importance of monitoring and profiling in the machine learning lifecycle. Through perseverance, collaboration, and a willingness to learn from our mistakes, we were able to navigate through these struggles and deliver a successful project. ---
-
+It's worth adding that we spent a lot of time struggling with DVC usage inside the cloud, leading to a workaround. Despite the struggles, the project was a valuable learning experience, enhancing our understanding of cloud services, DevOps skills, and the importance of monitoring and profiling in the machine learning lifecycle. 
 ### Question 27
 
 > **State the individual contributions of each team member. This is required information from DTU, because we need to**
