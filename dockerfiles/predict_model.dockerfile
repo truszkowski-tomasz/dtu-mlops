@@ -16,18 +16,10 @@ COPY data.dvc data.dvc
 COPY models.dvc models.dvc
 
 WORKDIR /
-RUN pip install -r requirements.txt --no-cache-dir
-
 COPY src/ src/
-# COPY .dvc/ .dvc/
-RUN dvc init --no-scm
-
-RUN dvc remote add -d myremote gs://mlops_project_data_bucket/
-RUN dvc config core.no_scm true
-RUN dvc pull --verbose
-
 COPY models/ models/
 
+RUN pip install -r requirements.txt --no-cache-dir
 RUN pip install . --no-deps --no-cache-dir
 
 CMD ["uvicorn", "src.app.main:app", "--host", "0.0.0.0", "--port", "80"]
