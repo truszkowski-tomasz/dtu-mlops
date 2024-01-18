@@ -285,9 +285,7 @@ In large projects, consistent code quality and format are vital as they lead to 
 >
 > Answer:
 
---- Our continuous integration (CI) setup is configured within our GitHub Actions workflow to ensure that every change to the codebase is automatically tested and validated. The CI pipeline includes running unit tests, linting, and other code quality checks.
-
-The unit tests are executed using a testing framework such as pytest to validate that all components of our application behave as expected. Linting is performed to enforce coding standards and style consistency across the project, which could be done using tools like  ruff.
+--- Our continuous integration (CI) setup is configured within GitHub Actions workflows to ensure that every change to the codebase is automatically tested and validated. Github Actions consist of two workflows - first one executes all the unittests using pytest framework to validate that all components of our application behave as expected. Second, using ruff, enforce coding standards and style consistency across the project.  
 
 Currently, our CI pipeline is set to run on the latest Ubuntu OS with Python 3.11. We have not configured the workflow to test across multiple operating systems or multiple versions of Python, but this can be a future enhancement to ensure broader compatibility.
 
