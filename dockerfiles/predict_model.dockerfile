@@ -20,8 +20,10 @@ RUN pip install -r requirements.txt --no-cache-dir
 
 COPY src/ src/
 COPY .dvc/ .dvc/
+RUN dvc init --no-scm
+RUN dvc remote add -d myremote gs://mlops_project_data_bucket/
+RUN dvc pull --verbose
 
-RUN dvc pull
 COPY models/ models/
 
 RUN pip install . --no-deps --no-cache-dir

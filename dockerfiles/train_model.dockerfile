@@ -18,7 +18,11 @@ COPY src/ src/
 RUN pip install -e .
 
 COPY .dvc/ .dvc/
+RUN dvc init --no-scm
+RUN dvc remote add -d myremote gs://mlops_project_data_bucket/
 RUN dvc pull --verbose
+
+# RUN pip install dvc "dvc[gs]"
 
 COPY models/ models/
 COPY data/ data/
