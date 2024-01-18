@@ -8,8 +8,9 @@ RUN apt update && \
 
 COPY requirements.txt requirements.txt
 COPY pyproject.toml pyproject.toml
-RUN pip install -e .
 COPY src/ src/
+RUN pip install -e .
+
 #TODO fetch data from bucket
 COPY models/ models/
 COPY data/ data/
