@@ -115,7 +115,7 @@ end of the project.
 >
 >
 > Answer:
-> s222937, s194768, s223219, s232858, s222703
+--- s222937, s194768, s223219, s232858, s222703 ---
 
 
 ### Question 3
@@ -259,7 +259,7 @@ We have focused on deploying docker images, data and running the training in the
 >
 > Answer:
 
---- Our process of contributing to the project was also well structured. All of the group members have utilized branches to make their contributions. The general branch labelling structure follows "group_member_name/contribution". To merge individual contributions into the main project, we have utilized Pull Requests (PR), and one or more group members must review the PR before it can be allowed to merge into the main branch (master in our project due to technical reasons).   ---
+--- Our process of contributing to the project was also well structured. All of the group members have utilized branches to make their contributions. The general branch labelling structure follows "group_member_name/contribution". To merge individual contributions into the main project, we have utilized Pull Requests (PR), and one or more group members must review the PR before it can be allowed to merge into the main branch (master in our project due to technical reasons). ---
 
 ### Question 10
 
