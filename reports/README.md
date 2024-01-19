@@ -94,8 +94,8 @@ end of the project.
 
 ### Additional
 
-* [ ] Revisit your initial project description. Did the project turn out as you wanted?
-* [ ] Make sure all group members have a understanding about all parts of the project
+* [X] Revisit your initial project description. Did the project turn out as you wanted?
+* [X] Make sure all group members have a understanding about all parts of the project
 * [X] Uploaded all your code to github
 
 ## Group information
@@ -314,7 +314,7 @@ We do make use of caching to speed up the CI process, particularly for dependenc
 >
 > Answer:
 
---- question 12 fill here ---
+--- In our setup, we utilized Hydra. This allows for the use of .yaml configuration files, offering a structured and easily maintainable way to manage experimental settings. There are three config files: one for train, one for model and another for data. To run an experiment, we would define parameters like learning rate, batch size, and epochs in the according .yaml file, say train_config.yaml. Then, we execute the experiment using Hydra's @hydra.main decorator, as shown in our script. The command would look like this: *python train_model.py* ---
 
 ### Question 13
 
