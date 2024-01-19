@@ -459,7 +459,7 @@ For model deployment, hosting our FastAPI server on a Compute Engine VM was a po
 >
 > Answer:
 
----  ---
+![Registry-1](figures/registry.png)
 
 ### Question 21
 
@@ -513,7 +513,7 @@ We have been unable to implement monitoring in our project but we appreciate its
 >
 > Answer:
 
-Àiax used $26.84, Tomasz used $0.01, Shah used ~$50 and in total $56.88 credits was spend during development. The highest costing services were the Compute Engine and Cloud Build, due to the high use of CPU and memory during training and for trying to debug issues with automatic image building on Cloud Build.
+Àiax used $26.84, Tomasz used $0.01, Shah used ~$50 and in total $76.85 credits was spend during development. The highest costing services were the Compute Engine and Cloud Build, due to the high use of CPU and memory during training and for trying to debug issues with automatic image building on Cloud Build.
 
 ## Overall discussion of project
 
@@ -538,7 +538,17 @@ We have been unable to implement monitoring in our project but we appreciate its
 
 ### Question 26
 
-> One of the major struggles in our project was the integration and orchestration of various cloud services and tools to establish a smooth workflow. We dedicated a substantial amount of time to setting up and configuring our CI/CD pipeline, ensuring our machine learning models were automatically trained and evaluated upon each code push.
+> **Discuss the overall struggles of the project. Where did you spend most time and what did you do to overcome these**
+> **challenges?**
+>
+> Answer length: 200-400 words.
+>
+> Example:
+> *The biggest challenges in the project was using ... tool to do ... . The reason for this was ...*
+>
+> Answer:
+
+One of the major struggles in our project was the integration and orchestration of various cloud services and tools to establish a smooth workflow. We dedicated a substantial amount of time to setting up and configuring our CI/CD pipeline, ensuring our machine learning models were automatically trained and evaluated upon each code push.
 
 This was challenging due to the distinct configurations and nuances of each tool, requiring a deep understanding of their APIs and operational models. Additionally, managing data across services with DVC while ensuring data privacy and security added complexity.
 
@@ -564,4 +574,4 @@ It's worth adding that we spent a lot of time struggling with DVC usage inside t
 >
 > Answer:
 
---- question 27 fill here ---
+Student s222703 was in charge of the profiling and training the model in GCP with VertexAI and Compute Engine.
