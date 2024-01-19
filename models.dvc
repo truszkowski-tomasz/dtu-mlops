@@ -44,7 +44,7 @@ outs:
       cloud_data_bucket:
         etag: 0885e1d3f7e2e183031001
         version_id: '1705403452027013'
-  - relpath: fine_tuned/bert_model.pth
+  - relpath: fine_tuned/bert_model.ckpt
     md5: 44ac191782fd56c4f1986b6efc79035e
     size: 438010567
     cloud:
