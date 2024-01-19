@@ -94,8 +94,8 @@ end of the project.
 
 ### Additional
 
-* [ ] Revisit your initial project description. Did the project turn out as you wanted?
-* [ ] Make sure all group members have a understanding about all parts of the project
+* [X] Revisit your initial project description. Did the project turn out as you wanted?
+* [X] Make sure all group members have a understanding about all parts of the project
 * [X] Uploaded all your code to github
 
 ## Group information
@@ -385,9 +385,9 @@ Training and validation loss represent how well our model is performing, respect
 >
 > Answer:
 
---- The exact method of debugging was dependent on each group member. Some just used IDE debugging tools and others used internet help together with the error trace.
-We did a single profiling run of our training code (see output below) just after adding boilerplate that showed how the backpropagation step was the most compute-intensive part, which is typical during the training of a deep learning model. Some possible optimizations are making the model architecture simpler or using combined floats.
-The second most consuming “winapi.WaitForMultipleObjects” suggests that our script spends a significant amount of time waiting for some OS-level operations. These are likely related to synchronization or I/O operations, such as data loading or saving. And after analysis of code we consider that we already make optimum use of data loading, logging verbosity, and model checkpoint save, and that is common that it takes time in these matters.
+Debugging method was dependent on each group member. Some just used IDE debugging tools and others used internet help together with the error trace.
+We did a single profiling run of our training code (see output below) just after adding boilerplate that showed how the backpropagation step was the most compute-intensive part, which is the usual during the training of a deep learning model. Some possible optimizations are making the model architecture simpler or using combined floats.
+The second most consuming "winapi.WaitForMultipleObjects" suggests that our script spends a significant amount of time waiting for some OS-level operations. These are likely related to synchronization or I/O operations, such as data loading or saving. And after analysis of code we consider we already make optimum use of data loading, logging verbosity, and model checkpoint save, and that is common that it takes time in these matters.
 One optimization that we used in order to save time during transformations, was to store the data as tensors.
 Finally, as for memory usage, the sections that consume the most memory are the model loading and training, which is expected for these big models.
 
@@ -437,8 +437,9 @@ Billing: Although overlooked, it is an important service that was regularly chec
 >
 > Answer:
 
---- While we had the capability to train our model locally using our CPUs, the necessity for scaling to more intensive compute resources was not immediate. Consequently, we didn't fully explore the potential of Compute Engine for training purposes. For model deployment, hosting our FastAPI server on a Compute Engine VM was a possibility. Yet, we recognized that this option might incur higher costs and offer less scalability compared to serverless alternatives like Cloud Run, which would be our preferred choice for such needs. Cloud Run provides a managed environment that automatically scales based on traffic, making it a more cost-effective and flexible solution for deploying containerized applications like ours. Additionally, we created a Deep Learning VM which we utilized to test the docker images as a test/deployment machine. ---
+Before setting up VertexAI, we used GCE to train the models, for example the one with 150 epochs shown above in the W&B experiments. The used machine was a "n2-standard-8" with 16GB of ram and 8 CPU's, since smaller machines we tried killed the process during trarining for resourse usage excess.
 
+For model deployment, hosting our FastAPI server on a Compute Engine VM was a possibility. Yet, we recognized that this option might incur higher costs and offer less scalability compared to serverless alternatives like Cloud Run, which would be our preferred choice for such needs. Cloud Run provides a managed environment that automatically scales based on traffic, making it a more cost-effective and flexible solution for deploying containerized applications like ours. Additionally, we created a Deep Learning VM which we utilized to test the docker images as a test/deployment machine. 
 
 ### Question 19
 
@@ -459,9 +460,7 @@ Billing: Although overlooked, it is an important service that was regularly chec
 >
 > Answer:
 
---- 
-![Container Registry](figures/container.png)
----
+![Registry-1](figures/registry.png)
 
 ### Question 21
 
@@ -515,7 +514,7 @@ We have been unable to implement monitoring in our project but we appreciate its
 >
 > Answer:
 
---- Àiax has used $6.87, Tomasz has used $0.01, Shah has used ~$50 and in total $56.88 credits were spent during development. The highest costing services were the Compute Engine and Cloud Build, due to the high use of CPU/memory during training and for trying to debug issues with automatic image building on Cloud Build (so many failed attempts to build images on Cloud Build). ---
+Àiax used $26.84, Tomasz used $0.01, Shah used ~$50 and in total $76.85 credits was spend during development. The highest costing services were the Compute Engine and Cloud Build, due to the high use of CPU and memory during training and for trying to debug issues with automatic image building on Cloud Build.
 
 ## Overall discussion of project
 
@@ -540,7 +539,17 @@ We have been unable to implement monitoring in our project but we appreciate its
 
 ### Question 26
 
-> One of the major struggles in our project was the integration and orchestration of various cloud services and tools to establish a smooth workflow. We dedicated a substantial amount of time to setting up and configuring our CI/CD pipeline, ensuring our machine learning models were automatically trained and evaluated upon each code push.
+> **Discuss the overall struggles of the project. Where did you spend most time and what did you do to overcome these**
+> **challenges?**
+>
+> Answer length: 200-400 words.
+>
+> Example:
+> *The biggest challenges in the project was using ... tool to do ... . The reason for this was ...*
+>
+> Answer:
+
+One of the major struggles in our project was the integration and orchestration of various cloud services and tools to establish a smooth workflow. We dedicated a substantial amount of time to setting up and configuring our CI/CD pipeline, ensuring our machine learning models were automatically trained and evaluated upon each code push.
 
 This was challenging due to the distinct configurations and nuances of each tool, requiring a deep understanding of their APIs and operational models. Additionally, managing data across services with DVC while ensuring data privacy and security added complexity.
 
@@ -567,8 +576,10 @@ It's worth adding that we spent a lot of time struggling with DVC usage inside t
 >
 > Answer:
 
---- 
-Student s232858 chose to focus on managing and working with the GCP platform. 
+---
+Student s222703 was in charge of the profiling and training the model in GCP with VertexAI and Compute Engine.
+  
+Student s232858 chose to focus on managing and working with the GCP platform.
 
 Student s223219 implemented pytorch model and training loop (it was later wrapped up with pytorch-lightining), logger, script for downloading models from huggingface and fastapi app. Added some unit tests and created workflows for github actions as a CI part of project, he also added pre-commit and integrated weights&biases. Student also contributed to final report and helped to solve ongoing problems within GCP space.
 ---
