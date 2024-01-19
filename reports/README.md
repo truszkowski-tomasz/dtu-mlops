@@ -174,7 +174,7 @@ Note: This project uses wandb for tracking all the metrics during the training. 
 > *experiments.*
 > Answer:
 
---- The cookiecutter template has been extremely useful in our project. It gave us the freedom to focus on actual implementations of code, configurations and dependency management for the project. The directory structure is quite intuitive and project functionality is stored in similarly named folders. In our project, "src" is the main directory of our project. It contains code that forms the backbone of our model such as scripts for data processing, model training and predictions. Inside the "src" directory, the only unused directory is the "visualizations" since we have used Weights&Biases API to automatically log and visualize our experiments. The "models" directory contains the trained models our finely tuned model. The "tests" directory contains files that we have used for testing the fundamental functionality of our project such as downloading the project, making the dataset etc. For monitoring our project, we have the "logs" directory. The "notebooks" folder has been unutilized so far in the project, however it can be very useful to house Jupyter notebooks which can be used to demonstrate our project. To make sure that our project was reproducible, we have utilized Docker and the directory named "dockerfiles" contains the files that create an image for the training and prediction part of our model. 
+--- The cookiecutter template has been extremely useful in our project. It gave us the freedom to focus on actual implementations of code, configurations and dependency management for the project. The directory structure is quite intuitive and project functionality is stored in similarly named folders. In our project, "src" is the main directory of our project. It contains code that forms the backbone of our model such as scripts for data processing, model training and predictions. Inside the "src" directory, the only unused directory is the "visualizations" since we have used Weights&Biases API to automatically log and visualize our experiments. The "models" directory contains the trained models our finely tuned model. The "tests" directory contains files that we have used for testing the fundamental functionality of our project such as downloading the project, making the dataset etc. For monitoring our project, we have the "logs" directory. The "notebooks" folder has been unutilized so far in the project, however it can be very useful to house Jupyter notebooks which can be used to demonstrate our project. To make sure that our project was reproducible, we have utilized Docker and the directory named "dockerfiles" contains the files that create an image for the training and prediction part of our model.
 
 There are many files throughout our project that are either incharge of performing a task or logging information for it. These files include (but arent limited to), docker-compose.yaml, cloudbuild.yaml and the files housed within .github folder. ---
 
@@ -194,6 +194,7 @@ There are many files throughout our project that are either incharge of performi
       - id: check-executables-have-shebangs
       - id: check-case-conflict
       - id: detect-private-key
+
 To adhere to the PEP 8 standard, we employ Ruff hooks for consistent code formatting and linting. This ensures code quality, readability, and collaboration in large projects, reducing errors and enhancing maintainability.
 
 ## Version control
@@ -236,7 +237,7 @@ We have focused on deploying docker images, data and running the training in the
 >
 > Answer:
 
---- Taking into consideration all the tests we have 60% of coverage. Two of the tests that are being commented out (what is described in question 7), do not cover everything they should. In order to achive higher coverage appropriate would be to mock those test to not relay on either locally stored or remotly stored data and models. Code fully covers downloading of dataset, models and saving the dataset in the form of TensorDataset objects. 
+--- Taking into consideration all the tests we have 60% of coverage. Two of the tests that are being commented out (what is described in question 7), do not cover everything they should. In order to achive higher coverage appropriate would be to mock those test to not relay on either locally stored or remotly stored data and models. Code fully covers downloading of dataset, models and saving the dataset in the form of TensorDataset objects.
 
 ![Test coverage:](figures/coverage.png)
 ---
@@ -253,7 +254,7 @@ We have focused on deploying docker images, data and running the training in the
 > *addition to the main branch. To merge code we ...*
 >
 > Answer:
-> 
+>
 --- Our process of contributing to the project was also well structured. Members of the group have utilized branches to make their contributions. The general branch labelling convention followed "group_member_name/contribution". To merge individual contributions into the main project, we have utilized Pull Requests (PR), and one or more group members must review the PR before it can be allowed to merge into the main branch (master in our project due to technical reasons). ---
 
 ### Question 10
@@ -268,7 +269,7 @@ We have focused on deploying docker images, data and running the training in the
 > *pipeline*
 >
 > Answer:
-> 
+>
 --- We have used DVC to implement data version control in our project. The data for our project has been accquired from Kaggle and it is unlikely that there may be many changes to the data itself. However, it is a critical part of our project pipeline, as it allows to make sure that once a project member has set up the project locally, they can get the exact same data as everyone else to train the model on.  ---
 
 
@@ -323,7 +324,7 @@ We do make use of caching to speed up the CI process, particularly for dependenc
 > *one would have to do ...*
 >
 > Answer:
-  
+
 --- To ensure reproducibility in our experiments, we employed a combination of config files, and environment management. Whenever an experiment is run, we use hydra framework configuration files that specify all parameters. This setup allows for precise control over the experiment settings and easy adjustment without modifying the code. Each experiment's configuration is saved alongside its results, providing a clear record of the conditions under which it was run.
 
 
@@ -417,7 +418,7 @@ Container Registry: Stored the container images created by Cloud Build, serving 
 
 Vertex AI: Utilized for submitting custom training jobs using the container images from Container Registry, which allowed us to train our models on scalable infrastructure.
 
-Compute Engine: Employed for initial testing and running experiments on the cloud before scaling up , providing customizable and on-demand virtual 
+Compute Engine: Employed for initial testing and running experiments on the cloud before scaling up , providing customizable and on-demand virtual
 
 Cloud Run: We have a job that is run once Cloud Build has finished building the trainer image and a continuous service that makes our API avaialable to use the predict feature of our model.
 
@@ -533,7 +534,7 @@ For model deployment, hosting our FastAPI server on a Compute Engine VM was a po
 > *Whenever we commit code and puch to github, it auto triggers ... and ... . From there the diagram shows ...*
 >
 > Answer:
-![Build History](figures/Diagram.png) 
+![Build History](figures/Diagram.png)
 --- The architectural diagram illustrates a comprehensive machine learning project setup with components categorized under 'Cloud' and 'Local' sections, showcasing the entire workflow from development to deployment.
 
 In the 'Cloud' section, Google Cloud Platform (GCP) serves as the backbone for various cloud-based services. Compute Engine provides scalable computing resources for training machine learning models. Vertex AI offers a managed environment for ML model development and deployment. Cloud Run allows for serving models through scalable, containerized APIs. Container registry stores containerized applications and models. GitHub actions automate CI/CD processes, enabling seamless development and deployment workflows. GCP Bucket serves as remote data storage for datasets and model artifacts.
@@ -582,9 +583,14 @@ It's worth adding that we spent a lot of time struggling with DVC usage inside t
 > Answer:
 
 
+Student s222703 was in charge of the profiling and training the model in GCP with VertexAI and Compute Engine.
+
+Student s232858 chose to focus on managing and working with the GCP platform.
+
+Student s222937 was responsible for training and prediction scripts using pytorch lightning, adding hydra config files, setting up and troubleshooting the Cloud Run training job and prediction service
+
 Student s223219 implemented pytorch model and training loop (it was later wrapped up with pytorch-lightining), logger, script for downloading models from huggingface and fastapi app. Added some unit tests and created workflows for github actions as a CI part of project, he also added pre-commit and integrated weights&biases. Student also contributed to final report and helped to solve ongoing problems within GCP space.
 
-Student s194768  was in charge of the development of the machine learning prediction model and generating reports.
+Student s194768  was in charge of the development of prediction model and generating reports.
 
-Our team maintained an open and inclusive environment, established clear workflows, and designated subject matter experts to provide timely assistance, fostering a culture of collaboration and support during code development
----
+Our team maintained an open and inclusive environment, established clear workflows, and designated subject matter experts to provide timely assistance, fostering a culture of collaboration and support during code development. ---
