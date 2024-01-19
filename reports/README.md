@@ -582,4 +582,6 @@ It's worth adding that we spent a lot of time struggling with DVC usage inside t
   
 Student s232858 chose to focus on managing and working with the GCP platform. 
 
-Student s223219 implemented pytorch model and training loop (it was later wrapped up with pytorch-lightining), logger, script for downloading models from huggingface and fastapi app. Added some unit tests and created workflows for github actions as a CI part of project, he also added pre-commit and integrated weights&biases. Student also contributed to final report and helped to solve ongoing problems within GCP space. ---
+Student s223219 implemented pytorch model and training loop (it was later wrapped up with pytorch-lightining), logger, script for downloading models from huggingface and fastapi app. Added some unit tests and created workflows for github actions as a CI part of project, he also added pre-commit and integrated weights&biases. Student also contributed to final report and helped to solve ongoing problems within GCP space. 
+
+Student s222937 focused on training and prediction scripts using pytorch-lightning, adding hydra config files, setting up and troubleshooting the Cloud Run training job and prediction service. ---
