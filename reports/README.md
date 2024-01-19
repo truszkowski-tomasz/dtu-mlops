@@ -81,7 +81,7 @@ end of the project.
 * [X] Get your model training in GCP using either the Engine or Vertex AI
 * [X] Create a FastAPI application that can do inference using your model
 * [ ] If applicable, consider deploying the model locally using torchserve
-* [?] Deploy your model in GCP using either Functions or Run as the backend
+* [ ] Deploy your model in GCP using either Functions or Run as the backend
 
 ### Week 3
 
@@ -568,5 +568,7 @@ It's worth adding that we spent a lot of time struggling with DVC usage inside t
 > Answer:
 
 --- 
-s232858 chose to focus on managing and working with the GCP platform.
+Student s232858 chose to focus on managing and working with the GCP platform. 
+
+Student s223219 implemented pytorch model and training loop (it was later wrapped up with pytorch-lightining), logger, script for downloading models from huggingface and fastapi app. Added some unit tests and created workflows for github actions as a CI part of project, he also added pre-commit and integrated weights&biases. Student also contributed to final report and helped to solve ongoing problems within GCP space.
 ---
