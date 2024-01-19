@@ -194,8 +194,6 @@ We implemented rules for code quality and formatting through pre-commit configur
       - id: check-executables-have-shebangs
       - id: check-case-conflict
       - id: detect-private-key
-
-
 To adhere to the PEP 8 standard, we employ Ruff hooks for consistent code formatting and linting. This ensures code quality, readability, and collaboration in large projects, reducing errors and enhancing maintainability.
 
 ## Version control
