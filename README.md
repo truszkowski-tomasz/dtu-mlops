@@ -4,7 +4,7 @@ This project serves as a hand-in for the final exam for 02476 Machine Learning O
 2. Shah Bekhsh
 3. Tomasz Truszkowski
 4. Àiax Faura Vilalta
-5. Diana
+5. Diana Podoroghin
 
 
 ## Inspiration & Data

@@ -194,9 +194,7 @@ There are many files throughout our project that are either incharge of performi
       - id: check-executables-have-shebangs
       - id: check-case-conflict
       - id: detect-private-key
-
-Also, in order to follow `pip-8` standard, we are also using ruff hooks for linting and code formating.
-In large projects, consistent code quality and format are vital as they lead to a more maintainable and understandable codebase, reduce the risk of introducing errors, and make collaboration easier. Uniform code standards help ensure that any developer can quickly read and contribute to the code, regardless of the project's scale. ---
+To adhere to the PEP 8 standard, we employ Ruff hooks for consistent code formatting and linting. This ensures code quality, readability, and collaboration in large projects, reducing errors and enhancing maintainability.
 
 ## Version control
 
@@ -409,7 +407,7 @@ Finally, as for memory usage, the sections that consume the most memory are the 
 >
 > Answer:
 
-In our project, we made use of the following Google Cloud Platform (GCP) services, each playing a crucial role in our machine learning workflow:
+In our project, we made use of the following Google Cloud Platform (GCP) services:
 
 Cloud Storage (GCS): Hosted our data that was version-controlled with DVC, providing robust and scalable storage for datasets and model artifacts.
 
@@ -423,7 +421,7 @@ Compute Engine: Employed for initial testing and running experiments on the clou
 
 Cloud Run: We have a job that is run once Cloud Build has finished building the trainer image and a continuous service that makes our API avaialable to use the predict feature of our model.
 
-Billing: Although overlooked, it is an important service that was regularly checked to see how fast we burned through our credits while using the cloud services. ---
+Billing: It is an important service that was regularly checked to see how fast we burned through our credits while using the cloud services. ---
 
 ### Question 18
 
@@ -535,8 +533,14 @@ For model deployment, hosting our FastAPI server on a Compute Engine VM was a po
 > *Whenever we commit code and puch to github, it auto triggers ... and ... . From there the diagram shows ...*
 >
 > Answer:
+![Build History](figures/Diagram.png) 
+--- The architectural diagram illustrates a comprehensive machine learning project setup with components categorized under 'Cloud' and 'Local' sections, showcasing the entire workflow from development to deployment.
 
---- question 25 fill here ---
+In the 'Cloud' section, Google Cloud Platform (GCP) serves as the backbone for various cloud-based services. Compute Engine provides scalable computing resources for training machine learning models. Vertex AI offers a managed environment for ML model development and deployment. Cloud Run allows for serving models through scalable, containerized APIs. Container registry stores containerized applications and models. GitHub actions automate CI/CD processes, enabling seamless development and deployment workflows. GCP Bucket serves as remote data storage for datasets and model artifacts.
+
+On the 'Local' side, developers utilize Cloud build triggers for building and deploying code to the cloud. Continuous Integration (CI) pipelines, with pytest and linting, ensure code quality and reliability. Git is used for version control, while DVC handles the efficient versioning and management of large datasets. Local data storage is employed for development purposes.
+
+The diagram highlights important tools and practices like Cookiecutter for project template setup, Hydra for configuration management, Wandb (Weights & Biases) for experiment tracking, and PyTorch Lightning Boilerplate for efficient PyTorch model development. Additionally, there's a focus on Python requirements and Conda for environment management, with debugger and profiler tools to optimize model performance. ---
 
 ### Question 26
 
@@ -578,10 +582,9 @@ It's worth adding that we spent a lot of time struggling with DVC usage inside t
 > Answer:
 
 
---- Student s222703 was in charge of the profiling and training the model in GCP with VertexAI and Compute Engine.
-  
-Student s232858 chose to focus on managing and working with the GCP platform. 
+Student s223219 implemented pytorch model and training loop (it was later wrapped up with pytorch-lightining), logger, script for downloading models from huggingface and fastapi app. Added some unit tests and created workflows for github actions as a CI part of project, he also added pre-commit and integrated weights&biases. Student also contributed to final report and helped to solve ongoing problems within GCP space.
 
-Student s223219 implemented pytorch model and training loop (it was later wrapped up with pytorch-lightining), logger, script for downloading models from huggingface and fastapi app. Added some unit tests and created workflows for github actions as a CI part of project, he also added pre-commit and integrated weights&biases. Student also contributed to final report and helped to solve ongoing problems within GCP space. 
+Student s194768  was in charge of the development of the machine learning prediction model and generating reports.
 
-Student s222937 focused on training and prediction scripts using pytorch-lightning, adding hydra config files, setting up and troubleshooting the Cloud Run training job and prediction service. ---
+Our team maintained an open and inclusive environment, established clear workflows, and designated subject matter experts to provide timely assistance, fostering a culture of collaboration and support during code development
+---
