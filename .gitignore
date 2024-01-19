@@ -192,3 +192,4 @@ outputs/
 
 # Lightning
 lightning_logs/
+/models

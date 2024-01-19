@@ -12,12 +12,12 @@ RUN apt update && \
 
 COPY requirements.txt requirements.txt
 COPY pyproject.toml pyproject.toml
+
+WORKDIR /
 COPY src/ src/
 COPY models/ models/
 
-
-WORKDIR /
 RUN pip install -r requirements.txt --no-cache-dir
 RUN pip install . --no-deps --no-cache-dir
 
-CMD ["uvicorn", "src.app.main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "src.app.main:app", "--host", "0.0.0.0", "--port", "8080"]

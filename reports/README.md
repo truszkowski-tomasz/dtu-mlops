@@ -74,14 +74,14 @@ end of the project.
 
 * [X] Write unit tests related to the data part of your code (**partially**)
 * [X] Write unit tests related to model construction and or model training (**partially**)
-* [ ] Calculate the coverage.
+* [X] Calculate the coverage.
 * [X] Get some continuous integration running on the github repository
 * [X] Create a data storage in GCP Bucket for you data and preferable link this with your data version control setup
-* [ ] Create a trigger workflow for automatically building your docker images
-* [ ] Get your model training in GCP using either the Engine or Vertex AI
+* [X] Create a trigger workflow for automatically building your docker images
+* [X] Get your model training in GCP using either the Engine or Vertex AI
 * [X] Create a FastAPI application that can do inference using your model
 * [ ] If applicable, consider deploying the model locally using torchserve
-* [ ] Deploy your model in GCP using either Functions or Run as the backend
+* [?] Deploy your model in GCP using either Functions or Run as the backend
 
 ### Week 3
 
@@ -105,7 +105,7 @@ end of the project.
 >
 > Answer:
 
---- Group Number 10 ---
+Group Number 10
 
 ### Question 2
 > **Enter the study number for each member in the group**
@@ -115,7 +115,8 @@ end of the project.
 >
 >
 > Answer:
-> s222937, s194768, s223219, s232858, s222703
+
+s222937, s194768, s223219, s232858, s222703
 
 
 ### Question 3
@@ -129,9 +130,9 @@ end of the project.
 >
 > Answer:
 
---- We have used the PyTorch framework in our project along with the PyTorch Lightning interface, which is built on top PyTorch framework.
+We have used the PyTorch framework in our project along with the PyTorch Lightning interface, which is built on top PyTorch framework.
 In our project, we have used the many functionalities provided by the PyTroch framework such as the torch.utils.data package to process our dataset (in conjunction with Pandas),
-the Tensor functionality from the Torch library to process our data as tensors, the nn library from PyTorch to create and manipulate our model and its layers (along with the BERT transformer that we have utilized from Huggingface 🤗). In addition to this we have used numerous other functionalities from other packages such as Pytest to test our scripts, Hydra to keep track of hyperparameters, wandb to log our model's performance, to name a few. As mentioned, we have used PyTorch Lightning to reduce the amount of boiler plate code around our project as well.---
+the Tensor functionality from the Torch library to process our data as tensors, the nn library from PyTorch to create and manipulate our model and its layers (along with the BERT transformer that we have utilized from Huggingface 🤗). In addition to this we have used numerous other functionalities from other packages such as Pytest to test our scripts, Hydra to keep track of hyperparameters, wandb to log our model's performance, to name a few. As mentioned, we have used PyTorch Lightning to reduce the amount of boiler plate code around our project as well.
 
 ## Coding environment
 
@@ -150,13 +151,15 @@ the Tensor functionality from the Torch library to process our data as tensors, 
 >
 > Answer:
 
---- Our project is overall very well structured. We have used the "Pipreqs" package to manage the dependencies of our project automatically, which are tracked in the requirements.txt file. Everytime we make a significant change in our project, such as adding functionality from a previously unused package, we update our requirements.txt file. For anyone to get a copy of our development environment, they could do the following.
-1. Create a new virtual environment (recommended but not necessary).
-2. pip install -r requirements.txt (to install all the dependencies of the project)
-3. dvc pull (to download the dataset)
-4. wandb login
+Our project is overall very well structured. We have managed the dependencies of our project automatically using requirements files and package manager `pip`. Everytime we make a significant change in our project, such as adding functionality from a previously unused package, we update our requirements.txt and/or requirements_dev.txt file. For anyone to get a copy of our development environment, they could run the following commands in terminal:
 
-Note: This project (currently) uses Google Drive as the storage location for DVC and wandb for hyperparameter tracking. Therefore, anyone willing to work on this project must contact @Tomasz (for wandb) and @Laura to be added to the gdrive folder.      ---
+1. make create_environment - Creates a new virtual environment using python 3.11
+2. make requirements - installs all the dependencies needed for the app to work
+3. gcloud auth login - logs into and authenticates to your google account
+4. dvc pull - pulls all necessary data and model from a bucket in google cloud storage (set to be available for everyone)
+5. At this point you are ready to use deployed model for Fake News prediction!
+
+Note: This project uses wandb for tracking all the metrics during the training. Therefore, anyone willing to use our script for training model needs to get relevant `WANDB_API_KEY`.
 
 ### Question 5
 
@@ -171,9 +174,9 @@ Note: This project (currently) uses Google Drive as the storage location for DVC
 > *experiments.*
 > Answer:
 
-The src directory contains the core code for the project, including scripts for data processing, model training, and predictions. The models directory holds the trained model files and serialized objects. Documentation relevant to the project is found within the docs directory, and the reports directory includes generated analysis and figures, often used for insights and presentations.
+The cookiecutter template has been extremely useful in our project. It gave us the freedom to focus on actual implementations of code, configurations and dependency management for the project. In our project, "src" is the main directory of our project. It contains code that forms the backbone of our model such as scripts for data processing, model training and predictions. The "models" directory contains the trained models   Based on the screenshots of the repository you provided earlier, the project follows a structure influenced by a cookiecutter machine learning template, with some modifications tailored to our specific needs. We have filled out the src, models, docs, and reports directories, among others.
 
-Our repository also contains a notebooks directory, which we have retained for potential future use in exploratory data analysis or prototyping, though it is currently empty.
+The src directory contains the core code for the project, including scripts for data processing, model training, and predictions. The models directory holds the trained model files and serialized objects. Our repository also contains a notebooks directory, which we have retained for potential future use in exploratory data analysis or prototyping, though it is currently empty.
 
 Additional configurations and workflows are managed through files like pyproject.toml, requirements.txt, and .github/workflows, which define project dependencies and CI/CD processes, respectively.
 
@@ -190,7 +193,7 @@ This setup is designed to be flexible and efficient for our machine learning ope
 >
 > Answer:
 
----  We implemented rules for code quality and formatting through pre-commit configuration. We are using standard pre-commit hooks:
+We implemented rules for code quality and formatting through pre-commit configuration. We are using standard pre-commit hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
       - id: check-docstring-first
@@ -199,7 +202,7 @@ This setup is designed to be flexible and efficient for our machine learning ope
       - id: detect-private-key
 
 Also, in order to follow `pip-8` standard, we are also using ruff hooks for linting and code formating.
-In large projects, consistent code quality and format are vital as they lead to a more maintainable and understandable codebase, reduce the risk of introducing errors, and make collaboration easier. Uniform code standards help ensure that any developer can quickly read and contribute to the code, regardless of the project's scale.---
+In large projects, consistent code quality and format are vital as they lead to a more maintainable and understandable codebase, reduce the risk of introducing errors, and make collaboration easier. Uniform code standards help ensure that any developer can quickly read and contribute to the code, regardless of the project's scale.
 
 ## Version control
 
@@ -218,7 +221,14 @@ In large projects, consistent code quality and format are vital as they lead to 
 >
 > Answer:
 
---- question 7 fill here ---
+We have implemented 4 tests, and 2 of them are part of the automatic pipeline. We are testing the following:
+
+1. Downloading dataset
+2. Making dataset
+3. Forward pass of model
+4. Saving dataset.
+
+We have focused on deploying docker images, data and running the training in the cloud, so test are not strong part of our project. Due to issues with with access to the model from the github actions workflow we have decided to comment out 2 of them - making the dataset (uses local tokenizer) and forward pass (using fine tuned model).
 
 ### Question 8
 
@@ -233,7 +243,9 @@ In large projects, consistent code quality and format are vital as they lead to 
 >
 > Answer:
 
---- question 8 fill here ---
+Taking into consideration all the tests we have 60% of coverage. Two of the tests that are being commented out (what is described in question 7), do not cover everything they should. In order to achive higher coverage appropriate would be to mock those test to not relay on either locally stored or remotly stored data and models. Code fully covers downloading of dataset, models and saving the dataset in the form of TensorDataset objects.
+
+![Test coverage:](figures/coverage.png)
 
 ### Question 9
 
@@ -248,7 +260,7 @@ In large projects, consistent code quality and format are vital as they lead to 
 >
 > Answer:
 
---- Our process of contributing to the project was also well structured. All of the group members have utilized branches to make their contributions. The general branch labelling structure follows "group_member_name/contribution". To merge individual contributions into the main project, we have utilized Pull Requests (PR), and one or more group members must review the PR before it can be allowed to merge into the main branch (master in our project due to technical reasons).   ---
+Our process of contributing to the project was also well structured. All of the group members have utilized branches to make their contributions. The general branch labelling structure follows "group_member_name/contribution". To merge individual contributions into the main project, we have utilized Pull Requests (PR), and one or more group members must review the PR before it can be allowed to merge into the main branch (master in our project due to technical reasons).
 
 ### Question 10
 
@@ -263,7 +275,7 @@ In large projects, consistent code quality and format are vital as they lead to 
 >
 > Answer:
 
---- We have used DVC to implement data version control in our project. The data for our project has been accquired from Kaggle and it is unlikely that there may be many changes to the data itself. However, it is a necessary part of our project pipeline, as it allows to make sure that once a project member has set up the project locally, they can get the exact same data as everyone else to train the model on.  ---
+We have used DVC to implement data version control in our project. The data for our project has been accquired from Kaggle and it is unlikely that there may be many changes to the data itself. However, it is a necessary part of our project pipeline, as it allows to make sure that once a project member has set up the project locally, they can get the exact same data as everyone else to train the model on.
 
 ### Question 11
 
@@ -279,11 +291,11 @@ In large projects, consistent code quality and format are vital as they lead to 
 >
 > Answer:
 
---- Our continuous integration (CI) setup is configured within GitHub Actions workflows to ensure that every change to the codebase is automatically tested and validated. Github Actions consist of two workflows - first one executes all the unittests using pytest framework to validate that all components of our application behave as expected. Second, using ruff, enforce coding standards and style consistency across the project.  
+Our CI setup is configured within GitHub Actions workflows to ensure that every change to the codebase is automatically tested and validated. Github Actions consist of two workflows - first one executes all the unit tests using pytest framework to validate that all components of our application behave as expected. Second, using ruff, enforce coding standards and style consistency across the project.
 
 Currently, our CI pipeline is set to run on the latest Ubuntu OS with Python 3.11. We have not configured the workflow to test across multiple operating systems or multiple versions of Python, but this can be a future enhancement to ensure broader compatibility.
 
-We do make use of caching to speed up the CI process, particularly for dependencies. Caching saves time on subsequent runs by reusing the previously saved cache, which avoids redundant steps like re-downloading and reinstalling packages. The link to the workflow: ---
+We do make use of caching to speed up the CI process, particularly for dependencies. Caching saves time on subsequent runs by reusing the previously saved cache, which avoids redundant steps like re-downloading and reinstalling packages. The link to the workflow:
 
 ## Running code and tracking experiments
 
@@ -321,7 +333,7 @@ We do make use of caching to speed up the CI process, particularly for dependenc
 
 To reproduce an experiment, one would need to use the same configuration file and ensure that the environment (Python version, library versions, etc.) matches the original setup. We manage our environment using tools like pip and requirements.txt (or conda with an environment.yml file) to specify exact package versions. Additionally, we use Docker containers to encapsulate the entire runtime environment, ensuring that experiments can be run with the same setup anywhere.
 
-This approach of using config files, precise dependency management, and containerization helps to eliminate variations in the experimental setup, thereby ensuring that our experiments are reproducible by anyone with access to the configuration and environment details. ---
+This approach of using config files, precise dependency management, and containerization helps to eliminate variations in the experimental setup, thereby ensuring that our experiments are reproducible by anyone with access to the configuration and environment details.
 
 ### Question 14
 
@@ -338,7 +350,15 @@ This approach of using config files, precise dependency management, and containe
 >
 > Answer:
 
---- question 14 fill here ---
+We did a lot of experiments, but many of them were tracked only because wandb support has been implemented very early. Some of them were performed locally and therefore with a limited number of epochs and only small subset of data was used. In the images below, there can be seen - training progress for a large subset of the data and 150 epochs, progress for just a few dozen examples and 5 epochs, and the full set of metrics we tracked (Validation loss, Train loss, micro f1, macro f1, validation accuracy) respectively. The orange colour represents Validation loss and the blue colour represents Training loss.
+
+![Training in cloud for 150 epochs](figures/150_epochs.png)
+
+![Training locally for 5 epochs](figures/5_epochs.png)
+
+![Some of the measures we tracked](figures/measures.png)
+
+Training and validation loss represent how well our model is performing, respectively on the training data and validation data. Validation data is needed to make sure that we do not overfit model to the training dataset. This way we make sure model generalizes well to new, unseen data. Micro F1 combines precision and recall but it is useful especially for multiclass classification as it reflects model ability to classify instances across all the classes. Macro, on the other hand is more helpful to understand classification of each class individually. Validation accuracy gives general overview predictions on validation set. It's important as it helps to easily see and understand how model performs on unseen data.
 
 ### Question 15
 
@@ -353,7 +373,7 @@ This approach of using config files, precise dependency management, and containe
 >
 > Answer:
 
---- We utilized Docker images to streamline and standardize our training process, particularly for running jobs on the cloud. Our workflow included an automated setup with Google Cloud Platform (GCP), where a new Docker image for training was automatically built and pushed to our container registry upon each commit to the main branch of our repository. This automation was achieved using a trigger on GCP. ---
+We utilized Docker images to streamline and standardize our training process, particularly for running jobs on the cloud. Our workflow included an automated setup with Google Cloud Platform (GCP), where a new Docker image for training was automatically built and pushed to our container registry upon each commit to the main branch of our repository. This automation was achieved using a trigger on GCP.
 
 ### Question 16
 
@@ -368,11 +388,11 @@ This approach of using config files, precise dependency management, and containe
 >
 > Answer:
 
---- Debugging method was dependent on each group member. Some just used IDE debugging tools and others used internet help together with the error trace.
+Debugging method was dependent on each group member. Some just used IDE debugging tools and others used internet help together with the error trace.
 We did a single profiling run of our training code (see output below) just after adding boilerplate that showed how the backpropagation step was the most compute-intensive part, which is the usual during the training of a deep learning model. Some possible optimizations are making the model architecture simpler or using combined floats.
 The second most consuming “winapi.WaitForMultipleObjects” suggests that our script spends a significant amount of time waiting for some OS-level operations. These are likely related to synchronization or I/O operations, such as data loading or saving. And after analysis of code we consider we already make optimum use of data loading, logging verbosity, and model checkpoint save, and that is common that it takes time in these matters.
 One optimization that we used in order to save time during transformations, was to store the data as tensors.
-Finally, as for memory usage, the sections that consume the most memory are the model loading and training, which is expected for these big models. ---
+Finally, as for memory usage, the sections that consume the most memory are the model loading and training, which is expected for these big models.
 
 ![Profiling by tottime](figures/Profiling-by-tottime.png)
 
@@ -391,7 +411,6 @@ Finally, as for memory usage, the sections that consume the most memory are the 
 >
 > Answer:
 
---- 
 In our project, we made use of the following Google Cloud Platform (GCP) services, each playing a crucial role in our machine learning workflow:
 
 Cloud Storage (GCS): Hosted our data that was version-controlled with DVC, providing robust and scalable storage for datasets and model artifacts.
@@ -402,7 +421,7 @@ Container Registry: Stored the container images created by Cloud Build, serving 
 
 Vertex AI: Utilized for submitting custom training jobs using the container images from Container Registry, which allowed us to train our models on scalable infrastructure.
 
-Compute Engine: Employed for initial testing and running experiments on the cloud before scaling up , providing customizable and on-demand virtual  ---
+Compute Engine: Employed for initial testing and running experiments on the cloud before scaling up , providing customizable and on-demand virtual
 
 ### Question 18
 
@@ -417,8 +436,7 @@ Compute Engine: Employed for initial testing and running experiments on the clou
 >
 > Answer:
 
---- While we had the capability to train our model locally using our CPUs, the necessity for scaling to more intensive compute resources was not immediate. Consequently, we didn't fully explore the potential of Compute Engine for training purposes. For model deployment, hosting our FastAPI server on a Compute Engine VM was a possibility. Yet, we recognized that this option might incur higher costs and offer less scalability compared to serverless alternatives like Cloud Run, which would be our preferred choice for such needs. Cloud Run provides a managed environment that automatically scales based on traffic, making it a more cost-effective and flexible solution for deploying containerized applications like ours.
- ---
+While we had the capability to train our model locally using our CPUs, the necessity for scaling to more intensive compute resources was not immediate. Consequently, we didn't fully explore the potential of Compute Engine for training purposes. For model deployment, hosting our FastAPI server on a Compute Engine VM was a possibility. Yet, we recognized that this option might incur higher costs and offer less scalability compared to serverless alternatives like Cloud Run, which would be our preferred choice for such needs. Cloud Run provides a managed environment that automatically scales based on traffic, making it a more cost-effective and flexible solution for deploying containerized applications like ours.
 
 ### Question 19
 
@@ -427,10 +445,10 @@ Compute Engine: Employed for initial testing and running experiments on the clou
 >
 > Answer:
 
---- 
+
 ![Bucket-1](figures/bucket-1.png)
 ![Bucket-2](figures/bucket-2.png)
- ---
+
 
 ### Question 20
 
@@ -439,7 +457,7 @@ Compute Engine: Employed for initial testing and running experiments on the clou
 >
 > Answer:
 
---- question 20 fill here ---
+---  ---
 
 ### Question 21
 
@@ -479,7 +497,7 @@ Compute Engine: Employed for initial testing and running experiments on the clou
 >
 > Answer:
 
---- question 23 fill here ---
+We have been unable to implement monitoring in our project but we appreciate its importance. It is no secret that machine learning models degrade over time and it is crucial for value generation that the performance of the model is kept under close observation. This allows us to view information that could lead us to improving the model itself, debugging it in case it fails or simply log its performance. Issues, such as data drifting, can arise on a previously "good" working model if it is asked to make predictions about data which is outside the scope of data on which it was trained. Logs, metrics and event triggers such as alert systems are all part of monitoring apparatus that can be used to check a model's performance.
 
 ### Question 24
 
@@ -493,7 +511,7 @@ Compute Engine: Employed for initial testing and running experiments on the clou
 >
 > Answer:
 
---- Àiax used $6.87, Group member 2 used ..., in total ... credits was spend during development. The service costing the most was Compute Engine due to the high use of CPU and memory during training and because these more expensive than other services like storage or networking ---
+Àiax used $26.84, Tomasz used $0.01, Shah used ~$50 and in total $56.88 credits was spend during development. The highest costing services were the Compute Engine and Cloud Build, due to the high use of CPU and memory during training and for trying to debug issues with automatic image building on Cloud Build.
 
 ## Overall discussion of project
 
@@ -528,7 +546,7 @@ Optimizing our machine learning models for performance and cost was another sign
 
 Team coordination and maintaining a consistent development environment were universal challenges. Using Docker to containerize our environment ensured every team member worked with an identical setup, avoiding the "it works on my machine" syndrome.
 
-It's worth adding that we spent a lot of time struggling with DVC usage inside the cloud, leading to a workaround. Despite the struggles, the project was a valuable learning experience, enhancing our understanding of cloud services, DevOps skills, and the importance of monitoring and profiling in the machine learning lifecycle. 
+It's worth adding that we spent a lot of time struggling with DVC usage inside the cloud, leading to a workaround. Despite the struggles, the project was a valuable learning experience, enhancing our understanding of cloud services, DevOps skills, and the importance of monitoring and profiling in the machine learning lifecycle.
 ### Question 27
 
 > **State the individual contributions of each team member. This is required information from DTU, because we need to**

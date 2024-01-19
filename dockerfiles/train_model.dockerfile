@@ -8,14 +8,13 @@ RUN apt update && \
 
 COPY requirements.txt requirements.txt
 COPY pyproject.toml pyproject.toml
+
+WORKDIR /
 COPY src/ src/
-#TODO fetch data from bucket
+
 COPY models/ models/
 COPY data/ data/
 
-COPY data/processed data/processed
-
-WORKDIR /
 RUN pip install -r requirements.txt --no-cache-dir
 RUN pip install . --no-deps --no-cache-dir
 RUN pip install -e .
