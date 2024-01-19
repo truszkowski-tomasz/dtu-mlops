@@ -438,9 +438,9 @@ Billing: Although overlooked, it is an important service that was regularly chec
 >
 > Answer:
 
-Before setting up VertexAI, we used GCE to train the models, for example the one with 150 epochs shown above in the W&B experiments. The used machine was a "n2-standard-8" with 16GB of ram and 8 CPU's, since smaller machines we tried killed the process during trarining for resourse usage excess.
+--- Before setting up VertexAI, we used GCE to train the models, for example the one with 150 epochs shown above in the W&B experiments. The used machine was a "n2-standard-8" with 16GB of ram and 8 CPU's, since smaller machines we tried killed the process during trarining for resourse usage excess.
 
-For model deployment, hosting our FastAPI server on a Compute Engine VM was a possibility. Yet, we recognized that this option might incur higher costs and offer less scalability compared to serverless alternatives like Cloud Run, which would be our preferred choice for such needs. Cloud Run provides a managed environment that automatically scales based on traffic, making it a more cost-effective and flexible solution for deploying containerized applications like ours. Additionally, we created a Deep Learning VM which we utilized to test the docker images as a test/deployment machine. 
+For model deployment, hosting our FastAPI server on a Compute Engine VM was a possibility. Yet, we recognized that this option might incur higher costs and offer less scalability compared to serverless alternatives like Cloud Run, which would be our preferred choice for such needs. Cloud Run provides a managed environment that automatically scales based on traffic, making it a more cost-effective and flexible solution for deploying containerized applications like ours. Additionally, we created a Deep Learning VM which we utilized to test the docker images as a test/deployment machine. ---
 
 ### Question 19
 
@@ -577,8 +577,8 @@ It's worth adding that we spent a lot of time struggling with DVC usage inside t
 >
 > Answer:
 
----
-Student s222703 was in charge of the profiling and training the model in GCP with VertexAI and Compute Engine.
+
+--- Student s222703 was in charge of the profiling and training the model in GCP with VertexAI and Compute Engine.
   
 Student s232858 chose to focus on managing and working with the GCP platform. 
 
