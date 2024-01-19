@@ -580,10 +580,7 @@ It's worth adding that we spent a lot of time struggling with DVC usage inside t
 >
 > Answer:
 
-<<<<<<< Updated upstream
 ---
-=======
->>>>>>> Stashed changes
 Student s222703 was in charge of the profiling and training the model in GCP with VertexAI and Compute Engine.
   
 Student s232858 chose to focus on managing and working with the GCP platform.
