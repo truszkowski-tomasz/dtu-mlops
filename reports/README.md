@@ -115,7 +115,7 @@ end of the project.
 >
 >
 > Answer:
---- s222937, s194768, s223219, s232858, s222703 ---
+--- s222937, s194768, s232858, s223219, s222703 ---
 
 
 ### Question 3
@@ -171,17 +171,11 @@ Note: This project (currently) uses Google Drive as the storage location for DVC
 > *experiments.*
 > Answer:
 
-The cookiecutter template has been extremely useful in our project. It gave us the freedom to focus on actual implementations of code, configurations and dependency management for the project. In our project, "src" is the main directory of our project. It contains code that forms the backbone of our model such as scripts for data processing, model training and predictions. The "models" directory contains the trained models   Based on the screenshots of the repository you provided earlier, the project follows a structure influenced by a cookiecutter machine learning template, with some modifications tailored to our specific needs. We have filled out the src, models, docs, and reports directories, among others.
+The cookiecutter template has been extremely useful in our project. It gave us the freedom to focus on actual implementations of code, configurations and dependency management for the project. The directory structure is quite intuitive and project functionality is stored in similarly named folders. In our project, "src" is the main directory of our project. It contains code that forms the backbone of our model such as scripts for data processing, model training and predictions. Inside the "src" directory, the only unused directory is the "visualizations" since we have used Weights&Biases API to automatically log and visualize our experiments. The "models" directory contains the trained models our finely tuned model. The "tests" directory contains files that we have used for testing the fundamental functionality of our project such as downloading the project, making the dataset etc. For monitoring our project, we have the "logs" directory. The "notebooks" folder has been unutilized so far in the project, however it can be very useful to house Jupyter notebooks which can be used to demonstrate our project. To make sure that our project was reproducible, we have utilized Docker and the directory named "dockerfiles" contains the files that create an image for the training and prediction part of our model. 
 
-The src directory contains the core code for the project, including scripts for data processing, model training, and predictions. The models directory holds the trained model files and serialized objects. Documentation relevant to the project is found within the docs directory, and the reports directory includes generated analysis and figures, often used for insights and presentations.
+There are many files throughout our project that are either incharge of performing a task or logging information for it. These files include (but arent limited to), docker-compose.yaml, cloudbuild.yaml and the files housed within .github folder. 
 
-Our repository also contains a notebooks directory, which we have retained for potential future use in exploratory data analysis or prototyping, though it is currently empty.
-
-Additional configurations and workflows are managed through files like pyproject.toml, requirements.txt, and .github/workflows, which define project dependencies and CI/CD processes, respectively.
-
-To manage our experiments and ensure reproducibility, we used Docker, as indicated by the dockerfiles directory containing Dockerfiles for different purposes. The Makefile present in the root assists in automating routine tasks such as setting up the environment, training models, and cleaning build artifacts.
-
-This setup is designed to be flexible and efficient for our machine learning operations, facilitating easy replication and scaling while maintaining a clear and organized codebase.
+Based on the screenshots of the repository you provided earlier, the project follows a structure influenced by a cookiecutter machine learning template, with some modifications tailored to our specific needs. We have filled out the src, models, docs, and reports directories, among others.
 
 ### Question 6
 
@@ -227,7 +221,7 @@ In large projects, consistent code quality and format are vital as they lead to 
 3. Forward pass of model
 4. Saving dataset.
 
-We have focused on deploying docker images, data and running the training in the cloud, so test are not strong part of our project. Due to issues with with access to the model from the github actions workflow we have decided to comment out 2 of them - making the dataset (uses local tokenizer) and forward pass (using fine tuned model). ---
+We have focused on deploying docker images, data and running the training in the cloud, therefore, our implemented tests are a rudimentary. Due to issues with with access to the model from the github actions workflow we have decided to comment out 2 of them - making the dataset (uses local tokenizer) and forward pass (using fine tuned model). ---
 
 ### Question 8
 
@@ -259,7 +253,7 @@ We have focused on deploying docker images, data and running the training in the
 >
 > Answer:
 
---- Our process of contributing to the project was also well structured. All of the group members have utilized branches to make their contributions. The general branch labelling structure follows "group_member_name/contribution". To merge individual contributions into the main project, we have utilized Pull Requests (PR), and one or more group members must review the PR before it can be allowed to merge into the main branch (master in our project due to technical reasons). ---
+--- Our process of contributing to the project was also well structured. Members of the group have utilized branches to make their contributions. The general branch labelling convention followed "group_member_name/contribution". To merge individual contributions into the main project, we have utilized Pull Requests (PR), and one or more group members must review the PR before it can be allowed to merge into the main branch (master in our project due to technical reasons). ---
 
 ### Question 10
 
@@ -274,7 +268,7 @@ We have focused on deploying docker images, data and running the training in the
 >
 > Answer:
 
---- We have used DVC to implement data version control in our project. The data for our project has been accquired from Kaggle and it is unlikely that there may be many changes to the data itself. However, it is a necessary part of our project pipeline, as it allows to make sure that once a project member has set up the project locally, they can get the exact same data as everyone else to train the model on.  ---
+--- We have used DVC to implement data version control in our project. The data for our project has been accquired from Kaggle and it is unlikely that there may be many changes to the data itself. However, it is a critical part of our project pipeline, as it allows to make sure that once a project member has set up the project locally, they can get the exact same data as everyone else to train the model on.  ---
 
 ### Question 11
 
@@ -313,7 +307,7 @@ We do make use of caching to speed up the CI process, particularly for dependenc
 >
 > Answer:
 
---- question 12 fill here ---
+--- We used Hydra configuration files to systematically organize our hyperparameters, file paths, and other adjustable parameters that may need to be easily modified. The structure is designed to have one dedicated configuration file per task. For instance, there is a configuration file for preprocessing and data split, another for model creation, a separate one for training, and finally, one for prediction. While the initial setup predominantly follows a one-file-per-task convention, certain scripts may pull parameters from more than one configuration file when necessary. Due to time constraints, there is still some hardcoding in the project, but solving this would be trivial since it is just an extension of what we have  learned to do in this project. ---
 
 ### Question 13
 
@@ -328,7 +322,7 @@ We do make use of caching to speed up the CI process, particularly for dependenc
 >
 > Answer:
 
---- To ensure reproducibility in our experiments, we employed a combination of config files, and environment management.. Whenever an experiment is run, we use hydra framework configuration files that specify all parameters. This setup allows for precise control over the experiment settings and easy adjustment without modifying the code. Each experiment's configuration is saved alongside its results, providing a clear record of the conditions under which it was run.
+--- To ensure reproducibility in our experiments, we employed a combination of config files, and environment management. Whenever an experiment is run, we use hydra framework configuration files that specify all parameters. This setup allows for precise control over the experiment settings and easy adjustment without modifying the code. Each experiment's configuration is saved alongside its results, providing a clear record of the conditions under which it was run.
 
 To reproduce an experiment, one would need to use the same configuration file and ensure that the environment (Python version, library versions, etc.) matches the original setup. We manage our environment using tools like pip and requirements.txt (or conda with an environment.yml file) to specify exact package versions. Additionally, we use Docker containers to encapsulate the entire runtime environment, ensuring that experiments can be run with the same setup anywhere.
 
@@ -349,7 +343,7 @@ This approach of using config files, precise dependency management, and containe
 >
 > Answer:
 
-We did a lot of experiments, but many of them were tracked only because wandb support has been implemented very early. Some of them were performed locally and therefore with a limited number of epochs and only small subset of data was used. In the images below, there can be seen - training progress for a large subset of the data and 150 epochs, progress for just a few dozen examples and 5 epochs, and the full set of metrics we tracked (Validation loss, Train loss, micro f1, macro f1, validation accuracy) respectively. The orange colour represents Validation loss and the blue colour represents Training loss.
+We did a lot of experiments, and many of them were tracked because wandb had been implemented into our project from early on. Some of them were performed locally and therefore with a limited number of epochs and only small subset of data was used. In the images below, there can be seen - training progress for a large subset of the data and 150 epochs, progress for just a few dozen examples and 5 epochs, and the full set of metrics we tracked (Validation loss, Train loss, micro f1, macro f1, validation accuracy) respectively. The orange colour represents Validation loss and the blue colour represents Training loss.
 
 ![Training in cloud for 150 epochs](figures/150_epochs.png)
 
@@ -372,7 +366,7 @@ Training and validation loss represent how well our model is performing, respect
 >
 > Answer:
 
---- We utilized Docker images to streamline and standardize our training process, particularly for running jobs on the cloud. Our workflow included an automated setup with Google Cloud Platform (GCP), where a new Docker image for training was automatically built and pushed to our container registry upon each commit to the main branch of our repository. This automation was achieved using a trigger on GCP. ---
+--- We utilized Docker images to streamline and standardize our training process, particularly for running jobs on the cloud. Initially, in our project, once a model was trained, we were building docker images locally on our machine. As the size of images grows, it becomes unfeasible to build images locally and then share them manually by uploading them somewhere. As we are creating separate images for the training and prediction part, it only reinforced the need for continuous integration and automatic building of the docker images on Cloud Build. Once the images are building, it is simply a matter of copying the pull command from Google Cloud Build and the image will be downloaded on any local machine running docker. To run our images, for instance, the trainer, `docker run trainer:latest`. We spend a considerable amount of time and effort into making sure that the automatic pipeline for creation of these images in Cloud Build worked correctly. As soon as any change is merged into the main branch of our project repository, a trigger on GCP is activated and begins creating new images for both trainer and predict using the cloud-builder. ---
 
 ### Question 16
 
@@ -387,9 +381,9 @@ Training and validation loss represent how well our model is performing, respect
 >
 > Answer:
 
---- Debugging method was dependent on each group member. Some just used IDE debugging tools and others used internet help together with the error trace.
-We did a single profiling run of our training code (see output below) just after adding boilerplate that showed how the backpropagation step was the most compute-intensive part, which is the usual during the training of a deep learning model. Some possible optimizations are making the model architecture simpler or using combined floats.
-The second most consuming “winapi.WaitForMultipleObjects” suggests that our script spends a significant amount of time waiting for some OS-level operations. These are likely related to synchronization or I/O operations, such as data loading or saving. And after analysis of code we consider we already make optimum use of data loading, logging verbosity, and model checkpoint save, and that is common that it takes time in these matters.
+--- The exact method of debugging was dependent on each group member. Some just used IDE debugging tools and others used internet help together with the error trace.
+We did a single profiling run of our training code (see output below) just after adding boilerplate that showed how the backpropagation step was the most compute-intensive part, which is typical during the training of a deep learning model. Some possible optimizations are making the model architecture simpler or using combined floats.
+The second most consuming “winapi.WaitForMultipleObjects” suggests that our script spends a significant amount of time waiting for some OS-level operations. These are likely related to synchronization or I/O operations, such as data loading or saving. And after analysis of code we consider that we already make optimum use of data loading, logging verbosity, and model checkpoint save, and that is common that it takes time in these matters.
 One optimization that we used in order to save time during transformations, was to store the data as tensors.
 Finally, as for memory usage, the sections that consume the most memory are the model loading and training, which is expected for these big models. ---
 
@@ -421,7 +415,11 @@ Container Registry: Stored the container images created by Cloud Build, serving 
 
 Vertex AI: Utilized for submitting custom training jobs using the container images from Container Registry, which allowed us to train our models on scalable infrastructure.
 
-Compute Engine: Employed for initial testing and running experiments on the cloud before scaling up , providing customizable and on-demand virtual  ---
+Compute Engine: Employed for initial testing and running experiments on the cloud before scaling up , providing customizable and on-demand virtual 
+
+Cloud Run: We have a job that is run once Cloud Build has finished building the trainer image and a continuous service that makes our API avaialable to use the predict feature of our model.
+
+Billing: Although overlooked, it is an important service that was regularly checked to see how fast we burned through our credits while using the cloud services. ---
 
 ### Question 18
 
@@ -436,8 +434,7 @@ Compute Engine: Employed for initial testing and running experiments on the clou
 >
 > Answer:
 
---- While we had the capability to train our model locally using our CPUs, the necessity for scaling to more intensive compute resources was not immediate. Consequently, we didn't fully explore the potential of Compute Engine for training purposes. For model deployment, hosting our FastAPI server on a Compute Engine VM was a possibility. Yet, we recognized that this option might incur higher costs and offer less scalability compared to serverless alternatives like Cloud Run, which would be our preferred choice for such needs. Cloud Run provides a managed environment that automatically scales based on traffic, making it a more cost-effective and flexible solution for deploying containerized applications like ours.
- ---
+--- While we had the capability to train our model locally using our CPUs, the necessity for scaling to more intensive compute resources was not immediate. Consequently, we didn't fully explore the potential of Compute Engine for training purposes. For model deployment, hosting our FastAPI server on a Compute Engine VM was a possibility. Yet, we recognized that this option might incur higher costs and offer less scalability compared to serverless alternatives like Cloud Run, which would be our preferred choice for such needs. Cloud Run provides a managed environment that automatically scales based on traffic, making it a more cost-effective and flexible solution for deploying containerized applications like ours. Additionally, we created a Deep Learning VM which we utilized to test the docker images as a test/deployment machine. ---
 
 ### Question 19
 
@@ -458,7 +455,9 @@ Compute Engine: Employed for initial testing and running experiments on the clou
 >
 > Answer:
 
----  ---
+--- 
+![Container Registry](figures/container.png)
+---
 
 ### Question 21
 
@@ -467,7 +466,7 @@ Compute Engine: Employed for initial testing and running experiments on the clou
 >
 > Answer:
 
---- question 21 fill here ---
+--- ![Build History](figures/buildhistory.png) ---
 
 ### Question 22
 
@@ -483,7 +482,7 @@ Compute Engine: Employed for initial testing and running experiments on the clou
 >
 > Answer:
 
---- question 22 fill here ---
+--- Our model is served using FastAPI. We spent a considerable effort debugging to make sure that our model was deployed correctly and obviously we made sure that it was served correctly on our local environment. This has been achieved. However, the goal we really pushed for was deploying the model as a service on GCP using Cloud Run. We believe we have reached very close to having a working deployed model on Cloud Run, as we have a successfully running service. However, the only problem is that it returns an "Internal Server Error". ---
 
 ### Question 23
 
@@ -512,7 +511,7 @@ Compute Engine: Employed for initial testing and running experiments on the clou
 >
 > Answer:
 
---- Àiax used $6.87, Tomasz used $0.01, Shah used ~$50 and in total $56.88 credits was spend during development. The highest costing services were the Compute Engine and Cloud Build, due to the high use of CPU and memory during training and for trying to debug issues with automatic image building on Cloud Build. ---
+--- Àiax has used $6.87, Tomasz has used $0.01, Shah has used ~$50 and in total $56.88 credits were spent during development. The highest costing services were the Compute Engine and Cloud Build, due to the high use of CPU/memory during training and for trying to debug issues with automatic image building on Cloud Build (so many failed attempts to build images on Cloud Build). ---
 
 ## Overall discussion of project
 
@@ -548,6 +547,7 @@ Optimizing our machine learning models for performance and cost was another sign
 Team coordination and maintaining a consistent development environment were universal challenges. Using Docker to containerize our environment ensured every team member worked with an identical setup, avoiding the "it works on my machine" syndrome.
 
 It's worth adding that we spent a lot of time struggling with DVC usage inside the cloud, leading to a workaround. Despite the struggles, the project was a valuable learning experience, enhancing our understanding of cloud services, DevOps skills, and the importance of monitoring and profiling in the machine learning lifecycle.
+
 ### Question 27
 
 > **State the individual contributions of each team member. This is required information from DTU, because we need to**
@@ -563,4 +563,6 @@ It's worth adding that we spent a lot of time struggling with DVC usage inside t
 >
 > Answer:
 
---- question 27 fill here ---
+--- 
+s232858 chose to focus on managing and working with the GCP platform.
+---
